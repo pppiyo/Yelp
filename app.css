@@ -19,10 +19,6 @@ body {
     width: 100%;
 }
 
-.form-row {
-    margin: 10px;
-}
-
 .head {
     padding: 1rem;
     color: white;
@@ -30,9 +26,22 @@ body {
 }
 
 .form-row {
-    
-    display: inline;
+    display: block;
+    margin-block: 10px;
+}
 
+#row2-left {
+    float: left;
+    width: 50%;
+}
+
+#row2-right {
+    float: right;
+    width: 50%;
+}
+
+label {
+    float: left;
 }
 
 button {
@@ -62,9 +71,4 @@ button:hover, button:focus {
 button:active {
     box-shadow: #D6D6E7 0 3px 7px inset;
     transform: translateY(2px);
-}
-
-
-form {
-    /* margin: 5%; */
 }
