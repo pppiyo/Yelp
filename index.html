@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+</head>
+
+<body>
+    <div class="welcome">
+        
+        <div class="head">
+            <!-- <img src="https://csci571.com/hw/hw6/images/banner.jpeg" alt="banner"> -->
+            <h1>Buisiness Search</h1>
+            <p>Fill out the form to get businesses near you!</p>
+        </div>
+        
+        <form action="#">
+            <div class="form-row" id="row1">
+                <label for="keyword">Keyword</label><br>
+                <input type="text" id="keyword" name="keyword" required>
+            </div>
+
+            <div class="form-row" id="row2"> 
+                <div>
+                    <label for="distance">Distance(miles)</label><br>
+                    <input type="number" id="distance" name="distance" value="10">
+                </div>
+                <div>
+                    <label for="category">Category</label><br>
+                    <select name="category" id="category" required>
+                        <option value="default">Default</option>
+                        <option value="arts_entertainment">Arts & Entertainment</option>
+                        <option value="health_medical">Health & Medical</option>
+                        <option value="hotels_travel">Hotels & Travel</option>
+                        <option value="professional_services">Professional Services</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row" id="row3">
+                <label for="location">Location</label><br>
+                <input type="text" id="location" name="location" required>
+            </div>
+
+            <hr>
+        
+            <div>
+                <label for="detect-location">Want us to auto-detect your location? Check here</label>
+                <input type="checkbox" id="detect-location">
+            </div>
+
+            <button id="submit-button">submit</button>
+            <button id="clear-button">clear</button>
+        </form>
+    </div>
+</body>
+</html>
