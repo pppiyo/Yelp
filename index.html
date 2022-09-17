@@ -10,41 +10,29 @@
 </head>
 
 <body>
-    <div class="welcome">
-        
+    <div class="welcome-card">
         <div class="head">
-            <!-- <img src="https://csci571.com/hw/hw6/images/banner.jpeg" alt="banner"> -->
-            <h1>Buisiness Search</h1>
-            <p>Fill out the form to get businesses near you!</p>
+            <img src="https://csci571.com/hw/hw6/images/banner.jpeg" alt="banner">
         </div>
         
-        <form action="#">
-            <div class="form-row" id="row1">
-                <label for="keyword">Keyword</label><br>
-                <input type="text" id="keyword" name="keyword" required>
-            </div>
+        <form action="#" method="post">
+            <label for="keyword">Keyword</label>
+            <input type="text" id="keyword" name="keyword" required>
 
-            <!-- <div class="form-row" id="row2">  -->
-                <div id=row2-left>
-                    <label for="distance">Distance(miles)</label><br>
-                    <input type="number" id="distance" name="distance" value="10">
-                </div>
-                <div id=row2-right>
-                    <label for="category">Category</label><br>
-                    <select name="category" id="category" required>
-                        <option value="">Default</option>
-                        <option value="arts_entertainment">Arts & Entertainment</option>
-                        <option value="health_medical">Health & Medical</option>
-                        <option value="hotels_travel">Hotels & Travel</option>
-                        <option value="professional_services">Professional Services</option>
-                    </select>
-                </div>
-            <!-- </div> -->
+            <label for="distance">Distance(miles)</label>
+            <input type="number" id="distance" name="distance" value="10">
+            
+            <label for="category">Category</label>
+            <select name="category" id="category" required>
+                <option value="">Default</option>
+                <option value="arts_entertainment">Arts & Entertainment</option>
+                <option value="health_medical">Health & Medical</option>
+                <option value="hotels_travel">Hotels & Travel</option>
+                <option value="professional_services">Professional Services</option>
+            </select>
 
-            <div class="form-row" id="row3">
-                <label for="location">Location</label><br>
-                <input type="text" id="location" name="location" required>
-            </div>
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" required>
 
             <hr>
         

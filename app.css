@@ -1,18 +1,21 @@
 body {
-    /* margin: 0 auto; */
-    /* margin: 10px 300px 500px 300px; */
     color: #4f6fad;
     font-family: 'Open Sans', sans-serif;
     font-stretch: expanded;
 }
 
-.welcome {
+.welcome-card {
     /* width: 50vh; */
     width: 500px;
     height: 450px;
-    padding: 50px;
     margin: 20px auto;
     box-shadow: 0px 0px 5px 2px grey;
+}
+
+.head {
+    width: 500px;
+    height: 110px;
+    margin: 0;
 }
 
 #keyword, #location {
@@ -20,28 +23,21 @@ body {
 }
 
 .head {
-    padding: 1rem;
     color: white;
     font-size: 1em;
+    height: 110px; 
+    width: 500px; 
 }
 
-.form-row {
-    display: block;
-    margin-block: 10px;
+form {
+    padding: 0 30px 20px 30px;
 }
 
-#row2-left {
-    float: left;
-    width: 50%;
-}
-
-#row2-right {
-    float: right;
-    width: 50%;
-}
-
-label {
-    float: left;
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    object-position: left bottom;
 }
 
 button {
@@ -51,6 +47,7 @@ button {
     padding: 15px 32px;
     text-transform: uppercase;
     font-weight: lighter;
+    margin-top: 1rem;
 }
 
 #submit-button {
@@ -68,7 +65,19 @@ button:hover, button:focus {
     border: 1px solid black;
 }
 
-button:active {
-    box-shadow: #D6D6E7 0 3px 7px inset;
-    transform: translateY(2px);
+
+hr {
+    color: #ccc;
 }
+
+input, select {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+}
+
+label {
+    display: block;
+    padding:0.25rem 0;
+    margin-top: 0.5em;
+}
+
