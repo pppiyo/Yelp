@@ -12,17 +12,12 @@ body {
     box-shadow: 0px 0px 5px 2px grey;
 }
 
-.head {
-    width: 500px;
-    height: 110px;
-    margin: 0;
-}
-
 #keyword, #location {
     width: 100%;
 }
 
-.head {
+.welcome-message {
+    margin: 0;
     color: white;
     font-size: 1em;
     height: 110px; 
@@ -44,30 +39,26 @@ button {
     display: inline-block;
     color: white;
     border: none;
-    padding: 15px 32px;
+    padding: 15px 28px;
     text-transform: uppercase;
     font-weight: lighter;
     margin-top: 1rem;
 }
 
 #submit-button {
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #384d78 0 -6px 0 inset;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #384d78 0 -5px 0 inset;
     background-color: #4f6fad;
 
 }
 
 #clear-button {
-    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #fa8500 0 -6px 0 inset;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #fa8500 0 -5px 0 inset;
     background-color: #ffb705;
+    transition: 0.3s background ease;
 }
 
 button:hover, button:focus {
     border: 1px solid black;
-}
-
-
-hr {
-    color: #ccc;
 }
 
 input, select {
