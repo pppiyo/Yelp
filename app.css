@@ -4,6 +4,10 @@ body {
     font-stretch: expanded;
 }
 
+h1 {
+    font-size: 30px;
+}
+
 #welcome-card {
     width: 500px;
     height: 450px;
@@ -23,10 +27,8 @@ body {
 
 #welcome-message {
     color: white;
-    font-size: 1em;
     height: 110px; 
     width: 500px; 
-    /* margin: auto; */
     background-image: url('https://csci571.com/hw/hw6/images/banner.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
