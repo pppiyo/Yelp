@@ -5,7 +5,6 @@ body {
 }
 
 #welcome-card {
-    /* width: 50vh; */
     width: 500px;
     height: 450px;
     margin: 20px auto;
@@ -13,7 +12,13 @@ body {
 }
 
 #keyword, #location {
-    width: 100%;
+    width: 424px;
+}
+
+
+#distance {
+    align-items:flex-end;
+    margin-right: 24px;
 }
 
 #welcome-message {
@@ -32,6 +37,30 @@ body {
 .required {
     color: rgb(213, 45, 45);
 }
+
+.row {
+    width: 500px;
+    margin-top: 10px;
+}
+
+#row1 #row3 {
+    display: block;
+}
+
+#row2, #row4 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* .col-0 {
+    flex: 0%;
+    margin-right: 100px;
+}
+
+.col-50 {
+    flex: 50%;
+} */
+
 
 form {
     padding: 0 30px 20px 30px;
@@ -57,14 +86,11 @@ button {
 #submit-button {
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #384d78 0 -5px 0 inset;
     background-color: #4f6fad;
-    transition: 0.3s background ease;
-
 }
 
 #clear-button {
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #fa8500 0 -5px 0 inset;
     background-color: #ffb705;
-    transition: 0.3s background ease;
 }
 
 button:hover, button:focus {
@@ -83,6 +109,4 @@ input, select {
 label {
     display: block;
     padding:0.25rem 0;
-    margin-top: 0.5em;
 }
-
