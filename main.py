@@ -14,30 +14,64 @@
 
 # [START gae_python38_app]
 # [START gae_python3_app]
-from flask import Flask
+from google.cloud import datastore
+import datetime
 
+from flask import Flask, render_template
 
-# If `entrypoint` is not defined in app.yaml, App Engine will look for an app
-# called `app` in `main.py`.
+datastore_client = datastore.Client()
+
 app = Flask(__name__)
 
+@app.route('/')
 
-@app.route('/hi')
-def helloWorld():
-# # def hello():
-#     """Return a friendly HTTP greeting."""
-    return str(sum(1, 2))
+def root():
+    # Store the current access time in Datastore.
+    store_time(datetime.datetime.now(tz=datetime.timezone.utc))
 
-def sum(a, b):
-    return a + b
+    # Fetch the most recent 10 access times from Datastore.
+    times = fetch_times(10)
+
+    return render_template(
+        'index.html', times=times)
 
 
+def store_time(dt):
+    entity = datastore.Entity(key=datastore_client.key('visit'))
+    entity.update({
+        'timestamp': dt
+    })
 
+    datastore_client.put(entity)
+
+
+def fetch_times(limit):
+    query = datastore_client.query(kind='visit')
+    query.order = ['-timestamp']
+
+    times = query.fetch(limit=limit)
+
+    return times
+
+    # For the sake of example, use static information to inflate the template.
+    # This will be replaced with real information in later steps.
+    # dummy_times = [datetime.datetime(2018, 1, 1, 10, 0, 0),
+    #                datetime.datetime(2018, 1, 2, 10, 30, 0),
+    #                datetime.datetime(2018, 1, 3, 11, 0, 0),
+    #                ]
+
+    # return render_template('index.html', times=dummy_times)
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
     # Engine, a webserver process such as Gunicorn will serve the app. You
     # can configure startup instructions by adding `entrypoint` to app.yaml.
+
+    # app.run(host='https://amylee-csci571-220906.wl.r.appspot.com', port=5900, debug=True)
     app.run(host='127.0.0.1', port=8080, debug=True)
 # [END gae_python3_app]
 # [END gae_python38_app]
+
+
+    # from waitress import serve
+    # serve(app, host="0.0.0.0", port=8080)
