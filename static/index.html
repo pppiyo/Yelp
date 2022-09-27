@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <script src="app.js"></script>
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ"></script>
+
 
 </head>
 
@@ -20,7 +22,7 @@
             </div>
         </div>
         
-        <form action="https://api.yelp.com/v3/businesses/search" method="get">
+        <form action="http://amylee-csci571-220906.wl.r.appspot.com" method="get" onsubmit="getAddress()">
             <div class="row" id="row1">
                 <label for="keyword">Keyword<span class="required">*</span></label>
                 <input type="text" id="keyword" name="keyword" required>
@@ -29,7 +31,7 @@
             <div class="row" id="row2">
                 <div class="col-0">                
                     <label for="distance">Distance(miles)</label>
-                    <input type="number" id="distance" name="distance" value="10">
+                    <input type="text" id="distance" name="distance" value="10">
                 </div>
     
                 <div class="col-50">
@@ -65,17 +67,7 @@
         </form>
     </div>
 
-    <div id="search-result">fjdksljfkdjsklf</div>
+    <div id="search-result"></div>
 
-<script type="text/javascript">
-    // document.getElementById("submit-button").onclick = function () {
-    //     location.href = "page2.html";
-    // };
-
-    document.getElementById("clear-button").onclick = function () {
-        document.getElementById("search-result").innerHTML = ``;
-    };
-
-</script>
 </body>
 </html>
