@@ -1,14 +1,14 @@
 'use strict';
 
-window.addEventListener('load', function () {
+// window.addEventListener('load', function () {
 
-  console.log("Hello World!");
+//   console.log("Hello World!");
 
-});
+// });
 
 document.getElementById("search-result").innerHTML = ``;
 
-document.getElementById("clear-button").onclick = function getAddress() {
+document.getElementById("submit-button").onclick = function getAddress() {
       var address = document.getElementById("location").value;
       var geocoder = new google.maps.Geocoder();
       geocoder.geocode({ 'address': address }, function (results, status) {
