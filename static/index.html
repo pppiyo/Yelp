@@ -8,8 +8,15 @@
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <script src="app.js"></script>
-    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ"></script>
-
+    <!-- <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ"></script> -->
+    <script src="//maps.googleapis.com/maps/api/js?key=process.env.GOOGLE_MAPS_API_KEY"></script>
+    <!-- playground-hide -->
+    <script>
+        const process = { env: {} };
+        process.env.GOOGLE_MAPS_API_KEY =
+            "AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ";
+    </script>
+    <!-- playground-hide-end -->
 
 </head>
 
@@ -23,6 +30,7 @@
         </div>
         
         <form action="http://amylee-csci571-220906.wl.r.appspot.com" method="get" onsubmit="getAddress()">
+        <!-- <form action="#" method="get" onsubmit="getAddress()"> -->
             <div class="row" id="row1">
                 <label for="keyword">Keyword<span class="required">*</span></label>
                 <input type="text" id="keyword" name="keyword" required>
@@ -67,7 +75,7 @@
         </form>
     </div>
 
-    <div id="search-result"></div>
+    <div id="search-result">fjksdjfklsdjklfjsdlk</div>
 
 </body>
 </html>
