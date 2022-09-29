@@ -8,14 +8,28 @@
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <script src="app.js"></script>
-    <!-- <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ"></script> -->
-    <script src="//maps.googleapis.com/maps/api/js?key=process.env.GOOGLE_MAPS_API_KEY"></script>
+    <!-- <script src="//maps.googleapis.com/maps/api/js?key=mapAIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ"></script> -->
+    <!-- <script src="//maps.googleapis.com/s/api/js?key=process.env.GOOGLE_MAPS_API_KEY"></script> -->
     <!-- playground-hide -->
     <script>
         const process = { env: {} };
         process.env.GOOGLE_MAPS_API_KEY =
             "AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ";
     </script>
+
+    <script>
+        function extractAddress() {
+
+            const form = document.getElementById('form');
+            const formData = new FormData(form);
+    
+            const address = document.getElementById('output');
+    
+            for (const [key, value] of formData) {
+                output.textContent += `${key}: ${value}\n`;
+            }
+        }
+    </script>    
     <!-- playground-hide-end -->
 
 </head>
@@ -29,11 +43,13 @@
             </div>
         </div>
         
-        <form action="http://amylee-csci571-220906.wl.r.appspot.com" method="get" onsubmit="getAddress()">
+        <!-- <form action="http://amylee-csci571-220906.wl.r.appspot.com" method="get" onsubmit="getAddress()"> -->
+        <form action="#" method="get" id="form">
         <!-- <form action="#" method="get" onsubmit="getAddress()"> -->
             <div class="row" id="row1">
                 <label for="keyword">Keyword<span class="required">*</span></label>
-                <input type="text" id="keyword" name="keyword" required>
+                <input type="text" id="keyword" name="keyword">
+                <!-- <input type="text" id="keyword" name="keyword" required> -->
             </div>
 
             <div class="row" id="row2">
@@ -70,12 +86,19 @@
 
             <!-- <button id="submit-button" target="_blank">submit</button>
             <button id="clear-button" target="_blank">clear</button> -->
-            <button type="submit" id="submit-button">submit</button>
+            <button type="submit" id="submit-button" onclick="extractAddress()">submit</button>
             <button type="reset" id="clear-button">clear</button>
         </form>
     </div>
 
-    <div id="search-result">fjksdjfklsdjklfjsdlk</div>
+    <output id="output"></output>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ&libraries=places">
+
+    </script>
+
 
 </body>
+
 </html>

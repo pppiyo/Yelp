@@ -1,25 +1,52 @@
-'use strict';
 
-// window.addEventListener('load', function () {
+document.getElementById("submit-button").onclick = getAddress();
 
-//   console.log("Hello World!");
+function getAddress() {
+  document.getElementById("search-result").innerHTML = ``;
+  var address = document.getElementById("location").value;
+  // alert(address);
+  
+};
 
-// });
+(function () {
+  var position = document.getElementById("location").value;
+  
+  
+  function init() {
+    var locatorButton = document.getElementById("submit-button");
+    locatorButton.addEventListener("click", locatorButtonPressed)
 
-document.getElementById("search-result").innerHTML = ``;
+  }
 
-document.getElementById("submit-button").onclick = function getAddress() {
-      var address = document.getElementById("location").value;
-      var geocoder = new google.maps.Geocoder();
-      geocoder.geocode({ 'address': address }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          var latitude = results[0].geometry.location.lat();
-          var longitude = results[0].geometry.location.lng();
-          document.addLocation.geolocation.value = latitude + " " + longitude;
-          alert(document.getElementById("geolocation").value);
-          document.addLocation.submit();
-        } else alert("geocode failed:" + status);
+  function locatorButtonPressed() {
+    locatorSection.classList.add("loading")
 
-      });
-      return false;
-    }  
+    navigator.geolocation.getCurrentPosition(function (position) {
+      getUserAddressBy(position.coords.latitude, position.coords.longitude)
+    },
+      function (error) {
+        locatorSection.classList.remove("loading")
+        alert("The Locator was denied :( Please add your address manually")
+      })
+  }
+
+  function getUserAddressBy(lat, long) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        var address = JSON.parse(this.responseText)
+        setAddressToInputField(address.results[0].formatted_address)
+      }
+    };
+    xhttp.open("GET", "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + long + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
+    xhttp.send();
+  }
+
+ 
+
+  init()
+
+})();
+
+
+
