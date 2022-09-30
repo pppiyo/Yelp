@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <script src="app.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+
+
     <!-- <script src="//maps.googleapis.com/maps/api/js?key=mapAIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ"></script> -->
     <!-- <script src="//maps.googleapis.com/s/api/js?key=process.env.GOOGLE_MAPS_API_KEY"></script> -->
     <!-- playground-hide -->
@@ -17,7 +21,7 @@
             "AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ";
     </script>
 
-    <script>
+    <!-- <script>
         function extractAddress() {
 
             const form = document.getElementById('form');
@@ -30,7 +34,7 @@
             }
 
         }
-    </script>    
+    </script>     -->
     <!-- playground-hide-end -->
 
 </head>
@@ -45,7 +49,7 @@
         </div>
         
         <!-- <form action="http://amylee-csci571-220906.wl.r.appspot.com" method="get" onsubmit="getAddress()"> -->
-        <form action="#" method="get" id="form">
+        <form action="" method="get" id="form">
         <!-- <form action="#" method="get" onsubmit="getAddress()"> -->
             <div class="row" id="row1">
                 <label for="keyword">Keyword<span class="required">*</span></label>
@@ -86,14 +90,14 @@
             </div>
 
             <button type="submit" id="submit-button" onclick="submitForm()">submit</button>
-            <button type="reset" id="clear-button">clear</button>
+            <button type="reset" id="clear-button" onclick="enableLocationBox()">clear</button>
         </form>
     </div>
 
     <div id="output"></div>
 
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ&libraries=places">
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ&libraries=places"> -->
 
     </script>
 
