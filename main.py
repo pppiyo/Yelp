@@ -1,33 +1,20 @@
-# Copyright 2018 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# [START gae_python38_app]
-# [START gae_python3_app]
 from flask import Flask
+import requests
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.get('/')
+def cook_form_data():
+    # https://api.yelp.com/v3/businesses/search?term=[KEYWORD]&latitude=[LAT]&longitude=[LONG]&cate gories=[CAT]&radius=[RAD]
 
-def root():
-    return ;
+    url = 'https://api.yelp.com/v3/businesses/search'
+
+    header = {'Authorization': 'Bearer eOCtSLcSjoo8DlufDEjkoF7Rjf9mHwrBRI_U6aPMluevSq_imUgoz13T-Au87od_4FmrsJ6iBChruHOxDXclMK5hbMixXZipfp1CuwPNdNDDC7NWypTros3P1Q4oY3Yx'}
+
+    parameter = {'term': 'sushi', 'latitude': '34.0294',
+                 'longitude': '-118.2871', 'categories': 'all', 'radius': '40000'}
+    r = requests.get(url, headers=header, params=parameter)
+    return r.json()
 
 
-if __name__ == '__main__':
-
-    # app.run(host='https://amylee-csci571-220906.wl.r.appspot.com', port=5900, debug=True)
-    app.run(host='127.0.0.1', port=8080, debug=True)
-# [END gae_python3_app]
-# [END gae_python38_app]
 

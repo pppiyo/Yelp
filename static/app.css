@@ -10,7 +10,8 @@ h1 {
 
 #welcome-card {
     width: 500px;
-    height: 450px;
+    height: 470px;
+    /* height: 450px; */
     margin: 20px auto;
     box-shadow: 0px 0px 5px 2px grey;
 }
@@ -18,7 +19,6 @@ h1 {
 #keyword, #location {
     width: 424px;
 }
-
 
 #distance {
     align-items:flex-end;

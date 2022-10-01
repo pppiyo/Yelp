@@ -1,20 +1,9 @@
 var lng, lat;
 
 function submitForm() {
-  event.preventDefault(); 
-  // var queryString = $('form').serialize();
-  // alert(queryString);
-  // console.log(queryString);
-  // var loc = parseQuery(queryString)[['location']];
-  // console.log(loc);
-  // alert(loc);
-
-  // var form = document.getElementById('form');
+  event.preventDefault();  // FOR DEBUG PURPOSE
   
   var formData = new FormData(form);
-  
-  // JSON.stringify(a); // FOR DEBUG PURPOSE
-  
   var checkBox = document.getElementById("detect-location");
   
   if (checkBox.checked == true) {
@@ -59,17 +48,6 @@ function useIpinfo() {
       // alert(lat); // FOR DEBUG PURPOSE
     }
   )
-
-  // fetch("https://ipinfo.io/json?token=f6e03259a7a9e5").then(
-  //   (response) => response.json()
-  // ).then(
-  //   (jsonResponse) => document.getElementById("output").innerHTML = (jsonResponse.loc)
-  // )
-
-  // $.get('https://ipinfo.io/json?token=f6e03259a7a9e5', function (data) {
-  //   console.log('Response', data);
-  // });
-
 }
 
 function useGeoCoding(location) {
@@ -91,24 +69,11 @@ function useGeoCoding(location) {
     }
   };
 
-  // console.log("https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ"); // FOR DEBUG PURPOSE
-
   xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
   
   xhr.send();
 }
 
-
-  // GDownloadUrl("test1.xml", function (data) {
-  //   var xml = xhr.responseXML;
-  //   var root = xml.documentElement;
-  //   var markers = root.getElementsByTagName("markers"), nameEl;
-
-  //   for (var i = 0, len = markers.length; i < len; ++i) {
-  //     nameEl = markers[i].getElementsByTagName("name")[0];
-  //     alert(nameEl.firstChild.data);
-  //   }
-  // });
 
 function disableLocationBox(checkbox) {
   var loc = document.getElementById("location");
@@ -119,42 +84,7 @@ function disableLocationBox(checkbox) {
   }
 }
 
+
 function enableLocationBox() {
   document.getElementById("location").disabled = false;
 }
-
-// (function () {
-//   var position = document.getElementById("location").value;
-
-
-//   function init() {
-//     var locatorButton = document.getElementById("submit-button");
-//     locatorButton.addEventListener("click", locatorButtonPressed)
-
-//   }
-
-//   function locatorButtonPressed() {
-//     locatorSection.classList.add("loading")
-
-//     navigator.geolocation.getCurrentPosition(function (position) {
-//       getUserAddressBy(position.coords.latitude, position.coords.longitude)
-//     },
-//       function (error) {
-//         locatorSection.classList.remove("loading")
-//         alert("The Locator was denied :( Please add your address manually")
-//       })
-//   }
-
-// function parseQuery(queryString) {
-//   var query = {};
-//   var pairs = (queryString[0] === '?' ? queryString.substr(1) : queryString).split('&');
-//   for (var i = 0; i < pairs.length; i++) {
-//     var pair = pairs[i].split('=');
-//     query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
-//   }
-//   return query;
-// }
-
-//   init()
-
-// })()
