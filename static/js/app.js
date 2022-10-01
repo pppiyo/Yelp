@@ -1,9 +1,17 @@
-var lng, lat;
+var lng, lat, formData;
 
 function submitForm() {
   event.preventDefault();  // FOR DEBUG PURPOSE
   
-  var formData = new FormData(form);
+  formData = new FormData(form); // formData global variable
+  // formData.json()
+
+  var object = {};
+  formData.forEach((value, key) => object[key] = value);
+  var jsonFormData = JSON.stringify(object);
+
+  document.getElementById("output").innerHTML = `${jsonFormData}`;
+  
   var checkBox = document.getElementById("detect-location");
   
   if (checkBox.checked == true) {
@@ -24,12 +32,14 @@ function submitForm() {
     } else {
 
       str = str.split(',').join("+");
-      document.getElementById("output").innerHTML = `${str}`;
+      // document.getElementById("output").innerHTML = `${str}`;
       useGeoCoding(str);
 
     }
 
   }
+  
+  do_ajax(jsonFormData);
 
 }
 
@@ -56,7 +66,7 @@ function useGeoCoding(location) {
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var json = xhr.response;
-      document.getElementById("output").innerHTML = `${json}`; // FOR DEBUG PURPOSE
+      // document.getElementById("output").innerHTML = `${json}`; // FOR DEBUG PURPOSE
       // console.log(json); // FOR DEBUG PURPOSE
       var obj = JSON.parse(json);
       if (obj["status"] == "ZERO_RESULTS") {
@@ -87,4 +97,21 @@ function disableLocationBox(checkbox) {
 
 function enableLocationBox() {
   document.getElementById("location").disabled = false;
+}
+
+
+function do_ajax(jsonFormData) {
+  var req = new XMLHttpRequest();
+  var output = document.getElementById('output');
+  req.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+      output.innerHTML = this.responseText;
+    } else {
+      output.innerHTML = "hi thehihidfidhs ..."; // FOR DEBUG PURPOSE
+    }
+  }
+
+  req.open('GET', '/form', true);
+  req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+  req.send(jsonFormData);
 }

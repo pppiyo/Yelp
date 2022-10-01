@@ -6,14 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
-    <link rel="stylesheet" href="app.css">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='app.css') }}" /> -->
-    <script src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/app.css" />
+    <script src="static/js/app.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
 
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
 
     <!-- <script src="//maps.googleapis.com/maps/api/js?key=mapAIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ"></script> -->
     <!-- <script src="//maps.googleapis.com/s/api/js?key=process.env.GOOGLE_MAPS_API_KEY"></script> -->
@@ -23,22 +20,6 @@
         process.env.GOOGLE_MAPS_API_KEY =
             "AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ";
     </script>
-
-    <!-- <script>
-        function extractAddress() {
-
-            const form = document.getElementById('form');
-            const formData = new FormData(form);
-    
-            var address = document.getElementById("location").value;
-    
-            for (const [key, value] of formData) {
-                document.write(`${key}: ${value}\n`);
-            }
-
-        }
-    </script>     -->
-    <!-- playground-hide-end -->
 
 </head>
 
@@ -97,12 +78,19 @@
         </form>
     </div>
 
-    <div id="output"></div>
+    <p>
+        <div id="output"></div>
+    </p>
+
+    <p>
+        <div id="returned"></div>
+    </p>
 
 
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ&libraries=places"> -->
 
     </script>
+
 
 
 </body>
