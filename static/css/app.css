@@ -1,10 +1,7 @@
 body {
     color: #4f6fad;
     font-family: 'Open Sans', sans-serif;
-    font-stretch: 200%;
-    /* font-stretch: ultra-expanded; */
-    /* transform: scale(2, 1); */
-        /* W3C */
+    font-stretch: ultra-expanded;
 }
 
 h1 {
@@ -13,7 +10,7 @@ h1 {
 
 #welcome-card {
     width: 500px;
-    height: 470px;
+    height: 480px;
     /* height: 450px; */
     margin: 20px auto;
     box-shadow: 0px 0px 5px 2px grey;
@@ -21,7 +18,7 @@ h1 {
 
 #keyword,
 #location {
-    width: 424px;
+    width: 422px;
 }
 
 #distance {
@@ -51,39 +48,49 @@ h1 {
 }
 
 .row {
-    width: 500px;
     margin-top: 10px;
 }
 
-#row1 #row3 {
-    display: block;
-}
-
-#row2,
 #row4 {
     display: flex;
-    flex-wrap: wrap;
 }
 
-/* .col-0 {
-    flex: 0%;
-    margin-right: 100px;
+#row2 {
+    columns: 2;
 }
 
-.col-50 {
-    flex: 50%;
-} */
+#category {
+    width: 212px;
+}
+
+#column1 {
+    position: relative;
+    width: 50%;
+    align-self: stretch;
+}
+
+#column2 {
+    position: relative;
+    width: 50%;
+    text-align:start;
+} 
 
 
 form {
-    padding: 0 30px 20px 30px;
+    padding: 5px 30px 20px 30px;
+}
+
+hr {
+    height: 1px;
+    background-color:#4f6fad;
+    border: none;
 }
 
 button {
     display: inline-block;
     color: white;
     border: none;
-    padding: 15px 28px;
+    padding: 12px 23px;
     text-transform: uppercase;
     font-weight: lighter;
     margin-top: 1rem;
@@ -117,4 +124,8 @@ select {
 label {
     display: block;
     padding: 0.25rem 0;
+}
+
+p {
+    margin-top: 20px;
 }

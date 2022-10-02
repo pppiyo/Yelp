@@ -1,11 +1,22 @@
 var lng, lat, formData;
 
-window.addEventListener('submit', event => {
-  submitForm();
+window.addEventListener('load', event => {
+  $("#submit-button").click(function () {
+    if (!$("#keyword")[0].checkValidity())
+      $("#keyword")[0].reportValidity()
+    else if (!$("#category")[0].checkValidity())
+      $("#category")[0].reportValidity()
+    else if (!$("#location")[0].checkValidity())
+      $("#location")[0].reportValidity()
+    else
+      submitForm();
+  });
 });
+
 
 function submitForm() {
   event.preventDefault();  // FOR DEBUG PURPOSE
+
   
   formData = new FormData(form); // formData global variable
   // formData.json()
