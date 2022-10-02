@@ -7,38 +7,29 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
     <link rel="stylesheet" type="text/css" href="/static/css/app.css" />
-    <script src="static/js/app.js"></script>
+    <script src="/static/js/app.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
-
-
-    <!-- <script src="//maps.googleapis.com/maps/api/js?key=mapAIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ"></script> -->
-    <!-- <script src="//maps.googleapis.com/s/api/js?key=process.env.GOOGLE_MAPS_API_KEY"></script> -->
-    <!-- playground-hide -->
-    <script>
-        const process = { env: {} };
-        process.env.GOOGLE_MAPS_API_KEY =
-            "AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ";
-    </script>
 
 </head>
 
 <body>
     <div id="welcome-card">
-        <div id="welcome-message">
-            <div class="text-content">
-                <h1>Buisiness Search</h1>
-                <p>Fill out the form to get businesses near you!</p>
-            </div>
+        <div id="banner">
+
         </div>
         
         <!-- <form action="http://amylee-csci571-220906.wl.r.appspot.com" method="get" onsubmit="getAddress()"> -->
-        <form action="" method="get" id="form">
-        <!-- <form action="#" method="get" onsubmit="getAddress()"> -->
+        <form action="submitForm()" method="GET" id="form">
+            <div class="title-message" id="title-message">
+                <h1>Buisiness Search</h1>
+                <p>Fill out the form to get businesses near you!</p>
+            </div>
+
             <div class="row" id="row1">
                 <label for="keyword">Keyword<span class="required">*</span></label>
-                <input type="text" id="keyword" name="keyword">
-                <!-- <input type="text" id="keyword" name="keyword" required> -->
+                <!-- <input type="text" id="keyword" name="keyword"> // FOR DEBUG PURPOSE-->
+                <input type="text" id="keyword" name="keyword" required />
             </div>
 
             <div class="row" id="row2">
@@ -50,7 +41,7 @@
                 <div class="col-50">
                     <label for="category">Category <span class="required">*</span></label>
                     <select name="category" id="category">
-                    <!-- <select name="category" id="category" required> -->
+                    <!-- <select name="category" id="category" required /> // FOR DEBUG PURPOSE-->
                         <option value="default">Default</option>
                         <option value="arts-entertainment">Arts & Entertainment</option>
                         <option value="health-medical">Health & Medical</option>
@@ -62,8 +53,8 @@
     
             <div class="row" id="row3">
                 <label for="location">Location <span class="required">*</span></label>
-                <input type="text" id="location" name="location">
-                <!-- <input type="text" id="location" name="location" required> -->
+                <!-- <input type="text" id="location" name="location"> // FOR DEBUG PURPOSE --> 
+                <input type="text" id="location" name="location" required />
             </div>
 
             <hr>
@@ -73,7 +64,7 @@
                 <input type="checkbox" id="detect-location" onclick="disableLocationBox(this)">
             </div>
 
-            <button type="submit" id="submit-button" onclick="submitForm()">submit</button>
+            <button type="submit" id="submit-button">submit</button>
             <button type="reset" id="clear-button" onclick="enableLocationBox()">clear</button>
         </form>
     </div>
@@ -86,10 +77,6 @@
         <div id="returned"></div>
     </p>
 
-
-    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ&libraries=places"> -->
-
-    </script>
 
 
 

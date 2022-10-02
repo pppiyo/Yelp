@@ -7,6 +7,10 @@ from werkzeug.datastructures import ImmutableMultiDict
 app = Flask(__name__)
 
 
+# @app.route('/<path:path>')
+# def homepage(path):
+#     return app.send_static_file(path)
+
 @app.route('/')
 def homepage():
     return app.send_static_file("index.html")

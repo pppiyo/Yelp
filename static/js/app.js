@@ -1,5 +1,9 @@
 var lng, lat, formData;
 
+window.addEventListener('submit', event => {
+  submitForm();
+});
+
 function submitForm() {
   event.preventDefault();  // FOR DEBUG PURPOSE
   
@@ -27,7 +31,7 @@ function submitForm() {
 
     if (str == '') {
 
-      alert("enter something");
+      // alert("enter something");
 
     } else {
 

@@ -16,6 +16,10 @@ h1 {
     box-shadow: 0px 0px 5px 2px grey;
 }
 
+#title-message {
+    color: white;
+}
+
 #keyword, #location {
     width: 424px;
 }
@@ -25,8 +29,8 @@ h1 {
     margin-right: 24px;
 }
 
-#welcome-message {
-    color: white;
+#banner {
+    /* color: white; */
     height: 110px; 
     width: 500px; 
     background-image: url('https://csci571.com/hw/hw6/images/banner.jpeg');
@@ -34,6 +38,8 @@ h1 {
     background-size: cover;
     resize: both;
     background-position-y: bottom;
+    position: absolute;
+    top: -(x)px;
 }
 
 .required {
