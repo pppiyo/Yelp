@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div id="welcome-card">
+    <section id="welcome-card">
         <div class="banner">
             <div id="banner-text">
                 <h2>Buisiness Search</h2>
@@ -39,7 +39,7 @@
                     <label for="category">Category <span class="required">*</span></label>
                     <!-- <select name="category" id="category"> -->
                     <select name="category" id="category" required />
-                        <option value="default">Default</option>
+                        <option value="default" selected>Default</option>
                         <option value="arts-entertainment">Arts & Entertainment</option>
                         <option value="health-medical">Health & Medical</option>
                         <option value="hotels-travel">Hotels & Travel</option>
@@ -62,18 +62,18 @@
                 <input type="checkbox" id="detect-location" onclick="disableLocationBox(this)">
             </div>
 
-            <button type="button" id="submit-button">submit</button>
-            <button type="reset" id="clear-button" onclick="enableLocationBox()">clear</button>
+            <button type="button" id="submit">submit</button>
+            <button type="button" id="clear" onclick="enableLocationBox()">clear</button>
         </form>
-    </div>
+    </section>
 
-    <p>
-        <div id="output"></div>
-    </p>
+    <section>
+        <div id="table"></div>
+    </section>
 
-    <p>
-        <div id="returned"></div>
-    </p>
+    <section>
+        <div id="details"></div>
+    </section>
 
 
 </body>
