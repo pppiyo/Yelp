@@ -1,7 +1,13 @@
 var lng, lat, formData;
 
 window.addEventListener('load', event => {
+
   $("#submit").click(function () {
+    if (document.getElementById('searchResults').innerHTML != ``) {
+      document.getElementById("searchResults").innerHTML = ``;
+      document.getElementById("details").innerHTML = ``;
+    }
+    
     if (!$("#keyword")[0].checkValidity())
       $("#keyword")[0].reportValidity()
     else if (!$("#category")[0].checkValidity())
@@ -14,40 +20,10 @@ window.addEventListener('load', event => {
 
   $("#clear").click(function () {
     document.getElementById("form").reset();
-    // var a = document.getElementById("table");
-    // if (a) {
-    //   a.remove();
-    // }
-    // var b = document.getElementById("details");
-    // if (b) {
-    //   b.remove();
-    // }
-
-    // let nodelist = document.body.childNodes;
-    // console.log(nodelist.length);
-
+    document.getElementById("searchResults").innerHTML = ``;
     document.getElementById("details").innerHTML = ``;
-    document.getElementById("table").innerHTML = ``;
-    // document.getElementById("details").innerHTML = ``;
-    // removeChildren(document.getElementsByTagName("body"));
   })
-
-
 });
-
-// function removeChildren(parent) {
-
-//   console.log(kids);
-//   var kids = parent.childNodes; // Get the list of children 
-//   console.log(kids);
-  // var numkids = kids.childElementCount; // Figure out how many children there are 
-  // console.log(numkids);
-  // for (var i = 1; i <= numkids; i++) { // Loop backward through the children 
-    // parent.removeChild(kids[i]); // Remove a child 
-  // }
-  
-// }
-
 
 function submitForm() {
   event.preventDefault();  // FOR DEBUG PURPOSE
@@ -58,38 +34,27 @@ function submitForm() {
   var object = {};
   formData.forEach((value, key) => object[key] = value);
   var jsonFormData = JSON.stringify(object);
-
-  // document.getElementById("table").innerHTML = `${jsonFormData}`;
+  // document.getElementById("searchResults").innerHTML = `${jsonFormData}`;
   
   var checkBox = document.getElementById("detect-location");
-  
   if (checkBox.checked == true) {
-
     useIpinfo();
-
   } else {
-
     var location = formData.get('location');
-    var a = _.words(location, /[^, ]+/g);
-    var str = String(a);
+    var temp = _.words(location, /[^, ]+/g);
+    var str = String(temp);
     console.log(str);
-
     if (str == '') {
-
       // alert("enter something");
-
     } else {
-
       str = str.split(',').join("+");
-      // document.getElementById("table").innerHTML = `${str}`;
+      // document.getElementById("searchResults").innerHTML = `${str}`;
       useGeoCoding(str);
-
     }
 
   }
   
-  do_ajax(jsonFormData);
-
+  handleForm(jsonFormData);
 }
 
 
@@ -100,11 +65,9 @@ function useIpinfo() {
     (jsonResponse) => {
       let coords = jsonResponse.loc;// handle lng, lat
       console.log(coords); // FOR DEBUG PURPOSE
-      // console.log(jsonResponse); // FOR DEBUG PURPOSE
       let a = coords.split(',');
       lat = a[0];
       lng = a[1];
-      // alert(lat); // FOR DEBUG PURPOSE
     }
   )
 }
@@ -115,7 +78,7 @@ function useGeoCoding(location) {
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var json = xhr.response;
-      // document.getElementById("table").innerHTML = `${json}`; // FOR DEBUG PURPOSE
+      // document.getElementById("searchResults").innerHTML = `${json}`; // FOR DEBUG PURPOSE
       // console.log(json); // FOR DEBUG PURPOSE
       var obj = JSON.parse(json);
       if (obj["status"] == "ZERO_RESULTS") {
@@ -123,7 +86,6 @@ function useGeoCoding(location) {
       } else {
         lat = obj["results"]["0"]["geometry"]["location"]["lat"];
         lng = obj["results"]["0"]["geometry"]["location"]["lng"];
-        // alert(lat); // FOR DEBUG PURPOSE
       }
     }
   };
@@ -149,26 +111,127 @@ function enableLocationBox() {
 }
 
 
-function do_ajax(jsonFormData) {
+function handleForm(jsonFormData) {
   var req = new XMLHttpRequest();
-  var table = document.getElementById('table');
+  var searchResults = document.getElementById('searchResults');
   req.open('GET', '/form', true);
   req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
   req.send(jsonFormData);  
   req.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      // var tableSection = document.createElement('section');
-      // tableSection.setAttribute('id', 'table');
-      // tableSection.innerHTML = `${this.responseText}`;
-      // document.body.appendChild(tableSection);
-
-      table.innerHTML = this.responseText;
-    } else {
-      // table.innerHTML = "hi thehihidfidhs ..."; // FOR DEBUG PURPOSE
+      // searchResults.innerHTML = this.response;
+      const jsonResponse = JSON.parse(this.responseText);
+      console.log(jsonResponse);
+      // alert(jsonResponse['businesses'][0]['name']);
+      generateTable(jsonResponse);
     }
   }
-
-  req.open('GET', '/form', true);
-  req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-  req.send(jsonFormData);
 }
+
+
+function generateTable(json) {
+  var tableArea = document.getElementById('searchResults');
+  rows = json['businesses'].length;
+  tableArea.innerHTML = generateHeader();
+  for (var i = 1; i <= rows; i++) {
+    let image = 'img';
+    // let image = json['businesses'][i-1]['image_url']; 
+    let name = json['businesses'][i-1]['name'];
+    let rating = json['businesses'][i-1]['rating'];
+    let distance = json['businesses'][i - 1]['distance'];
+    tableArea.innerHTML += addToRow(i, image, name, rating, distance);
+  }
+}
+
+//Generate Header
+function generateHeader() {
+  var html = "<table id='table' class='results' style=''>";
+  html += "<thead><tr class=''>";
+  html += "<th class='tb-heading ui-state-default'>" + 'No.' + "</th>";
+  html += "<th class='tb-heading ui-state-default'>" + 'Image' + "</th>";
+  html += "<th class='tb-heading ui-state-default'>" + 'Business Name' + "</th>";
+  html += "<th class='tb-heading ui-state-default'>" + 'Rating' + "</th>";
+  html += "<th class='tb-heading ui-state-default'>" + 'Distance(miles)' + "</th>";
+  html += "</tr></thead></table>";
+  return html;
+}
+
+//Add new row
+function addToRow(index, image, name, rating, distance) {
+  var html = "<tr class='trObj'>";
+  html += "<td>" + index + "</td>";
+  html += "<td>" + image + "</td>";
+  html += "<td>" + name + "</td>";
+  html += "<td>" + rating + "</td>";
+  html += "<td>" + distance + "</td>";
+  html += "</tr>";
+  return html;
+}
+
+// function populateTable(table, rows, cols, content) {
+//   var is_func = (typeof content === 'function');
+//   if (!table) table = document.createElement('table');
+//   var row = document.createElement('tr');
+//   row.appendChild(document.createElement('td'));
+  
+//   for (var i = 0; i < rows; ++i) {
+//     var row = document.createElement('tr');
+//     for (var j = 0; j < cols; ++j) {
+//       row.appendChild(document.createElement('td'));
+//       var text = !is_func ? (content + '') : content(table, i, j);
+//       row.cells[j].appendChild(document.createTextNode(text));
+//     }
+//     table.appendChild(row);
+//   }
+//   return table;
+// }
+  
+  // alert(jsonResponse['businesses'][0]['name']);
+  
+  
+  // table_content += "<html><head><title>XML Parse Result</title></head><body></body>";
+  // ELEMENT_NODE = 1;    // MS parser doesn't define Node.ELEMENT_NODE
+  // root = xmlDoc.DocumentElement;
+  // html_text = "<html><head><title>XML Parse Result</title></head><body>";
+  // html_text += "<table border='1'>";
+  // caption = xmlDoc.getElementsByTagName("title").item(0).firstChild.nodeValue;
+  // html_text += "<caption align='left'><h1>" + caption + "</h1></caption>";
+  // planes = xmlDoc.getElementsByTagName("aircraft");
+  // planeNodeList = planes.item(0).childNodes;
+  // html_text += "<tbody>";
+  // html_text += "<tr>";
+  // x = 0; y = 0;
+  // // output the headers
+  // for (i = 0; i < planeNodeList.length; i++) {
+  //   if (planeNodeList.item(i).nodeType == ELEMENT_NODE) {
+  //     header = planeNodeList.item(i).nodeName;
+  //     if (header == "Airbus") { header = "Family"; x = 120; y = 55; }
+  //     if (header == "Boeing") { header = "Family"; x = 100; y = 67; }
+  //     if (header == "seats")
+  //       header = "Seats";
+  //     if (header == "Wingspan") header = "Wing Span";
+  //     if (header == "height") header = "Height";
+  //     html_text += "<th>" + header + "</th>";
+  //   }
+  // }
+  // html_text += "</tr>";
+  // // output out the values
+  // for (i = 0; i < planes.length; i++) //do for all planes
+  // {
+  //   planeNodeList = planes.item(i).childNodes; //get properties of a plane
+  //   html_text += "<tr>";      //start a new row of the output table
+  //   for (j = 0; j < planeNodeList.length; j++) {
+  //     if (planeNodeList.item(j).nodeType == ELEMENT_NODE) {
+  //       if (planeNodeList.item(j).nodeName == "Image") {//handle images separately
+  //         html_text += "<td><img src='" + planeNodeList.item(j).firstChild.nodeValue + "' width='" + x + "' height='" + y + "'></td>";
+  //       }
+  //       else {
+  //         html_text += "<td>" + planeNodeList.item(j).firstChild.nodeValue + "</td>";
+  //       }
+  //     }
+  //   }
+  //   html_text += "</tr>";
+  // }
+  // html_text += "</tbody>"; html_text += "</table>";
+  // html_text += "</body></html>";
+// }
