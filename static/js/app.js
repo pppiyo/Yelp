@@ -87,8 +87,9 @@ function submitForm() {
     }
 
   }
-
+  
   do_ajax(jsonFormData);
+
 }
 
 
@@ -166,4 +167,8 @@ function do_ajax(jsonFormData) {
       // table.innerHTML = "hi thehihidfidhs ..."; // FOR DEBUG PURPOSE
     }
   }
+
+  req.open('GET', '/form', true);
+  req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+  req.send(jsonFormData);
 }
