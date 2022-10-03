@@ -14,8 +14,21 @@ window.addEventListener('load', event => {
 
   $("#clear").click(function () {
     document.getElementById("form").reset();
-    document.getElementById("table").innerHTML = ``;
+    // var a = document.getElementById("table");
+    // if (a) {
+    //   a.remove();
+    // }
+    // var b = document.getElementById("details");
+    // if (b) {
+    //   b.remove();
+    // }
+
+    // let nodelist = document.body.childNodes;
+    // console.log(nodelist.length);
+
     document.getElementById("details").innerHTML = ``;
+    document.getElementById("table").innerHTML = ``;
+    // document.getElementById("details").innerHTML = ``;
     // removeChildren(document.getElementsByTagName("body"));
   })
 
@@ -138,19 +151,19 @@ function enableLocationBox() {
 function do_ajax(jsonFormData) {
   var req = new XMLHttpRequest();
   var table = document.getElementById('table');
+  req.open('GET', '/form', true);
+  req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+  req.send(jsonFormData);  
   req.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       // var tableSection = document.createElement('section');
-      // tableSection.innerHTML = `<div id="table">${this.responseText}</div>`;
+      // tableSection.setAttribute('id', 'table');
+      // tableSection.innerHTML = `${this.responseText}`;
       // document.body.appendChild(tableSection);
 
       table.innerHTML = this.responseText;
     } else {
-      table.innerHTML = "hi thehihidfidhs ..."; // FOR DEBUG PURPOSE
+      // table.innerHTML = "hi thehihidfidhs ..."; // FOR DEBUG PURPOSE
     }
   }
-
-  req.open('GET', '/form', true);
-  req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-  req.send(jsonFormData);
 }
