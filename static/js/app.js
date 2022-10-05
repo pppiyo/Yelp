@@ -29,6 +29,19 @@ function renameKey(obj, oldKey, newKey) {
 }
 
 
+function ajax(location) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            resolve(this.responseText);
+        };
+        xhr.onerror = reject;
+        xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
+        xhr.send();
+    });
+}
+
+
 function submitForm() {
     event.preventDefault();    // FOR DEBUG PURPOSE
 
@@ -50,8 +63,27 @@ function submitForm() {
         } else {
             str = str.split(',').join("+");
             // document.getElementById("searchResults").innerHTML = `${str}`;
-            var coordinates = useGeoCoding(str);
-            alert(coordinates);
+                ajax(str)
+                .then(function (obj) {
+                    console.log(obj); // Code depending on result
+
+                    // if (obj["status"] == "ZERO_RESULTS") {
+                    //     alert("No results");
+                    // } else {
+                    //     var lat = obj["results"]["0"]["geometry"]["location"]["lat"];
+                    //     var lng = obj["results"]["0"]["geometry"]["location"]["lng"];
+                    //     console.log(lat); // FOR DEBUG PURPOSE
+                    //     return { "latitude": lat, "longitude": lng }
+                    // }
+                })
+                .catch(function () {
+                    console.log("An error occurred"); // Code depending on result
+                    // An error occurred
+                });  
+
+        //   console.log(results);
+            // var coordinates = useGeoCoding(str);
+            // alert(coordinates);
         }
     }
 
@@ -73,7 +105,9 @@ function submitForm() {
     document.getElementById("searchResults").innerHTML = `${cookedFormJson}`; // FOR DEBUG PURPOSE
 
     // handleForm(jsonFormData);
+
 }
+
 
 
 function useIpinfo() {
@@ -100,49 +134,49 @@ function useIpinfo() {
     });
 }
 
+    
+// function useGeoCoding(location) {
+//     var xhr = new XMLHttpRequest();
 
-function useGeoCoding(location) {
-    var xhr = new XMLHttpRequest();
+//     xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
 
-    xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
+//     xhr.send();
+//     xhr.onreadystatechange = function () {
+//         var lat, lng;
 
-    xhr.send();
-    xhr.onreadystatechange = function () {
-        var lat, lng;
+//         if (this.readyState == 4 && this.status == 200) {
+//             var json = xhr.response;
+//             // document.getElementById("searchResults").innerHTML = `${json}`; // FOR DEBUG PURPOSE
+//             var obj = JSON.parse(json);
+//             // console.log(obj); // FOR DEBUG PURPOSE
 
-        if (this.readyState == 4 && this.status == 200) {
-            var json = xhr.response;
-            // document.getElementById("searchResults").innerHTML = `${json}`; // FOR DEBUG PURPOSE
-            var obj = JSON.parse(json);
-            // console.log(obj); // FOR DEBUG PURPOSE
+//             if (callback) callback(obj);
 
-            if (callback) callback(obj);
+//             // if (obj["status"] == "ZERO_RESULTS") {
+//             //     alert("No results");
+//             // } else {
+//             //     lat = obj["results"]["0"]["geometry"]["location"]["lat"];
+//             //     lng = obj["results"]["0"]["geometry"]["location"]["lng"];
+//             //     console.log(lat); // FOR DEBUG PURPOSE
+//             // }
+//         }
+//         // return {
+//         //     "latitude": lat,
+//         //     "longitude": lng
+//         // }
+//     };
 
-            // if (obj["status"] == "ZERO_RESULTS") {
-            //     alert("No results");
-            // } else {
-            //     lat = obj["results"]["0"]["geometry"]["location"]["lat"];
-            //     lng = obj["results"]["0"]["geometry"]["location"]["lng"];
-            //     console.log(lat); // FOR DEBUG PURPOSE
-            // }
-        }
-        // return {
-        //     "latitude": lat,
-        //     "longitude": lng
-        // }
-    };
+//     // var returnJson = {
+//     //     "latitude": lat,
+//     //     "longitude": lng
+//     // }
+//     // console.log(returnJson); // FOR DEBUG PURPOSE
+//     // return returnJson;
 
-    // var returnJson = {
-    //     "latitude": lat,
-    //     "longitude": lng
-    // }
-    // console.log(returnJson); // FOR DEBUG PURPOSE
-    // return returnJson;
+//     // console.log(xhr.onreadystatechange);
+//     // console.log(returnJson); // FOR DEBUG PURPOSE
 
-    // console.log(xhr.onreadystatechange);
-    // console.log(returnJson); // FOR DEBUG PURPOSE
-
-}
+// }
 
 
 function disableLocationBox(checkbox) {
