@@ -27,7 +27,6 @@ function submitForm() {
     event.preventDefault();    // FOR DEBUG PURPOSE
 
     var formData = new FormData(form); // returns a FormData prototype
-    // console.log(formData); // FOR DEBUG PURPOSE
 
     var object = {};
     formData.forEach((value, key) => object[key] = value);
@@ -35,45 +34,38 @@ function submitForm() {
     const tempJson = JSON.parse(rawFormJson);
     renameKey(tempJson, 'keyword', 'term');
     const strDistance = tempJson['distance']
-    const radius = parseInt(strDistance) * 1609.34;
+    const radius = Math.round(parseInt(strDistance) * 1609.344);
     tempJson['radius'] = radius;
     
     var checkBox = document.getElementById("detect-location");
 
     if (checkBox.checked == true) {
         useIpinfo(tempJson);
-    }
-    // } else {
-    //     var location = formData.get('location');
-    //     var temp = _.words(location, /[^, ]+/g);
-    //     var str = String(temp);
-    //     // console.log(str);    // FOR DEBUG PURPOSE
-    //     if (str == '') {
-    //         // alert("enter something");
-    //     } else {
-    //         str = str.split(',').join("+");
-    //         // document.getElementById("searchResults").innerHTML = `${str}`;
-    //         // console.log(results);
+    } else {
+        var location = formData.get('location');
+        var temp = _.words(location, /[^, ]+/g);
+        var str = String(temp);
+        if (str == '') {
+            alert('\nInvalid input:\n\nYou must either enter a location or click the auto-detect checkbox.');
+        } else {
+            str = str.split(',').join("+");
             
-    //         useGeoCoding(str, function acallback(json) {
-    //             var lat, lng;
-    //             // console.log(json);
-    //             if (json["status"] == "ZERO_RESULTS") {
-    //                 alert("No results");
-    //             } else {
-    //                 lat = json["results"]["0"]["geometry"]["location"]["lat"];
-    //                 lng = json["results"]["0"]["geometry"]["location"]["lng"];
+            useGeoCoding(str, function acallback(json) {
+                var lat, lng;
+                if (json["status"] == "ZERO_RESULTS") {
+                    document.getElementById('searchResults').innerHTML = `<div style="color:black; display:center;">No record has been found</div>`
+                } else {
+                    lat = json["results"]["0"]["geometry"]["location"]["lat"];
+                    lng = json["results"]["0"]["geometry"]["location"]["lng"];
                     
-    //                 tempJson['latitude'] = lat;
-    //                 console.log(tempJson); // FOR DEBUG PURPOSE
-    //                 tempJson['longitude'] = lng;
-    //                 const cookedFormJson = JSON.stringify(tempJson);
-    //                 // document.getElementById("searchResults").innerHTML = `${cookedFormJson}`; // FOR DEBUG PURPOSE
-    //                 handleForm(tempJson);
-    //             }
-    //         });
-    //     }
-    // }
+                    tempJson['latitude'] = lat;
+                    tempJson['longitude'] = lng;
+                    var query = $.param(tempJson);
+                    handleForm(query);
+                }
+            });
+        }
+    }
 }
 
 function useIpinfo(jsonFormData) {
@@ -88,35 +80,31 @@ function useIpinfo(jsonFormData) {
             jsonFormData["longitude"] = lng;
             jsonFormData['latitude'] = lat;
 
-            // var query = $.param(jsonFormData);
-            // console.log(query);
-            // handleForm(query); // send by query
-            handleForm(jsonFormData);
+            var query = $.param(jsonFormData);
+            handleForm(query); // send by query
         }
     )}
 
 
-// function handleForm(query) {
-function handleForm(jsonFormData) {
+function handleForm(query) {
     var req = new XMLHttpRequest();
     req.open('GET', 'http://127.0.0.1:5000/cook', true);
-    // req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
-    req.setRequestHeader('content-type', 'application/json;charset=UTF-8');
-    // req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    // req.send();
+    req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
+    req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    req.send();
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             searchResults.innerHTML = this.response;
             const jsonResponse = JSON.parse(this.responseText);
-            console.log(jsonResponse);    // FOR DEBUG PURPOSE
-            // alert(jsonResponse['businesses'][0]['name']);
-            // generateTable(jsonResponse);
-            // if (callback) callback(jsonResponse);
+            // console.log(jsonResponse);    // FOR DEBUG PURPOSE
+            if (jsonResponse['businesses'].length == 0) {
+                document.getElementById('searchResults').innerHTML = `<div style="color:black;">No record has been found</div>`
+
+            } else {
+                generateTable(jsonResponse);
+            }
         }
     }
-    var data = JSON.stringify(jsonFormData);
-    req.send(data);
-
 }
 
 
@@ -125,33 +113,35 @@ function generateTable(json) {
     rows = json['businesses'].length;
     tableArea.innerHTML = generateHeader();
     for (var i = 1; i <= rows; i++) {
-        let image = 'img';
-        // let image = json['businesses'][i-1]['image_url'];
+        let image = json['businesses'][i-1]['image_url'];
         let name = json['businesses'][i - 1]['name'];
         let rating = json['businesses'][i - 1]['rating'];
-        let distance = json['businesses'][i - 1]['distance'];
-        tableArea.innerHTML += addToRow(i, image, name, rating, distance);
+        let distanceMeter = json['businesses'][i - 1]['distance'];
+        let distanceMile = (distanceMeter / 1609.344).toPrecision(2);
+        
+        tableArea.innerHTML += addToRow(i, image, name, rating, distanceMile);
     }
 }
 
 //Generate Header
 function generateHeader() {
-    var html = "<table id='table' class='results' style=''>";
+    // var html = "<table id='table' class='results' style='height:100px;'>";
+    var html = "";
     html += "<thead><tr class=''>";
-    html += "<th class='tb-heading ui-state-default'>" + 'No.' + "</th>";
-    html += "<th class='tb-heading ui-state-default'>" + 'Image' + "</th>";
-    html += "<th class='tb-heading ui-state-default'>" + 'Business Name' + "</th>";
-    html += "<th class='tb-heading ui-state-default'>" + 'Rating' + "</th>";
-    html += "<th class='tb-heading ui-state-default'>" + 'Distance(miles)' + "</th>";
+    html += "<th class='tb-heading' style='height:50px; width:50px; color:black'>" + 'No.' + "</th>";
+    html += "<th class='tb-heading' style='height:50px; width:150px; color:black'>" + 'Image' + "</th>";
+    html += "<th class='tb-heading' style='height:50px; width:600px; color:black'>" + 'Business Name' + "</th>";
+    html += "<th class='tb-heading' style='height:50px; width:200px; color:black'>" + 'Rating' + "</th>";
+    html += "<th class='tb-heading' style='height:50px; width:200px; color:black'>" + 'Distance(miles)' + "</th>";
     html += "</tr></thead></table>";
     return html;
 }
 
 //Add new row
 function addToRow(index, image, name, rating, distance) {
-    var html = "<tr class='trObj'>";
+    var html = "<tr class='results'>";
     html += "<td>" + index + "</td>";
-    html += "<td>" + image + "</td>";
+    html += "<td><img src='" + image + "' width='200px' height='100px'></img></td>";
     html += "<td>" + name + "</td>";
     html += "<td>" + rating + "</td>";
     html += "<td>" + distance + "</td>";
@@ -159,6 +149,24 @@ function addToRow(index, image, name, rating, distance) {
     return html;
 }
 
+
+function enableLocationBox() {
+    document.getElementById("location").disabled = false;
+}
+
+function renameKey(obj, oldKey, newKey) {
+    obj[newKey] = obj[oldKey];
+    delete obj[oldKey];
+}
+
+function disableLocationBox(checkbox) {
+    var loc = document.getElementById("location");
+    loc.value = ``;
+    loc.disabled = checkbox.checked ? true : false;
+    if (!loc.disabled) {
+        loc.focus();
+    }
+}
 
 function useGeoCoding(location, callback) {
     var xhr = new XMLHttpRequest();
@@ -236,23 +244,3 @@ function useGeoCoding(location, callback) {
 // }
 // html_text += "</tbody>"; html_text += "</table>";
 // html_text += "</body></html>";
-
-
-function disableLocationBox(checkbox) {
-    var loc = document.getElementById("location");
-    loc.value = ``;
-    loc.disabled = checkbox.checked ? true : false;
-    if (!loc.disabled) {
-        loc.focus();
-    }
-}
-
-
-function enableLocationBox() {
-    document.getElementById("location").disabled = false;
-}
-
-function renameKey(obj, oldKey, newKey) {
-    obj[newKey] = obj[oldKey];
-    delete obj[oldKey];
-}

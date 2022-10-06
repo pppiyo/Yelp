@@ -132,14 +132,15 @@ p {
 
 table {
     /* table-layout:auto; */
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid;
     text-align: center;
+    width: 700px;
+    /* width: 100%; */
+    margin: auto;
+    border-collapse: collapse;
+    border: 1px solid silver;
     padding: 8px;
 
-        table-layout: fixed;
-        /* width: 200px; */
+    table-layout: auto;
 }
 
 th {
@@ -149,12 +150,12 @@ th {
 
 th,
 td {
-    border: 1px solid black;
+    border: 1px solid silver;
     width: 100px;
     overflow: hidden;
 }
 
 td {
-    word-wrap: break-word;
     max-width: 50px;
+    color: black;
 }
