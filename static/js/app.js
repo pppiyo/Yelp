@@ -88,19 +88,22 @@ function useIpinfo(jsonFormData) {
             jsonFormData["longitude"] = lng;
             jsonFormData['latitude'] = lat;
 
-            var query = $.param(jsonFormData);
-            console.log(query);
-            handleForm(query);
+            // var query = $.param(jsonFormData);
+            // console.log(query);
+            // handleForm(query); // send by query
+            handleForm(jsonFormData);
         }
     )}
 
 
-function handleForm(query) {
+// function handleForm(query) {
+function handleForm(jsonFormData) {
     var req = new XMLHttpRequest();
-    req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
-    // req.setRequestHeader('content-type', 'application/json;charset=UTF-8');
-    req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    req.send();
+    req.open('GET', 'http://127.0.0.1:5000/cook', true);
+    // req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
+    req.setRequestHeader('content-type', 'application/json;charset=UTF-8');
+    // req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    // req.send();
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             searchResults.innerHTML = this.response;
@@ -111,6 +114,9 @@ function handleForm(query) {
             // if (callback) callback(jsonResponse);
         }
     }
+    var data = JSON.stringify(jsonFormData);
+    req.send(data);
+
 }
 
 

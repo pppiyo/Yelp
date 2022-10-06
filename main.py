@@ -3,6 +3,7 @@
 import json
 import urllib
 from crypt import methods
+from xml.dom.minidom import TypeInfo
 from flask import Flask, request, send_from_directory
 import requests
 # from werkzeug.datastructures import ImmutableMultiDict
@@ -19,9 +20,18 @@ def homepage():
 
 @app.get('/cook')
 def cook_form_data():
+
+    print(request.args)
+    # decode(request.data)
+    # parsed_json = json.loads(request.data)   
+    # print(json.dumps(parsed_json, indent=4, sort_keys=True))
+
+
     # query = request
     # query = request.args[8:]
     # print(query)
+
+    # print(request.get_data)
 
     # json.dumps(urllib.parse(request))
 
