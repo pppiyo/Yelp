@@ -1,5 +1,7 @@
 # from os import sendfile
 
+import json
+import urllib
 from crypt import methods
 from flask import Flask, request, send_from_directory
 import requests
@@ -17,8 +19,15 @@ def homepage():
 
 @app.get('/cook')
 def cook_form_data():
-    term = request.args.get('keyword', '')
-    print(term)
+    # query = request
+    # query = request.args[8:]
+    # print(query)
+
+    # json.dumps(urllib.parse(request))
+
+    # print(query + "------")
+    # term = request.args.get('keyword', '')
+    # print(term)
 
     # https://api.yelp.com/v3/businesses/search?term=[KEYWORD]&latitude=[LAT]&longitude=[LONG]&categories=[CAT]&radius=[RAD]
     # data = ImmutableMultiDict(request.args)

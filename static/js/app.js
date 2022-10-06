@@ -22,10 +22,6 @@ window.addEventListener('load', event => {
     })
 });
 
-function renameKey(obj, oldKey, newKey) {
-    obj[newKey] = obj[oldKey];
-    delete obj[oldKey];
-}
 
 function submitForm() {
     event.preventDefault();    // FOR DEBUG PURPOSE
@@ -43,13 +39,10 @@ function submitForm() {
     tempJson['radius'] = radius;
     
     var checkBox = document.getElementById("detect-location");
-    
-    console.log(rawFormJson); // FOR DEBUG PURPOSE
-    handleForm(rawFormJson);
 
-    // if (checkBox.checked == true) {
-    //     var coordinates = useIpinfo();
-    //     alert(coordinates);
+    if (checkBox.checked == true) {
+        useIpinfo(tempJson);
+    }
     // } else {
     //     var location = formData.get('location');
     //     var temp = _.words(location, /[^, ]+/g);
@@ -83,49 +76,41 @@ function submitForm() {
     // }
 }
 
-// function useIpinfo() {
-//     const p1 =
-//         fetch("https://ipinfo.io/json?token=f6e03259a7a9e5")
-//         .then(
-//             (response) => response.json()
-//         ).then(
-//             (jsonResponse) => {
-//                     "latitude": jsonResponse.loc.split(',')[0],
-//                     "longitude": jsonResponse.loc.split(',')[1],
-//                 }
-//             }
-//         ).then(
-//             ()
-//         )
-//     p1.then((value) => {
-//         return value;
-//         // expected output: 123
-//     });
-// }
+function useIpinfo(jsonFormData) {
+    fetch("https://ipinfo.io/json?token=f6e03259a7a9e5").then(
+        (response) => response.json()
+    ).then(
+        (jsonResponse) => {
+            let coords = jsonResponse.loc;
+            let a = coords.split(',');
+            var lat = a[0];
+            var lng = a[1];
+            jsonFormData["longitude"] = lng;
+            jsonFormData['latitude'] = lat;
+
+            var query = $.param(jsonFormData);
+            console.log(query);
+            handleForm(query);
+        }
+    )}
 
 
-
-
-function handleForm(jsonFormData, callback) {
+function handleForm(query) {
     var req = new XMLHttpRequest();
-    var searchResults = document.getElementById('searchResults'); // FOR DEBUG PURPOSES
-    searchResults.innerHTML = jsonFormData; // FOR DEBUG PURPOSES
-    req.open('GET', 'http://127.0.0.1:5000/cook?keyword=fd&distance=10&category=default&location=los+angeles', true);
-    // req.open('GET', '/cook', true);
-    req.setRequestHeader('content-type', 'application/json;charset=UTF-8');
-    // req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
-    console.log(jsonFormData);
-    req.send(jsonFormData);
-    // req.onreadystatechange = function () {
-    //     if (this.readyState == 4 && this.status == 200) {
-    //         // searchResults.innerHTML = this.response;
-    //         const jsonResponse = JSON.parse(this.responseText);
-    //         // console.log(jsonResponse);    // FOR DEBUG PURPOSE
-    //         alert(jsonResponse['businesses'][0]['name']);
-    //         // generateTable(jsonResponse);
-    //         if (callback) callback(jsonResponse);
-    //     }
-    // }
+    req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
+    // req.setRequestHeader('content-type', 'application/json;charset=UTF-8');
+    req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    req.send();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            searchResults.innerHTML = this.response;
+            const jsonResponse = JSON.parse(this.responseText);
+            console.log(jsonResponse);    // FOR DEBUG PURPOSE
+            // alert(jsonResponse['businesses'][0]['name']);
+            // generateTable(jsonResponse);
+            // if (callback) callback(jsonResponse);
+        }
+    }
 }
 
 
@@ -259,4 +244,9 @@ function disableLocationBox(checkbox) {
 
 function enableLocationBox() {
     document.getElementById("location").disabled = false;
+}
+
+function renameKey(obj, oldKey, newKey) {
+    obj[newKey] = obj[oldKey];
+    delete obj[oldKey];
 }
