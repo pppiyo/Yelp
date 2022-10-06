@@ -17,6 +17,9 @@ def homepage():
 
 @app.get('/cook')
 def cook_form_data():
+    term = request.args.get('keyword', '')
+    print(term)
+
     # https://api.yelp.com/v3/businesses/search?term=[KEYWORD]&latitude=[LAT]&longitude=[LONG]&categories=[CAT]&radius=[RAD]
     # data = ImmutableMultiDict(request.args)
     # print(data)
@@ -25,8 +28,8 @@ def cook_form_data():
 
     header = {'Authorization': 'Bearer eOCtSLcSjoo8DlufDEjkoF7Rjf9mHwrBRI_U6aPMluevSq_imUgoz13T-Au87od_4FmrsJ6iBChruHOxDXclMK5hbMixXZipfp1CuwPNdNDDC7NWypTros3P1Q4oY3Yx'}
 
-    term = request.get_json()
-    print(term)
+    # term = request.get_json()
+    # print(term)
 
     payload = {'term': 'sushi', 'latitude': '34.0294',
                  'longitude': '-118.2871', 'categories': 'all', 'radius': '40000'}

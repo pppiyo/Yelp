@@ -22,25 +22,10 @@ window.addEventListener('load', event => {
     })
 });
 
-
 function renameKey(obj, oldKey, newKey) {
     obj[newKey] = obj[oldKey];
     delete obj[oldKey];
 }
-
-
-// function ajax(location) {
-//     return new Promise(function (resolve, reject) {
-//         var xhr = new XMLHttpRequest();
-//         xhr.onload = function () {
-//             resolve(this.responseText);
-//         };
-//         xhr.onerror = reject;
-//         xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
-//         xhr.send();
-//     });
-// }
-
 
 function submitForm() {
     event.preventDefault();    // FOR DEBUG PURPOSE
@@ -48,169 +33,99 @@ function submitForm() {
     var formData = new FormData(form); // returns a FormData prototype
     // console.log(formData); // FOR DEBUG PURPOSE
 
-    var checkBox = document.getElementById("detect-location");
-
-    if (checkBox.checked == true) {
-        var coordinates = useIpinfo();
-        alert(coordinates);
-    } else {
-        var location = formData.get('location');
-        var temp = _.words(location, /[^, ]+/g);
-        var str = String(temp);
-        // console.log(str);    // FOR DEBUG PURPOSE
-        if (str == '') {
-            // alert("enter something");
-        } else {
-            str = str.split(',').join("+");
-            // document.getElementById("searchResults").innerHTML = `${str}`;
-            // console.log(results);
-            
-            useGeoCoding(str, acallback);
-            // var coordinates = useGeoCoding(str, acallback);
-            // alert(coordinates);
-
-        }
-    }
-
-    // alert(lng);
     var object = {};
     formData.forEach((value, key) => object[key] = value);
     var rawFormJson = JSON.stringify(object);
-    // console.log(rawFormJson); // FOR DEBUG PURPOSE
     const tempJson = JSON.parse(rawFormJson);
     renameKey(tempJson, 'keyword', 'term');
-
-    //     tempJson['latitude'] = lat;
-    // console.log(tempJson); // FOR DEBUG PURPOSE
-    //     tempJson['longitude'] = lng;
     const strDistance = tempJson['distance']
     const radius = parseInt(strDistance) * 1609.34;
     tempJson['radius'] = radius;
-    const cookedFormJson = JSON.stringify(tempJson);
-    document.getElementById("searchResults").innerHTML = `${cookedFormJson}`; // FOR DEBUG PURPOSE
-
-    // handleForm(jsonFormData);
-
-}
-
-
-
-function useIpinfo() {
-    const p1 =
-        fetch("https://ipinfo.io/json?token=f6e03259a7a9e5").then(
-            (response) => response.json()
-        ).then(
-            (jsonResponse) => {
-                let coords = jsonResponse.loc;// handle lng, lat
-                // console.log(coords); // FOR DEBUG PURPOSE
-                let a = coords.split(',');
-                var lat = a[0];
-                var lng = a[1];
-                var returnJson = {
-                    "latitude": lat,
-                    "longitude": lng
-                }
-                return returnJson;
-            }
-        ).resolve();
-    p1.then((value) => {
-        return value;
-        // expected output: 123
-    });
-}
-
     
-function useGeoCoding(location, callback) {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = function () {
-        var jsonObject = JSON.parse(this.responseText);
-        var coordinates = callback(jsonObject);
-        console.log(coordinates);
-    }
-    xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
-    xhr.send();
+    var checkBox = document.getElementById("detect-location");
+    
+    console.log(rawFormJson); // FOR DEBUG PURPOSE
+    handleForm(rawFormJson);
+
+    // if (checkBox.checked == true) {
+    //     var coordinates = useIpinfo();
+    //     alert(coordinates);
+    // } else {
+    //     var location = formData.get('location');
+    //     var temp = _.words(location, /[^, ]+/g);
+    //     var str = String(temp);
+    //     // console.log(str);    // FOR DEBUG PURPOSE
+    //     if (str == '') {
+    //         // alert("enter something");
+    //     } else {
+    //         str = str.split(',').join("+");
+    //         // document.getElementById("searchResults").innerHTML = `${str}`;
+    //         // console.log(results);
+            
+    //         useGeoCoding(str, function acallback(json) {
+    //             var lat, lng;
+    //             // console.log(json);
+    //             if (json["status"] == "ZERO_RESULTS") {
+    //                 alert("No results");
+    //             } else {
+    //                 lat = json["results"]["0"]["geometry"]["location"]["lat"];
+    //                 lng = json["results"]["0"]["geometry"]["location"]["lng"];
+                    
+    //                 tempJson['latitude'] = lat;
+    //                 console.log(tempJson); // FOR DEBUG PURPOSE
+    //                 tempJson['longitude'] = lng;
+    //                 const cookedFormJson = JSON.stringify(tempJson);
+    //                 // document.getElementById("searchResults").innerHTML = `${cookedFormJson}`; // FOR DEBUG PURPOSE
+    //                 handleForm(tempJson);
+    //             }
+    //         });
+    //     }
+    // }
 }
 
-
-
-function acallback(json) {
-    var lat, lng;
-    // console.log(json);
-    if (json["status"] == "ZERO_RESULTS") {
-        alert("No results");
-    } else {
-        lat = json["results"]["0"]["geometry"]["location"]["lat"];
-        lng = json["results"]["0"]["geometry"]["location"]["lng"];
-
-    }
-    var result = {
-        "latitude": lat,
-        "longitude": lng
-    }
-    console.log(result); // FOR DEBUG PURPOSE
-    return result;
-}
-
-//     xhr.onreadystatechange = function () {
-//         var lat, lng;
-
-//         if (this.readyState == 4 && this.status == 200) {
-//             var json = xhr.response;
-//             // document.getElementById("searchResults").innerHTML = `${json}`; // FOR DEBUG PURPOSE
-//             var obj = JSON.parse(json);
-//             // console.log(obj); // FOR DEBUG PURPOSE
-
-//             if (callback) callback(obj);
-
-//           
-//     };
-
-//     // var returnJson = {
-//     //     "latitude": lat,
-//     //     "longitude": lng
-//     // }
-//     // console.log(returnJson); // FOR DEBUG PURPOSE
-//     // return returnJson;
-
-//     // console.log(xhr.onreadystatechange);
-//     // console.log(returnJson); // FOR DEBUG PURPOSE
-
+// function useIpinfo() {
+//     const p1 =
+//         fetch("https://ipinfo.io/json?token=f6e03259a7a9e5")
+//         .then(
+//             (response) => response.json()
+//         ).then(
+//             (jsonResponse) => {
+//                     "latitude": jsonResponse.loc.split(',')[0],
+//                     "longitude": jsonResponse.loc.split(',')[1],
+//                 }
+//             }
+//         ).then(
+//             ()
+//         )
+//     p1.then((value) => {
+//         return value;
+//         // expected output: 123
+//     });
 // }
 
 
-function disableLocationBox(checkbox) {
-    var loc = document.getElementById("location");
-    loc.value = ``;
-    loc.disabled = checkbox.checked ? true : false;
-    if (!loc.disabled) {
-        loc.focus();
-    }
-}
-
-
-function enableLocationBox() {
-    document.getElementById("location").disabled = false;
-}
 
 
 function handleForm(jsonFormData, callback) {
     var req = new XMLHttpRequest();
     var searchResults = document.getElementById('searchResults'); // FOR DEBUG PURPOSES
     searchResults.innerHTML = jsonFormData; // FOR DEBUG PURPOSES
-    req.open('GET', '/cook', true);
+    req.open('GET', 'http://127.0.0.1:5000/cook?keyword=fd&distance=10&category=default&location=los+angeles', true);
+    // req.open('GET', '/cook', true);
     req.setRequestHeader('content-type', 'application/json;charset=UTF-8');
     // req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    console.log(jsonFormData);
     req.send(jsonFormData);
-    req.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            // searchResults.innerHTML = this.response;
-            const jsonResponse = JSON.parse(this.responseText);
-            // console.log(jsonResponse);    // FOR DEBUG PURPOSE
-            // alert(jsonResponse['businesses'][0]['name']);
-            // generateTable(jsonResponse);
-            if (callback) callback(jsonResponse);
-        }
-    }
+    // req.onreadystatechange = function () {
+    //     if (this.readyState == 4 && this.status == 200) {
+    //         // searchResults.innerHTML = this.response;
+    //         const jsonResponse = JSON.parse(this.responseText);
+    //         // console.log(jsonResponse);    // FOR DEBUG PURPOSE
+    //         alert(jsonResponse['businesses'][0]['name']);
+    //         // generateTable(jsonResponse);
+    //         if (callback) callback(jsonResponse);
+    //     }
+    // }
 }
 
 
@@ -251,6 +166,17 @@ function addToRow(index, image, name, rating, distance) {
     html += "<td>" + distance + "</td>";
     html += "</tr>";
     return html;
+}
+
+
+function useGeoCoding(location, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        var jsonObject = JSON.parse(this.responseText);
+        callback(jsonObject);
+    }
+    xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
+    xhr.send();
 }
 
 // function populateTable(table, rows, cols, content) {
@@ -320,3 +246,17 @@ function addToRow(index, image, name, rating, distance) {
 // html_text += "</tbody>"; html_text += "</table>";
 // html_text += "</body></html>";
 
+
+function disableLocationBox(checkbox) {
+    var loc = document.getElementById("location");
+    loc.value = ``;
+    loc.disabled = checkbox.checked ? true : false;
+    if (!loc.disabled) {
+        loc.focus();
+    }
+}
+
+
+function enableLocationBox() {
+    document.getElementById("location").disabled = false;
+}
