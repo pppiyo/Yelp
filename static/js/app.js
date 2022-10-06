@@ -29,17 +29,17 @@ function renameKey(obj, oldKey, newKey) {
 }
 
 
-function ajax(location) {
-    return new Promise(function (resolve, reject) {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function () {
-            resolve(this.responseText);
-        };
-        xhr.onerror = reject;
-        xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
-        xhr.send();
-    });
-}
+// function ajax(location) {
+//     return new Promise(function (resolve, reject) {
+//         var xhr = new XMLHttpRequest();
+//         xhr.onload = function () {
+//             resolve(this.responseText);
+//         };
+//         xhr.onerror = reject;
+//         xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
+//         xhr.send();
+//     });
+// }
 
 
 function submitForm() {
@@ -63,27 +63,12 @@ function submitForm() {
         } else {
             str = str.split(',').join("+");
             // document.getElementById("searchResults").innerHTML = `${str}`;
-                ajax(str)
-                .then(function (obj) {
-                    console.log(obj); // Code depending on result
-
-                    // if (obj["status"] == "ZERO_RESULTS") {
-                    //     alert("No results");
-                    // } else {
-                    //     var lat = obj["results"]["0"]["geometry"]["location"]["lat"];
-                    //     var lng = obj["results"]["0"]["geometry"]["location"]["lng"];
-                    //     console.log(lat); // FOR DEBUG PURPOSE
-                    //     return { "latitude": lat, "longitude": lng }
-                    // }
-                })
-                .catch(function () {
-                    console.log("An error occurred"); // Code depending on result
-                    // An error occurred
-                });  
-
-        //   console.log(results);
-            // var coordinates = useGeoCoding(str);
+            // console.log(results);
+            
+            useGeoCoding(str, acallback);
+            // var coordinates = useGeoCoding(str, acallback);
             // alert(coordinates);
+
         }
     }
 
@@ -135,12 +120,37 @@ function useIpinfo() {
 }
 
     
-// function useGeoCoding(location) {
-//     var xhr = new XMLHttpRequest();
+function useGeoCoding(location, callback) {
+    var xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+        var jsonObject = JSON.parse(this.responseText);
+        var coordinates = callback(jsonObject);
+        console.log(coordinates);
+    }
+    xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
+    xhr.send();
+}
 
-//     xhr.open("get", "https://maps.googleapis.com/maps/api/geocode/json?address=" + location + "&key=AIzaSyBXU0jzc6Rbzd5yAPd5mXWOymaZUMnqKEQ", true);
 
-//     xhr.send();
+
+function acallback(json) {
+    var lat, lng;
+    // console.log(json);
+    if (json["status"] == "ZERO_RESULTS") {
+        alert("No results");
+    } else {
+        lat = json["results"]["0"]["geometry"]["location"]["lat"];
+        lng = json["results"]["0"]["geometry"]["location"]["lng"];
+
+    }
+    var result = {
+        "latitude": lat,
+        "longitude": lng
+    }
+    console.log(result); // FOR DEBUG PURPOSE
+    return result;
+}
+
 //     xhr.onreadystatechange = function () {
 //         var lat, lng;
 
@@ -152,18 +162,7 @@ function useIpinfo() {
 
 //             if (callback) callback(obj);
 
-//             // if (obj["status"] == "ZERO_RESULTS") {
-//             //     alert("No results");
-//             // } else {
-//             //     lat = obj["results"]["0"]["geometry"]["location"]["lat"];
-//             //     lng = obj["results"]["0"]["geometry"]["location"]["lng"];
-//             //     console.log(lat); // FOR DEBUG PURPOSE
-//             // }
-//         }
-//         // return {
-//         //     "latitude": lat,
-//         //     "longitude": lng
-//         // }
+//           
 //     };
 
 //     // var returnJson = {
