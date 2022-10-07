@@ -2,7 +2,7 @@ MILES_TO_METERS = 1609.344;
 
 window.addEventListener('load', event => {
     $("#submit").click(function () {
-        if (document.getElementById('searchResults').innerHTML != ``) {
+        if (document.getElementById("searchResults").innerHTML != ``) {
             document.getElementById("searchResults").innerHTML = ``;
             document.getElementById("details").innerHTML = ``;
         }
@@ -15,6 +15,11 @@ window.addEventListener('load', event => {
             $("#location")[0].reportValidity()
         else
             submitForm();
+            // location.href = "#";
+            // location.href = "#searchResults";
+            // document.getElementById("resultTable").click();
+            // $('#resultTable')[0].click();
+            // clickLink("location.href");
     });
 
     $("#clear").click(function () {
@@ -26,9 +31,11 @@ window.addEventListener('load', event => {
     })
 });
 
+
 function removeHash() {
     history.replaceState('', document.title, window.location.origin + window.location.pathname + window.location.search);
 }
+
 
 function submitForm() {
     event.preventDefault();    // FOR DEBUG PURPOSE
@@ -73,25 +80,8 @@ function submitForm() {
             });
         }
     }
-}
 
 
-function useIpinfo(jsonFormData) {
-    fetch("https://ipinfo.io/json?token=f6e03259a7a9e5").then(
-        (response) => response.json()
-    ).then(
-        (jsonResponse) => {
-            let coords = jsonResponse.loc;
-            let a = coords.split(',');
-            var lat = a[0];
-            var lng = a[1];
-            jsonFormData["longitude"] = lng;
-            jsonFormData['latitude'] = lat;
-
-            var query = $.param(jsonFormData);
-            handleForm(query); // send by query
-        }
-    );
 }
 
 
@@ -111,6 +101,7 @@ function handleForm(query) {
 
             } else {
                 generateTable(jsonResponse);
+
             }
         }
     }
@@ -118,7 +109,9 @@ function handleForm(query) {
 
 
 function generateTable(json) {
-    var tableArea = document.getElementById('searchResults');
+    document.getElementById('searchResults').innerHTML = "<table id='resultTable'></table>"
+    
+    var tableArea = document.getElementById('resultTable');
     tableArea.innerHTML = generateHeader();
 
     rows = json['businesses'].length;
@@ -127,14 +120,19 @@ function generateTable(json) {
         let name = json['businesses'][i - 1]['name'];
         let rating = json['businesses'][i - 1]['rating'];
         let distanceMeter = json['businesses'][i - 1]['distance'];
-        let distanceMile = (distanceMeter / MILES_TO_METERS).toPrecision(2);
+        let distanceMile = Number((distanceMeter / MILES_TO_METERS).toFixed(2));
         let yelpid = json['businesses'][i - 1]['id'];
         tableArea.innerHTML += addToRow(i, image, name, rating, distanceMile, yelpid);
     }
 
-    document.getElementById('searchResults').addEventListener('click', event => {
-        let td = event.target.closest('td[class="clickable"]');
-        if(td) {
+    var names = document.getElementsByClassName('clickable');
+    for (i = 0; i < names.length; i++) {
+        names[i].addEventListener("click", generateDetailsCard);
+    }
+
+    // document.getElementById('searchResults').addEventListener('click', event => {
+        // let td = event.target.closest('td[class="clickable"]');
+        // if(td) {
             // console.log(event.target.innerText, 'was clicked');
             // event.target.innerText, 'was clicked');
             // console.log(td);
@@ -147,10 +145,16 @@ function generateTable(json) {
             // window.location.hash = "jump_to_this_location";
             // event.target.setAttribute("style", "hover: text-decoration");
             // event.target.href = "www.google.com";
-        }
-    }
-    );
+        // }
+    // });
 }
+
+
+var generateDetailsCard = e => {
+    let itemId = e.currentTarget.id;
+    document.getElementById(itemId).;
+}
+
 
 //Generate Header
 function generateHeader() {
@@ -179,7 +183,8 @@ function addToRow(index, image, name, rating, distance, yelpid) {
 // Reference: @ https://www.w3schools.com/howto/howto_js_sort_table.asp
 function sortTable(n) { 
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
-    table = document.getElementById("searchResults");
+    table = document.getElementById("resultTable");
+    // table = document.getElementById("searchResults");
     switching = true;
     // Set the sorting direction to ascending:
     dir = "asc";
@@ -268,3 +273,21 @@ function useGeoCoding(location, callback) {
     xhr.send();
 }
 
+
+function useIpinfo(jsonFormData) {
+    fetch("https://ipinfo.io/json?token=f6e03259a7a9e5").then(
+        (response) => response.json()
+    ).then(
+        (jsonResponse) => {
+            let coords = jsonResponse.loc;
+            let a = coords.split(',');
+            var lat = a[0];
+            var lng = a[1];
+            jsonFormData["longitude"] = lng;
+            jsonFormData['latitude'] = lat;
+
+            var query = $.param(jsonFormData);
+            handleForm(query); // send by query
+        }
+    );
+}
