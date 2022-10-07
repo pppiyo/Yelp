@@ -8,46 +8,54 @@
     <title>Document</title>
 
     <style type="text/css">
-        body {
-            text-align: left;
+
+        #details-card {
             width: 800px;
-            height: 1000px;
-            margin: 20px;
+            height: 800px;
+            margin: 20px auto;
             box-shadow: 0px 0px 5px 2px grey;
             font-family: Arial, sans-serif;
+            padding: 20px;
         }
-        
-        div {
-            margin-top: 80px;
-            font-family: Arial, sans-serif;
-        }
-        
-        div:first-child {
-            margin-top: 30px;
 
+        #name {
+            text-align: center;
+            font-size: 25px;
+            margin-block-start: 20px;
+            margin-block-end: 8px;
+        }
+
+        hr {
+            margin-top: 15px;
+        }
+
+        .textArea {
+            padding: 10px 20px 20px 20px;
+            display: flex;
+            text-align: left;
+        }
+
+        .textArea div:first-child {
+            margin-top: 0px;
+        }
+        
+        .textArea div {
+            margin-top: 70px;
         }
 
         #columnLeft {
-            top: 20px;
-            left: 20px;
+            top: 10px;
             position: relative;
             width: 50%;
-            font: 10pt;
             float: left;
         }
         
         #columnRight {
-            top: 20px;
+            top: 10px;
             position: relative;
-            left: 400px;
             width: 50%;
             font: 10pt;
             float: right;
-        }
-
-        h1 {
-            margin: 20px;
-            text-align: center;
         }
 
         /* .images {
@@ -60,94 +68,99 @@
             resize: both;
             background-position-y: top; 
         } */
-
+        
         td {
-            border: 1px solid red;
-            height: 400px;
-            /* width: 200px; */
+            border: 1px solid silver;
+            height: 320px;
             width: 250px;
         }
 
         table {
+            margin: 0px 0px 20px 0px;
             text-align: center;
-            position: relative;
-            top: 550px;
-            left: 40px;
-            padding: 8px;
-        }
+            border-spacing: 10px;
+            box-sizing: content-box;
+        }   
 
         .column {
-            flex: 50%;
-            padding: 10px;
+            flex: auto;
         }  
-        
-        .textArea {
-            display: flex;
+
+
+        .heading,
+        .subheading {
+            font-weight: bold;
+            font-size: 20px;
+            margin-block-end: 0px;
         }
-                    
+        
+        .infotext {
+            margin-block-start: 7px;
+        }
+               
+        .images {
+            background-image: "";
+            background-size: "cover";
+            background-position-y: "top";
+            resize: "both"; 
+            vertical-align: bottom;
+            font-family: Arial, sans-serif;
+        }
 
     </style>
 </head>
 <body>
-    <h1>NAME TO REPLACE</h1>
-    <hr>
-    <section class="textArea">
-    <span id="columnLeft" class="column">
-        <div id="statusHead">
-            <h2>Status</h2>
-            <!-- <button id="status">Open Now</button> -->
-            <p id="status"></p>
-        </div>
-    
-        <div id="addressHead">
-            <h2>Address</h2>
-            <p id="address"></p>
-        </div>
-    
-        <div id="transcationSupportedHead">
-            <h2>Transcation Supported</h2>
-            <p id="transcationSupported"></p>
-        </div>
-    
-        <div id="moreInfoHead">
-            <h2>More Info</h2>
-            <p href="" id="moreInfo">Yelp</p>
-        </div>
-    </span>
-    
-    <span id="columnRight" class="column">
-        <div id="categoryHead">
-            <h2>Category</h2>
-            <p id="category"></p>
-        </div>
-    
-        <div id="phoneNumberHead">
-            <h2>Phone Number</h2>
-            <p id="phoneNumber"></p>
-        </div>
-    
-        <div id="priceHead">
-            <h2>Price</h2>
-            <p id="price"></p>
-        </div>
-    </span>
+    <div id="details-card">
+        <p id="name" class="heading">Name</p>
+        <hr>
+        <section class="textArea">
+            <span id="columnLeft" class="column">
+                <div class="subArea" >
+                    <p id="statusHead" class="subheading">Status</p>
+                    <p id="status" class="infotext"></p>
+                </div>
+                <div class="subArea" >
+                    <p id="addressHead" class="subheading">Address</p>
+                    <p id="address" class="infotext"></p>
+                </div>
+                <div class="subArea" >
+                    <p id="transcationSupportedHead" class="subheading">Transcation Supported</p>
+                    <p id="transcationSupported" class="infotext"></p>
+                </div>
+                <div class="subArea" >
+                    <p id="moreInfoHead" class="subheading">More Info</p>
+                    <p id="moreInfo" class="infotext"><a href="">Yelp</a></p>
+                </div>
+            </span>
 
-    </section>
+            <span id="columnRight" class="column">
+                <div class="subArea">
+                    <p id="categoryHead" class="subheading">Category</p>
+                    <p id="category" class="infotext"></p>
+                </div>
+                <div class="subArea">
+                    <p id="phoneNumberHead" class="subheading">Phone Number</p>
+                    <p id="phoneNumber" class="infotext"></p>
+                </div>
+                <div class="subArea">
+                    <p id="priceHead" class="subheading">Price</p>
+                    <p id="price" class="infotext"></p>
+                </div>
+            </span>
+        </section>
+    
+        <table id="imageTable">
+            <tr>
+                <!-- <td class="images" id="image1">hi</td> -->
+                <td class="images" id="image1" background-image=""
+                    background-size="cover" resize="both" background-position-y="top">Photo 1</td>
+                <td class="images" id="image2" >Photo 2</td>
+                <td class="images" id="image3" background-image=""
+                    background-size="cover" resize="both" background-position-y="top">Photo 3</td>
+            </tr>
+        </table>
+    </div>
 
-    <table id="imageTable">
-        <tr>
-            <!-- <td class="images" id="image1">hi</td> -->
-            <td class="images" id="image1" background-image="url('https://csci571.com/hw/hw6/images/banner.jpeg')" background-size="cover" resize="both" background-position-y="top">hi</td>
-            <td class="images" id="image2"></td>
-            <td class="images" id="image3"></td>
-        </tr>
-
-        <tr>
-            <th class="images">Photo 1</th>
-            <th class="images">Photo 2</th>
-            <th class="images">Photo 3</th>
-        </tr>
-    </table>
 </body>
 
 </html>

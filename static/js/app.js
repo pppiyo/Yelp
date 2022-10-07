@@ -152,24 +152,11 @@ function generateTable(json) {
     );
 }
 
-// //Generate Header
-// function generateHeader() {
-//     var html = "";
-//     html += "<thead><tr class='table-head'>";
-//     html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:50px; color:black; border: 1px solid silver;'>" + 'No.' + "</th>";
-//     html += "<th onclick='sortTable(1)' id='th-image' style='height:50px; width:100px; color:black; border: 1px solid silver;'>" + 'Image' + "</th>";
-//     html += "<th onclick='sortTable(2)' id='th-name' style='height:50px; width:600px; color:black; border: 1px solid silver;'>" + 'Business Name' + "</th>";
-//     html += "<th onclick='sortTable(3)' id='th-rating' style='height:50px; width:200px; color:black; border: 1px solid silver;'>" + 'Rating' + "</th>";
-//     html += "<th onclick='sortTable(4)' id='th-distance' style='height:50px; width:200px; color:black; border: 1px solid silver;'>" + 'Distance (miles)' + "</th>";
-//     html += "</tr></thead>";
-//     return html;
-// }
-
 //Generate Header
 function generateHeader() {
     var html = "";
     html += "<thead><tr class='table-head'>";
-    html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:30px; color:black;'>" + 'No.' + "</th>";
+    html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:50px; color:black;'>" + 'No.' + "</th>";
     html += "<th onclick='sortTable(1)' id='th-image' style='height:50px; width:100px; color:black;'>" + 'Image' + "</th>";
     html += "<th onclick='sortTable(2)' id='th-name' style='height:50px; width:600px; color:black;'>" + 'Business Name' + "</th>";
     html += "<th onclick='sortTable(3)' id='th-rating' style='height:50px; width:200px; color:black;'>" + 'Rating' + "</th>";
@@ -177,18 +164,6 @@ function generateHeader() {
     html += "</tr></thead>";
     return html;
 }
-
-
-// function addToRow(index, image, name, rating, distance, yelpid) {
-//     var html = "<tr class='results'>";
-//     html += "<td style='border: 1px solid silver;'>" + index + "</td>";
-//     html += "<td style='border: 1px solid silver;'><img src='" + image + "' width='100px' height='100px' text-align='center'></img></td>";
-//     html += "<td id='" + yelpid + "' class='clickable' style='border: 1px solid silver;'><a href='#details' style='text-decoration: none;'>" + name + "</a></td>";
-//     html += "<td style='border: 1px solid silver;'>" + rating + "</td>";
-//     html += "<td style='border: 1px solid silver;'>" + distance + "</td>";
-//     html += "</tr>";
-//     return html;
-// }
 
 function addToRow(index, image, name, rating, distance, yelpid) {
     var html = "<tr class='results'>";
@@ -201,8 +176,8 @@ function addToRow(index, image, name, rating, distance, yelpid) {
     return html;
 }
 
-
-function sortTable(n) {
+// Reference: @ https://www.w3schools.com/howto/howto_js_sort_table.asp
+function sortTable(n) { 
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("searchResults");
     switching = true;
