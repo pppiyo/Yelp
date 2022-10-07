@@ -94,14 +94,15 @@ function handleForm(query) {
     req.send();
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            searchResults.innerHTML = this.response;
+            // searchResults.innerHTML = this.response; // FOR DEBUG PURPOSE
             const jsonResponse = JSON.parse(this.responseText);
-            // console.log(jsonResponse);    // FOR DEBUG PURPOSE
+            console.log(jsonResponse);    // FOR DEBUG PURPOSE
             if (jsonResponse['businesses'].length == 0) {
                 document.getElementById('searchResults').innerHTML = `<div style="color:black;">No record has been found</div>`
 
             } else {
                 generateTable(jsonResponse);
+                // document.getElementById('details').innerHTML = `${this.response}`;
             }
         }
     }
@@ -110,8 +111,18 @@ function handleForm(query) {
 
 function generateTable(json) {
     var tableArea = document.getElementById('searchResults');
-    rows = json['businesses'].length;
     tableArea.innerHTML = generateHeader();
+    // tableArea.addEventListener('formdata', event => {
+    //     $('#table-head').click(alert("hi"));
+    //     // $("#thead").click(console.log('test tset'));
+    //     // $("#image").click(alert("test"));
+    // });
+    // $('#table-head').on('click', function () {
+    //     console.log('test some special magick');
+    // });
+
+
+    rows = json['businesses'].length;
     for (var i = 1; i <= rows; i++) {
         let image = json['businesses'][i-1]['image_url'];
         let name = json['businesses'][i - 1]['name'];
@@ -123,25 +134,84 @@ function generateTable(json) {
     }
 }
 
+
 //Generate Header
 function generateHeader() {
     // var html = "<table id='table' class='results' style='height:100px;'>";
     var html = "";
-    html += "<thead><tr class=''>";
-    html += "<th class='tb-heading' style='height:50px; width:50px; color:black'>" + 'No.' + "</th>";
-    html += "<th class='tb-heading' style='height:50px; width:150px; color:black'>" + 'Image' + "</th>";
-    html += "<th class='tb-heading' style='height:50px; width:600px; color:black'>" + 'Business Name' + "</th>";
-    html += "<th class='tb-heading' style='height:50px; width:200px; color:black'>" + 'Rating' + "</th>";
-    html += "<th class='tb-heading' style='height:50px; width:200px; color:black'>" + 'Distance(miles)' + "</th>";
-    html += "</tr></thead></table>";
+    html += "<thead><tr class='table-head'>";
+    html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:100px; color:black;'>" + 'No.' + "</th>";
+    html += "<th onclick='sortTable(1)' id='th-image' style='height:50px; width:200px; color:black;'>" + 'Image' + "</th>";
+    html += "<th onclick='sortTable(2)' id='th-name' style='height:50px; width:600px; color:black;'>" + 'Business Name' + "</th>";
+    html += "<th onclick='sortTable(3)' id='th-rating' style='height:50px; width:200px; color:black;'>" + 'Rating' + "</th>";
+    html += "<th onclick='sortTable(4)' id='th-distance' style='height:50px; width:200px; color:black;'>" + 'Distance(miles)' + "</th>";
+    html += "</tr></thead>";
     return html;
 }
+
+function sortTable(n) {
+    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+    table = document.getElementById("searchResults");
+    switching = true;
+    // Set the sorting direction to ascending:
+    dir = "asc";
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+        // Start by saying: no switching is done:
+        switching = false;
+        rows = table.rows;
+        /* Loop through all table rows (except the
+        first, which contains table headers): */
+        for (i = 1; i < (rows.length - 1); i++) {
+            // Start by saying there should be no switching:
+            shouldSwitch = false;
+            /* Get the two elements you want to compare,
+            one from current row and one from the next: */
+            x = rows[i].getElementsByTagName("TD")[n];
+            y = rows[i + 1].getElementsByTagName("TD")[n];
+            /* Check if the two rows should switch place,
+            based on the direction, asc or desc: */
+            if (dir == "asc") {
+                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                    // If so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            } else if (dir == "desc") {
+                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                    // If so, mark as a switch and break the loop:
+                    shouldSwitch = true;
+                    break;
+                }
+            }
+        }
+        if (shouldSwitch) {
+            /* If a switch has been marked, make the switch
+            and mark that a switch has been done: */
+            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+            switching = true;
+            // Each time a switch is done, increase this count by 1:
+            switchcount++;
+        } else {
+            /* If no switching has been done AND the direction is "asc",
+            set the direction to "desc" and run the while loop again. */
+            if (switchcount == 0 && dir == "asc") {
+                dir = "desc";
+                switching = true;
+            }
+        }
+    }
+}
+
+
 
 //Add new row
 function addToRow(index, image, name, rating, distance) {
     var html = "<tr class='results'>";
     html += "<td>" + index + "</td>";
     html += "<td><img src='" + image + "' width='200px' height='100px'></img></td>";
+    // html += "<td><img src='" + image + "' ></td>";
     html += "<td>" + name + "</td>";
     html += "<td>" + rating + "</td>";
     html += "<td>" + distance + "</td>";
@@ -178,69 +248,3 @@ function useGeoCoding(location, callback) {
     xhr.send();
 }
 
-// function populateTable(table, rows, cols, content) {
-//     var is_func = (typeof content === 'function');
-//     if (!table) table = document.createElement('table');
-//     var row = document.createElement('tr');
-//     row.appendChild(document.createElement('td'));
-
-//     for (var i = 0; i < rows; ++i) {
-//         var row = document.createElement('tr');
-//         for (var j = 0; j < cols; ++j) {
-//             row.appendChild(document.createElement('td'));
-//             var text = !is_func ? (content + '') : content(table, i, j);
-//             row.cells[j].appendChild(document.createTextNode(text));
-//         }
-//         table.appendChild(row);
-//     }
-//     return table;
-// }
-
-// alert(jsonResponse['businesses'][0]['name']);
-
-
-// table_content += "<html><head><title>XML Parse Result</title></head><body></body>";
-// ELEMENT_NODE = 1;        // MS parser doesn't define Node.ELEMENT_NODE
-// root = xmlDoc.DocumentElement;
-// html_text = "<html><head><title>XML Parse Result</title></head><body>";
-// html_text += "<table border='1'>";
-// caption = xmlDoc.getElementsByTagName("title").item(0).firstChild.nodeValue;
-// html_text += "<caption align='left'><h1>" + caption + "</h1></caption>";
-// planes = xmlDoc.getElementsByTagName("aircraft");
-// planeNodeList = planes.item(0).childNodes;
-// html_text += "<tbody>";
-// html_text += "<tr>";
-// x = 0; y = 0;
-// // output the headers
-// for (i = 0; i < planeNodeList.length; i++) {
-//     if (planeNodeList.item(i).nodeType == ELEMENT_NODE) {
-//         header = planeNodeList.item(i).nodeName;
-//         if (header == "Airbus") { header = "Family"; x = 120; y = 55; }
-//         if (header == "Boeing") { header = "Family"; x = 100; y = 67; }
-//         if (header == "seats")
-//             header = "Seats";
-//         if (header == "Wingspan") header = "Wing Span";
-//         if (header == "height") header = "Height";
-//         html_text += "<th>" + header + "</th>";
-//     }
-// }
-// html_text += "</tr>";
-// // output out the values
-// for (i = 0; i < planes.length; i++) //do for all planes
-// {
-//     planeNodeList = planes.item(i).childNodes; //get properties of a plane
-//     html_text += "<tr>";            //start a new row of the output table
-//     for (j = 0; j < planeNodeList.length; j++) {
-//         if (planeNodeList.item(j).nodeType == ELEMENT_NODE) {
-//             if (planeNodeList.item(j).nodeName == "Image") {//handle images separately
-//                 html_text += "<td><img src='" + planeNodeList.item(j).firstChild.nodeValue + "' width='" + x + "' height='" + y + "'></td>";
-//             }
-//             else {
-//                 html_text += "<td>" + planeNodeList.item(j).firstChild.nodeValue + "</td>";
-//             }
-//         }
-//     }
-//     html_text += "</tr>";
-// }
-// html_text += "</tbody>"; html_text += "</table>";
-// html_text += "</body></html>";

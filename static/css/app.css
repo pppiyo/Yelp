@@ -133,7 +133,7 @@ p {
 table {
     /* table-layout:auto; */
     text-align: center;
-    width: 700px;
+    width: 80%;
     /* width: 100%; */
     margin: auto;
     border-collapse: collapse;
@@ -151,7 +151,7 @@ th {
 th,
 td {
     border: 1px solid silver;
-    width: 100px;
+    /* width: 100px; */
     overflow: hidden;
 }
 
