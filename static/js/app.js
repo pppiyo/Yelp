@@ -172,7 +172,57 @@ function generateDetailsCard(json, i) {
 
 
 function drawCardFrame() {
-    document.getElementById("details").innerHTML = ``;
+    document.getElementById("details").innerHTML = `
+        <div name="details-card">
+        <p id="name" class="heading" name="details-card">Name</p>
+        <hr name="details-card">
+        <section class="textArea" name="details-card">
+            <span id="columnLeft" class="column" name="details-card">
+                <div class="subArea" name="details-card">
+                    <p id="statusHead" class="subheading" name="details-card">Status</p>
+                    <p id="status" class="infotext" name="details-card"></p>
+                </div>
+                <div class="subArea" name="details-card">
+                    <p id="addressHead" class="subheading" name="details-card">Address</p>
+                    <p id="address" class="infotext" name="details-card"></p>
+                </div>
+                <div class="subArea" name="details-card">
+                    <p id="transcationSupportedHead" class="subheading" name="details-card">Transcation Supported</p>
+                    <p id="transcationSupported" class="infotext" name="details-card"></p>
+                </div>
+                <div class="subArea" name="details-card">
+                    <p id="moreInfoHead" class="subheading" name="details-card">More Info</p>
+                    <p id="moreInfo" class="infotext" name="details-card"><a href="">Yelp</a></p>
+                </div>
+            </span>
+
+            <span id="columnRight" class="column" name="details-card">
+                <div class="subArea" name="details-card">
+                    <p id="categoryHead" class="subheading" name="details-card">Category</p>
+                    <p id="category" class="infotext" name="details-card"></p>
+                </div>
+                <div class="subArea" name="details-card">
+                    <p id="phoneNumberHead" class="subheading" name="details-card">Phone Number</p>
+                    <p id="phoneNumber" class="infotext" name="details-card"></p>
+                </div>
+                <div class="subArea" name="details-card">
+                    <p id="priceHead" class="subheading" name="details-card">Price</p>
+                    <p id="price" class="infotext" name="details-card"></p>
+                </div>
+            </span>
+        </section>
+    
+        <table id="imageTable" name="details-card">
+            <tr name="details-card">
+                <td name="details-card" class="images" id="image1" background-image=""
+                    background-size="cover" resize="both" background-position-y="top">Photo 1</td>
+                <td name="details-card" class="images" id="image2" >Photo 2</td>
+                <td name="details-card" class="images" id="image3" background-image=""
+                    background-size="cover" resize="both" background-position-y="top">Photo 3</td>
+            </tr>
+        </table>
+    </div>
+    `;
 }
 
 

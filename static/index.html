@@ -14,64 +14,67 @@
 </head>
 
 <body>
-    <section id="welcome-card">
-        <div class="banner">
-            <div id="banner-text">
-                <h2>Buisiness Search</h2>
-                <p>Fill out the form to get businesses near you!</p>
+    <section id="welcome-card" name="welcome-card">
+        <div class="banner" name="welcome-card">
+            <div id="banner-text" name="welcome-card">
+                <h2 name="welcome-card">Buisiness Search</h2>
+                <p name="welcome-card">Fill out the form to get businesses near you!</p>
             </div>
         </div>
 
-        <form action="#searchResults" method="GET" id="form">
-            <div class="row" id="row1">
-                <label for="keyword">Keyword<span class="required">*</span></label>
-                <input type="text" id="keyword" name="keyword" required />
+        <form action="#searchResults" method="GET" id="form" name="welcome-card">
+            <div class="row" id="row1" name="welcome-card">
+                <label for="keyword" name="welcome-card">Keyword<span class="required">*</span></label>
+                <!-- <input type="text" id="keyword" name="keyword" required /> -->
+                <input type="text" id="keyword" name="welcome-card" required />
             </div>
 
-            <div class="row" id="row2">
-                <div id="column1">                
-                    <label for="distance">Distance(miles)</label>
-                    <input type="text" id="distance" name="distance" value="10">
+            <div class="row" id="row2" name="welcome-card">
+                <div id="column1" name="welcome-card">                
+                    <label for="distance" name="welcome-card">Distance(miles)</label>
+                    <input type="text" id="distance" name="welcome-card" value="10">
+                    <!-- <input type="text" id="distance" name="distance" value="10"> -->
                 </div>
     
-                <div id="column2">
-                    <label for="category">Category <span class="required">*</span></label>
-                    <select name="category" id="category" required />
-                        <option value="default" selected>Default</option>
-                        <option value="arts-entertainment">Arts & Entertainment</option>
-                        <option value="health-medical">Health & Medical</option>
-                        <option value="hotels-travel">Hotels & Travel</option>
-                        <option value="food">Food</option>
-                        <option value="professional-services">Professional Services</option>
+                <div id="column2" name="welcome-card">
+                    <label for="category" name="welcome-card">Category <span class="required">*</span></label>
+                    <select name="welcome-card" id="category" required />
+                    <!-- <select name="category" id="category" required /> -->
+                        <option value="default" name="welcome-card" selected>Default</option>
+                        <option value="arts-entertainment" name="welcome-card">Arts & Entertainment</option>
+                        <option value="health-medical" name="welcome-card">Health & Medical</option>
+                        <option value="hotels-travel" name="welcome-card">Hotels & Travel</option>
+                        <option value="food" name="welcome-card">Food</option>
+                        <option value="professional-services" name="welcome-card">Professional Services</option>
                     </select>
                 </div>
             </div>
     
-            <div class="row" id="row3">
-                <label for="location">Location <span class="required">*</span></label>
-                <input type="text" id="location" name="location" required />
+            <div class="row" id="row3" name="welcome-card">
+                <label for="location" name="welcome-card">Location <span class="required">*</span></label>
+                <input type="text" id="location" name="welcome-card" required />
+                <!-- <input type="text" id="location" name="location" required /> -->
             </div>
 
-            <p></p>
-            <hr>
+            <p name="welcome-card"></p>
+            <hr name="welcome-card">
         
-            <div class="row" id="row4">
-                <label for="detect-location">Want us to auto-detect your location? Check here</label>
-                <input type="checkbox" id="detect-location" onclick="disableLocationBox(this)">
+            <div class="row" id="row4" name="welcome-card">
+                <label for="detect-location" name="welcome-card">Want us to auto-detect your location? Check here</label>
+                <input name="welcome-card" type="checkbox" id="detect-location" onclick="disableLocationBox(this)">
             </div>
 
-            <button type="button" id="submit">submit</button>
-            <button type="button" id="clear" onclick="enableLocationBox()">clear</button>
+            <button type="button" id="submit" name="welcome-card">submit</button>
+            <button type="button" id="clear" onclick="enableLocationBox()" name="welcome-card">clear</button>
         </form>
     </section>
 
     <br>
 
 
-    <section id="searchResults"></section>
-    <!-- <table id="searchResults"></table> -->
+    <section id="searchResults" name="welcome-card"></section>
 
-    <section id="details"></section>
+    <section id="details" name="welcome-card"></section>
 
 
 </body>
