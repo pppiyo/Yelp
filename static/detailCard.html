@@ -10,10 +10,10 @@
     <style type="text/css">
         body {
             text-align: left;
-            width: 1000px;
+            width: 800px;
             height: 1000px;
             margin: 20px;
-            /* box-shadow: 0px 0px 5px 2px grey; */
+            box-shadow: 0px 0px 5px 2px grey;
             font-family: Arial, sans-serif;
         }
         
@@ -23,41 +23,27 @@
         }
 
         #columnLeft {
+            left: 40px;
             position: absolute;
             top: 50px;
-            width: 500px;
-            font: 12pt/14pt time, serif;
+            width: 400px;
+            font: 12pt/14pt;
         }
         
         #columnRight {
             position: absolute;
             top: 50px;
-            left: 500px;
+            left: 400px;
             width: 1000px;
-            font: 12pt/14pt time, serif;
-        }
-    
-        .relElement {
-            position: absolute;
-            margin: 10px;
-        }
-
-        span {
-            display: inline;
-            /* margin-top: 50px; */
+            font: 10pt;
         }
 
         h1 {
+            margin: 20px;
             text-align: center;
         }
 
-        #imageArea {
-            position: bottom;
-        }
-        
-        .images {
-            position: absolute;
-            top:1000px;
+        /* .images {
             background-image: none;
             height: 50%;
             width: 30%;
@@ -66,34 +52,23 @@
             background-size: cover;
             resize: both;
             background-position-y: top; 
+        } */
+
+        td {
+            border: 1px solid red;
+            height: 400px;
+            /* width: 200px; */
+            width: 250px;
         }
 
-
-        #column1 {
+        table {
+            text-align: center;
             position: absolute;
-            top: 50px;
-            width: 400px;
-            font: 12pt/14pt time, serif;
-            border: 1px solid silver;
-        }        
-
-        #column2 {
-            position: absolute;
-            top: 50px;
-            width: 400px;
-            font: 12pt/14pt time, serif;
-            left: 430px;
-        }        
+            top: 550px;
+            left: 40px;
+            padding: 8px;
+        }
         
-        #column3 {
-            position: absolute;
-            top: 50px;
-            width: 400px;
-            font: 12pt/14pt time, serif;
-            left: 840px;
-        }     
-        
-
 
     </style>
 </head>
@@ -143,11 +118,20 @@
 
     </section>
 
-    <section id="imageArea">
-        <span class="images" id="column1"></span>
-        <span class="images" id="column2"></span>
-        <span class="images" id="column3"></span>
-    </section>
+    <table id="imageTable">
+        <tr>
+            <!-- <td class="images" id="image1">hi</td> -->
+            <td class="images" id="image1" background-image="url('https://csci571.com/hw/hw6/images/banner.jpeg')" background-size="cover" resize="both" background-position-y="top">hi</td>
+            <td class="images" id="image2"></td>
+            <td class="images" id="image3"></td>
+        </tr>
+
+        <tr>
+            <th class="images">Photo 1</th>
+            <th class="images">Photo 2</th>
+            <th class="images">Photo 3</th>
+        </tr>
+    </table>
 </body>
 
 </html>

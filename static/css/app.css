@@ -11,7 +11,6 @@ h1 {
 #welcome-card {
     width: 500px;
     height: 480px;
-    /* height: 450px; */
     margin: 20px auto;
     box-shadow: 0px 0px 5px 2px grey;
 }
@@ -133,8 +132,8 @@ p {
 table {
     /* table-layout:auto; */
     text-align: center;
-    width: 80%;
-    /* width: 100%; */
+    /* width: 80%; */
+    width: 1000px;
     margin: auto;
     border-collapse: collapse;
     border: 1px solid silver;
@@ -151,11 +150,10 @@ th {
 th,
 td {
     border: 1px solid silver;
-    /* width: 100px; */
     overflow: hidden;
 }
 
 td {
-    max-width: 50px;
+    /* max-width: 50px; */
     color: black;
 }

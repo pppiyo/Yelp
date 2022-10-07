@@ -88,7 +88,6 @@ function useIpinfo(jsonFormData) {
     )}
 
 
-
 function handleForm(query) {
     var req = new XMLHttpRequest();
     req.open('GET', 'http://127.0.0.1:5000/cook', true);
@@ -132,9 +131,10 @@ function generateTable(json) {
         let td = event.target.closest('td[class="clickable"]');
         if(td) {
             // console.log(event.target.innerText, 'was clicked');
-            console.log(td);
+            // event.target.innerText, 'was clicked');
+            // console.log(td);
             // generateDetailCard(td[]);
-            document.getElementById('details').innerHTML = `hi`;
+            // document.getElementById('details').innerHTML = `${detailCard.html}`;
         }
     }
     );
@@ -146,11 +146,11 @@ function generateTable(json) {
 function generateHeader() {
     var html = "";
     html += "<thead><tr class='table-head'>";
-    html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:100px; color:black;'>" + 'No.' + "</th>";
+    html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:50px; color:black;'>" + 'No.' + "</th>";
     html += "<th onclick='sortTable(1)' id='th-image' style='height:50px; width:100px; color:black;'>" + 'Image' + "</th>";
     html += "<th onclick='sortTable(2)' id='th-name' style='height:50px; width:600px; color:black;'>" + 'Business Name' + "</th>";
     html += "<th onclick='sortTable(3)' id='th-rating' style='height:50px; width:200px; color:black;'>" + 'Rating' + "</th>";
-    html += "<th onclick='sortTable(4)' id='th-distance' style='height:50px; width:200px; color:black;'>" + 'Distance(miles)' + "</th>";
+    html += "<th onclick='sortTable(4)' id='th-distance' style='height:50px; width:200px; color:black;'>" + 'Distance (miles)' + "</th>";
     html += "</tr></thead>";
     return html;
 }
@@ -159,7 +159,7 @@ function generateHeader() {
 function addToRow(index, image, name, rating, distance, yelpid) {
     var html = "<tr class='results'>";
     html += "<td>" + index + "</td>";
-    html += "<td><img src='" + image + "' width='100px' height='100px'></img></td>";
+    html += "<td><img src='" + image + "' width='100px' height='100px' text-align='center'></img></td>";
     html += "<td id='" + yelpid + "' class='clickable'>" + name + "</td>";
     html += "<td>" + rating + "</td>";
     html += "<td>" + distance + "</td>";
