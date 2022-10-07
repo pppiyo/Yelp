@@ -18,12 +18,17 @@ window.addEventListener('load', event => {
     });
 
     $("#clear").click(function () {
+        removeHash();
         document.getElementById("form").reset();
+        document.getElementById("detect-location").checked = false;
         document.getElementById("searchResults").innerHTML = ``;
         document.getElementById("details").innerHTML = ``;
     })
 });
 
+function removeHash() {
+    history.replaceState('', document.title, window.location.origin + window.location.pathname + window.location.search);
+}
 
 function submitForm() {
     event.preventDefault();    // FOR DEBUG PURPOSE
@@ -55,7 +60,7 @@ function submitForm() {
             useGeoCoding(str, function acallback(json) {
                 var lat, lng;
                 if (json["status"] == "ZERO_RESULTS") {
-                    document.getElementById('searchResults').innerHTML = `<div style="color:black; display:center;">No record has been found</div>`
+                    document.getElementById('searchResults').innerHTML = `<div id="no-record">No record has been found</div>`
                 } else {
                     lat = json["results"]["0"]["geometry"]["location"]["lat"];
                     lng = json["results"]["0"]["geometry"]["location"]["lng"];
@@ -69,6 +74,7 @@ function submitForm() {
         }
     }
 }
+
 
 function useIpinfo(jsonFormData) {
     fetch("https://ipinfo.io/json?token=f6e03259a7a9e5").then(
@@ -85,12 +91,13 @@ function useIpinfo(jsonFormData) {
             var query = $.param(jsonFormData);
             handleForm(query); // send by query
         }
-    )}
+    );
+}
 
 
 function handleForm(query) {
     var req = new XMLHttpRequest();
-    req.open('GET', 'http://127.0.0.1:5000/cook', true);
+    // req.open('GET', 'http://127.0.0.1:5000/cook', true);
     req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
@@ -100,16 +107,14 @@ function handleForm(query) {
             const jsonResponse = JSON.parse(this.responseText);
             console.log(jsonResponse);    // FOR DEBUG PURPOSE
             if (jsonResponse['businesses'].length == 0) {
-                document.getElementById('searchResults').innerHTML = `<div style="color:black;">No record has been found</div>`
+                document.getElementById('searchResults').innerHTML = `<div id="no-record" style="color:black;">No record has been found</div>`
 
             } else {
                 generateTable(jsonResponse);
-                // document.getElementById('details').innerHTML = `${this.response}`;
             }
         }
     }
 }
-
 
 
 function generateTable(json) {
@@ -118,7 +123,7 @@ function generateTable(json) {
 
     rows = json['businesses'].length;
     for (var i = 1; i <= rows; i++) {
-        let image = json['businesses'][i-1]['image_url'];
+        let image = json['businesses'][i - 1]['image_url'];
         let name = json['businesses'][i - 1]['name'];
         let rating = json['businesses'][i - 1]['rating'];
         let distanceMeter = json['businesses'][i - 1]['distance'];
@@ -135,18 +140,36 @@ function generateTable(json) {
             // console.log(td);
             // generateDetailCard(td[]);
             // document.getElementById('details').innerHTML = `${detailCard.html}`;
+            // event.target.setAttribute("href", "#details");
+            // event.target.setAttribute(this.href + "#details");
+            // event.target.setAttribute("onclick", "location.href='#details'");
+            // event.target.setAttribute("onclick", "location.hash='#details'");
+            // window.location.hash = "jump_to_this_location";
+            // event.target.setAttribute("style", "hover: text-decoration");
+            // event.target.href = "www.google.com";
         }
     }
     );
 }
 
-
+// //Generate Header
+// function generateHeader() {
+//     var html = "";
+//     html += "<thead><tr class='table-head'>";
+//     html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:50px; color:black; border: 1px solid silver;'>" + 'No.' + "</th>";
+//     html += "<th onclick='sortTable(1)' id='th-image' style='height:50px; width:100px; color:black; border: 1px solid silver;'>" + 'Image' + "</th>";
+//     html += "<th onclick='sortTable(2)' id='th-name' style='height:50px; width:600px; color:black; border: 1px solid silver;'>" + 'Business Name' + "</th>";
+//     html += "<th onclick='sortTable(3)' id='th-rating' style='height:50px; width:200px; color:black; border: 1px solid silver;'>" + 'Rating' + "</th>";
+//     html += "<th onclick='sortTable(4)' id='th-distance' style='height:50px; width:200px; color:black; border: 1px solid silver;'>" + 'Distance (miles)' + "</th>";
+//     html += "</tr></thead>";
+//     return html;
+// }
 
 //Generate Header
 function generateHeader() {
     var html = "";
     html += "<thead><tr class='table-head'>";
-    html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:50px; color:black;'>" + 'No.' + "</th>";
+    html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:30px; color:black;'>" + 'No.' + "</th>";
     html += "<th onclick='sortTable(1)' id='th-image' style='height:50px; width:100px; color:black;'>" + 'Image' + "</th>";
     html += "<th onclick='sortTable(2)' id='th-name' style='height:50px; width:600px; color:black;'>" + 'Business Name' + "</th>";
     html += "<th onclick='sortTable(3)' id='th-rating' style='height:50px; width:200px; color:black;'>" + 'Rating' + "</th>";
@@ -156,17 +179,27 @@ function generateHeader() {
 }
 
 
+// function addToRow(index, image, name, rating, distance, yelpid) {
+//     var html = "<tr class='results'>";
+//     html += "<td style='border: 1px solid silver;'>" + index + "</td>";
+//     html += "<td style='border: 1px solid silver;'><img src='" + image + "' width='100px' height='100px' text-align='center'></img></td>";
+//     html += "<td id='" + yelpid + "' class='clickable' style='border: 1px solid silver;'><a href='#details' style='text-decoration: none;'>" + name + "</a></td>";
+//     html += "<td style='border: 1px solid silver;'>" + rating + "</td>";
+//     html += "<td style='border: 1px solid silver;'>" + distance + "</td>";
+//     html += "</tr>";
+//     return html;
+// }
+
 function addToRow(index, image, name, rating, distance, yelpid) {
     var html = "<tr class='results'>";
     html += "<td>" + index + "</td>";
     html += "<td><img src='" + image + "' width='100px' height='100px' text-align='center'></img></td>";
-    html += "<td id='" + yelpid + "' class='clickable'>" + name + "</td>";
+    html += "<td id='" + yelpid + "' class='clickable'><a href='#details' style='text-decoration: none;'>" + name + "</a></td>";
     html += "<td>" + rating + "</td>";
     html += "<td>" + distance + "</td>";
     html += "</tr>";
     return html;
 }
-
 
 
 function sortTable(n) {
@@ -229,27 +262,16 @@ function sortTable(n) {
 }
 
 
-//Add new row
-// function addToRow(index, image, name, rating, distance) {
-//     var html = "<tr class='results'>";
-//     html += "<td>" + index + "</td>";
-//     html += "<td><img src='" + image + "' width='100px' height='100px'></img></td>";
-//     html += "<td id=''>" + name + "</td>";
-//     html += "<td>" + rating + "</td>";
-//     html += "<td>" + distance + "</td>";
-//     html += "</tr>";
-//     return html;
-// }
-
-
 function enableLocationBox() {
     document.getElementById("location").disabled = false;
 }
+
 
 function renameKey(obj, oldKey, newKey) {
     obj[newKey] = obj[oldKey];
     delete obj[oldKey];
 }
+
 
 function disableLocationBox(checkbox) {
     var loc = document.getElementById("location");
@@ -259,6 +281,7 @@ function disableLocationBox(checkbox) {
         loc.focus();
     }
 }
+
 
 function useGeoCoding(location, callback) {
     var xhr = new XMLHttpRequest();

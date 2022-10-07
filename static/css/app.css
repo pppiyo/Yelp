@@ -136,10 +136,9 @@ table {
     width: 1000px;
     margin: auto;
     border-collapse: collapse;
-    border: 1px solid silver;
     padding: 8px;
 
-    table-layout: auto;
+    /* table-layout: auto; */
 }
 
 th {
@@ -150,10 +149,24 @@ th {
 th,
 td {
     border: 1px solid silver;
-    overflow: hidden;
 }
 
 td {
     /* max-width: 50px; */
     color: black;
+}
+
+#no-record {
+    text-align: center;
+    border: 1px solid silver;
+    background-color: white;
+    /* position: relative; */
+    margin: auto;
+}
+
+a {
+    color: grey;
+        /* cursor:; */
+    text-decoration: none;
+    
 }
