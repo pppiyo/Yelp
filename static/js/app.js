@@ -87,13 +87,11 @@ function submitForm() {
 
 function handleForm(query) {
     var req = new XMLHttpRequest();
-    // req.open('GET', 'http://127.0.0.1:5000/cook', true);
     req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            // searchResults.innerHTML = this.response; // FOR DEBUG PURPOSE
             const jsonResponse = JSON.parse(this.responseText);
             console.log(jsonResponse);    // FOR DEBUG PURPOSE
             if (jsonResponse['businesses'].length == 0) {
@@ -126,9 +124,12 @@ function generateTable(json) {
     }
 
     var names = document.getElementsByClassName('clickable');
-    for (i = 0; i < names.length; i++) {
-        names[i].addEventListener("click", generateDetailsCard);
+    for (let i = 0; i < names.length; i++) {
+        names[i].addEventListener("click", e => {
+            generateDetailsCard(json, i);
+        });
     }
+
 
     // document.getElementById('searchResults').addEventListener('click', event => {
         // let td = event.target.closest('td[class="clickable"]');
@@ -149,10 +150,29 @@ function generateTable(json) {
     // });
 }
 
+function generateDetailsCard(json, i) {
+    drawCardFrame();
 
-var generateDetailsCard = e => {
-    let itemId = e.currentTarget.id;
-    document.getElementById(itemId).;
+    let status = json['businesses'][i]['is_closed'];
+    let addresses = json['businesses'][i]['location'];
+    let transactions = json['businesses'][i]['transactions'];
+    let categories = json['businesses'][i]['categories'];
+    let phone = json['businesses'][i]['phone'];
+    let yelpUrl = json['businesses'][i]['url'];
+    
+    console.log(status);
+    console.log(addresses); // ~json
+    console.log(transactions); // []
+    console.log(categories); // []
+    console.log(phone); // ?
+    console.log(yelpUrl); //string
+
+    // tbd
+}
+
+
+function drawCardFrame() {
+    document.getElementById("details").innerHTML = ``;
 }
 
 
