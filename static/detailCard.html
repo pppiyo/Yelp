@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <title>Document</title>
+
+    <style type="text/css">
+        body {
+            text-align: left;
+            width: 1000px;
+            height: 1000px;
+            margin: 20px;
+            /* box-shadow: 0px 0px 5px 2px grey; */
+            font-family: Arial, sans-serif;
+        }
+        
+        div {
+            margin-top: 80px;
+            font-family: Arial, sans-serif;
+        }
+
+        #columnLeft {
+            position: absolute;
+            top: 50px;
+            width: 500px;
+            font: 12pt/14pt time, serif;
+        }
+        
+        #columnRight {
+            position: absolute;
+            top: 50px;
+            left: 500px;
+            width: 1000px;
+            font: 12pt/14pt time, serif;
+        }
+    
+        .relElement {
+            position: absolute;
+            margin: 10px;
+        }
+
+        span {
+            display: inline;
+            /* margin-top: 50px; */
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #imageArea {
+            position: bottom;
+        }
+        
+        .images {
+            position: absolute;
+            top:1000px;
+            background-image: none;
+            height: 50%;
+            width: 30%;
+            background-image: url('https://csci571.com/hw/hw6/images/banner.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            resize: both;
+            background-position-y: top; 
+        }
+
+
+        #column1 {
+            position: absolute;
+            top: 50px;
+            width: 400px;
+            font: 12pt/14pt time, serif;
+            border: 1px solid silver;
+        }        
+
+        #column2 {
+            position: absolute;
+            top: 50px;
+            width: 400px;
+            font: 12pt/14pt time, serif;
+            left: 430px;
+        }        
+        
+        #column3 {
+            position: absolute;
+            top: 50px;
+            width: 400px;
+            font: 12pt/14pt time, serif;
+            left: 840px;
+        }     
+        
+
+
+    </style>
+</head>
+<body>
+    <h1>NAME TO REPLACE</h1>
+    <hr>
+    <section class="textArea">
+    <span id="columnLeft">
+        <div id="statusHead">
+            <h2>Status</h2>
+            <!-- <button id="status">Open Now</button> -->
+            <p id="status"></p>
+        </div>
+    
+        <div id="addressHead">
+            <h2>Address</h2>
+            <p id="address"></p>
+        </div>
+    
+        <div id="transcationSupportedHead">
+            <h2>Transcation Supported</h2>
+            <p id="transcationSupported"></p>
+        </div>
+    
+        <div id="moreInfoHead">
+            <h2>More Info</h2>
+            <p href="" id="moreInfo">Yelp</p>
+        </div>
+    </span>
+    
+    <span id="columnRight">
+        <div id="categoryHead">
+            <h2>Category</h2>
+            <p id="category"></p>
+        </div>
+    
+        <div id="phoneNumberHead">
+            <h2>Phone Number</h2>
+            <p id="phoneNumber"></p>
+        </div>
+    
+        <div id="priceHead">
+            <h2>Price</h2>
+            <p id="price"></p>
+        </div>
+    </span>
+
+    </section>
+
+    <section id="imageArea">
+        <span class="images" id="column1"></span>
+        <span class="images" id="column2"></span>
+        <span class="images" id="column3"></span>
+    </section>
+</body>
+
+</html>

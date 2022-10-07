@@ -1,3 +1,5 @@
+MILES_TO_METERS = 1609.344;
+
 window.addEventListener('load', event => {
     $("#submit").click(function () {
         if (document.getElementById('searchResults').innerHTML != ``) {
@@ -34,7 +36,7 @@ function submitForm() {
     const tempJson = JSON.parse(rawFormJson);
     renameKey(tempJson, 'keyword', 'term');
     const strDistance = tempJson['distance']
-    const radius = Math.round(parseInt(strDistance) * 1609.344);
+    const radius = Math.round(parseInt(strDistance) * MILES_TO_METERS);
     tempJson['radius'] = radius;
     
     var checkBox = document.getElementById("detect-location");
@@ -86,6 +88,7 @@ function useIpinfo(jsonFormData) {
     )}
 
 
+
 function handleForm(query) {
     var req = new XMLHttpRequest();
     req.open('GET', 'http://127.0.0.1:5000/cook', true);
@@ -109,18 +112,10 @@ function handleForm(query) {
 }
 
 
+
 function generateTable(json) {
     var tableArea = document.getElementById('searchResults');
     tableArea.innerHTML = generateHeader();
-    // tableArea.addEventListener('formdata', event => {
-    //     $('#table-head').click(alert("hi"));
-    //     // $("#thead").click(console.log('test tset'));
-    //     // $("#image").click(alert("test"));
-    // });
-    // $('#table-head').on('click', function () {
-    //     console.log('test some special magick');
-    // });
-
 
     rows = json['businesses'].length;
     for (var i = 1; i <= rows; i++) {
@@ -128,26 +123,51 @@ function generateTable(json) {
         let name = json['businesses'][i - 1]['name'];
         let rating = json['businesses'][i - 1]['rating'];
         let distanceMeter = json['businesses'][i - 1]['distance'];
-        let distanceMile = (distanceMeter / 1609.344).toPrecision(2);
-        
-        tableArea.innerHTML += addToRow(i, image, name, rating, distanceMile);
+        let distanceMile = (distanceMeter / MILES_TO_METERS).toPrecision(2);
+        let yelpid = json['businesses'][i - 1]['id'];
+        tableArea.innerHTML += addToRow(i, image, name, rating, distanceMile, yelpid);
     }
+
+    document.getElementById('searchResults').addEventListener('click', event => {
+        let td = event.target.closest('td[class="clickable"]');
+        if(td) {
+            // console.log(event.target.innerText, 'was clicked');
+            console.log(td);
+            // generateDetailCard(td[]);
+            document.getElementById('details').innerHTML = `hi`;
+        }
+    }
+    );
 }
+
 
 
 //Generate Header
 function generateHeader() {
-    // var html = "<table id='table' class='results' style='height:100px;'>";
     var html = "";
     html += "<thead><tr class='table-head'>";
     html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:100px; color:black;'>" + 'No.' + "</th>";
-    html += "<th onclick='sortTable(1)' id='th-image' style='height:50px; width:200px; color:black;'>" + 'Image' + "</th>";
+    html += "<th onclick='sortTable(1)' id='th-image' style='height:50px; width:100px; color:black;'>" + 'Image' + "</th>";
     html += "<th onclick='sortTable(2)' id='th-name' style='height:50px; width:600px; color:black;'>" + 'Business Name' + "</th>";
     html += "<th onclick='sortTable(3)' id='th-rating' style='height:50px; width:200px; color:black;'>" + 'Rating' + "</th>";
     html += "<th onclick='sortTable(4)' id='th-distance' style='height:50px; width:200px; color:black;'>" + 'Distance(miles)' + "</th>";
     html += "</tr></thead>";
     return html;
 }
+
+
+function addToRow(index, image, name, rating, distance, yelpid) {
+    var html = "<tr class='results'>";
+    html += "<td>" + index + "</td>";
+    html += "<td><img src='" + image + "' width='100px' height='100px'></img></td>";
+    html += "<td id='" + yelpid + "' class='clickable'>" + name + "</td>";
+    html += "<td>" + rating + "</td>";
+    html += "<td>" + distance + "</td>";
+    html += "</tr>";
+    return html;
+}
+
+
 
 function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
@@ -202,22 +222,24 @@ function sortTable(n) {
             }
         }
     }
-}
 
+    for (let i = 1; i < rows.length; i++) {
+        rows[i].getElementsByTagName("TD")[0].innerHTML = i;
+    }
+}
 
 
 //Add new row
-function addToRow(index, image, name, rating, distance) {
-    var html = "<tr class='results'>";
-    html += "<td>" + index + "</td>";
-    html += "<td><img src='" + image + "' width='200px' height='100px'></img></td>";
-    // html += "<td><img src='" + image + "' ></td>";
-    html += "<td>" + name + "</td>";
-    html += "<td>" + rating + "</td>";
-    html += "<td>" + distance + "</td>";
-    html += "</tr>";
-    return html;
-}
+// function addToRow(index, image, name, rating, distance) {
+//     var html = "<tr class='results'>";
+//     html += "<td>" + index + "</td>";
+//     html += "<td><img src='" + image + "' width='100px' height='100px'></img></td>";
+//     html += "<td id=''>" + name + "</td>";
+//     html += "<td>" + rating + "</td>";
+//     html += "<td>" + distance + "</td>";
+//     html += "</tr>";
+//     return html;
+// }
 
 
 function enableLocationBox() {
