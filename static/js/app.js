@@ -125,21 +125,23 @@ function generateTable(json) {
 
     var names = document.getElementsByClassName('clickable');
     for (let i = 0; i < names.length; i++) {
-        names[i].addEventListener("click", e => {
-            let status = json['businesses'][i]['is_closed'];
-            let addresses = json['businesses'][i]['location'];
-            let transactions = json['businesses'][i]['transactions'];
-            let categories = json['businesses'][i]['categories'];
-            let phone = json['businesses'][i]['phone'];
-            let yelpUrl = json['businesses'][i]['url'];
+        names[i].addEventListener("click", e => {      
+            alert('hi');     
+    // let status = json['businesses'][i]['is_closed'];
+    // let addresses = json['businesses'][i]['location'];
+    // let transactions = json['businesses'][i]['transactions'];
+    // let categories = json['businesses'][i]['categories'];
+    // let phone = json['businesses'][i]['phone'];
+    // let yelpUrl = json['businesses'][i]['url'];
+    // let imageUrl = json['businesses'][i]['image_url'];
 
-            console.log(status);
-            console.log(addresses); // ~json
-            console.log(transactions); // []
-            console.log(categories); // []
-            console.log(phone); // ?
-            console.log(yelpUrl); //string            
-            generateDetailsCard(json, i);
+    // console.log(status);
+    // console.log(addresses); // ~json
+    // console.log(transactions); // []
+    // console.log(categories); // []
+    // console.log(phone); // ?
+    // console.log(yelpUrl); //string            
+            // generateDetailsCard(json, i);
         });
     };
 }
