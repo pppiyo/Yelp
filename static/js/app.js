@@ -126,10 +126,23 @@ function generateTable(json) {
     var names = document.getElementsByClassName('clickable');
     for (let i = 0; i < names.length; i++) {
         names[i].addEventListener("click", e => {
+            let status = json['businesses'][i]['is_closed'];
+            let addresses = json['businesses'][i]['location'];
+            let transactions = json['businesses'][i]['transactions'];
+            let categories = json['businesses'][i]['categories'];
+            let phone = json['businesses'][i]['phone'];
+            let yelpUrl = json['businesses'][i]['url'];
+
+            console.log(status);
+            console.log(addresses); // ~json
+            console.log(transactions); // []
+            console.log(categories); // []
+            console.log(phone); // ?
+            console.log(yelpUrl); //string            
             generateDetailsCard(json, i);
         });
-    }
-
+    };
+}
 
     // document.getElementById('searchResults').addEventListener('click', event => {
         // let td = event.target.closest('td[class="clickable"]');
@@ -148,31 +161,10 @@ function generateTable(json) {
             // event.target.href = "www.google.com";
         // }
     // });
-}
-
-function generateDetailsCard(json, i) {
-    drawCardFrame();
-
-    let status = json['businesses'][i]['is_closed'];
-    let addresses = json['businesses'][i]['location'];
-    let transactions = json['businesses'][i]['transactions'];
-    let categories = json['businesses'][i]['categories'];
-    let phone = json['businesses'][i]['phone'];
-    let yelpUrl = json['businesses'][i]['url'];
+// }
     
-    console.log(status);
-    console.log(addresses); // ~json
-    console.log(transactions); // []
-    console.log(categories); // []
-    console.log(phone); // ?
-    console.log(yelpUrl); //string
-
-    // tbd
-}
-
-
-function drawCardFrame() {
-    document.getElementById("details").innerHTML = ``;
+function showDetailsCard() {
+    document.getElementById('detailsCard').style.display = "block";
 }
 
 
@@ -255,7 +247,7 @@ function sortTable(n) {
             }
         }
     }
-
+    // Keep "No." column unchanged.
     for (let i = 1; i < rows.length; i++) {
         rows[i].getElementsByTagName("TD")[0].innerHTML = i;
     }
