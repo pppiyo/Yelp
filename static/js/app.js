@@ -15,8 +15,8 @@ window.addEventListener('load', event => {
             $("#location")[0].reportValidity()
         else
             submitForm();
-        // location.href = "#";
-        // location.href = "#searchResults";
+        location.href = "#";
+        location.href = "#searchResults";
         // document.getElementById("resultTable").click();
         // $('#resultTable')[0].click();
         // clickLink("location.href");
@@ -75,6 +75,7 @@ function submitForm() {
                     tempJson['latitude'] = lat;
                     tempJson['longitude'] = lng;
                     var query = $.param(tempJson);
+                    
                     handleForm(query);
                 }
             });
@@ -86,7 +87,7 @@ function submitForm() {
 function handleForm(query) {
     var req = new XMLHttpRequest();
     // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/cook?' + query, true);
-    // req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
+    req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
@@ -107,21 +108,20 @@ function handleForm(query) {
 function handleDetail(yelpId) {
     var req = new XMLHttpRequest();
     // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + yelpId, true);
-    // req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
-    req.open('GET', 'http://127.0.0.1:5000/cook?' + yelpId, true);
+    req.open('GET', 'http://127.0.0.1:5000/details?' + yelpId, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             const jsonResponse = JSON.parse(this.responseText);
             console.log(jsonResponse);    // FOR DEBUG PURPOSE
-            if (jsonResponse['businesses'].length == 0) {
-                document.getElementById('searchResults').innerHTML = `<div id="no-record" style="color:black;">No record has been found</div>`
+            // if (jsonResponse['businesses'].length == 0) {
+            //     document.getElementById('searchResults').innerHTML = `<div id="no-record" style="color:black;">No record has been found</div>`
 
-            } else {
-                // generateDetailsCard(jsonResponse);
-                console.log(jsonResponse);
-            }
+            // } else {
+            //     // generateDetailsCard(jsonResponse);
+            //     console.log(jsonResponse);
+            // }
         }
     }
 }
