@@ -61,7 +61,7 @@
             table-layout: fixed;
             height: inherit;
             text-align: center;
-            border-spacing: 10px;
+            /* border-spacing: 10px; */
             box-sizing: border-box;
         }        
 
@@ -79,10 +79,22 @@
 
         td {
             border: 1px solid silver;
-            height: 380px;
+            position: fixed;
             width: 250px;
-            padding: 0px 0px 7px 0px;
+        }
+
+        .images td {
+            height: 340px;
+            background-repeat: no-repeat;
+            background-size:contain;
+            resize: both;
+            background-position-y: top;  
+        }
+        
+        .image-text td  {
             font-family: Arial, sans-serif;
+            height: 20px;
+            padding: 0px 0px 7px 0px;
         }
 
         .subheading {
@@ -153,6 +165,11 @@
                 <td class="images" id="image1"></td>
                 <td class="images" id="image2"></td>
                 <td class="images" id="image3"></td>
+            </tr>
+            <tr>
+                <td class="image-text" id="image-text1">Photo 1</td>
+                <td class="image-text" id="image-text2">Photo 2</td>
+                <td class="image-text" id="image-text3">Photo 3</td>
             </tr>
         </table>
     </div>

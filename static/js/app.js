@@ -252,15 +252,20 @@ function generateDetailsCard(json) {
         let photos = json['photos'];
         for (let i = 1; i <= photos.length; i++) {
             const url = photos[i-1];
-            const innerHtml = "<img src='" + url + "'>Photo " + i;
+            const bgImgUrl = "background-image: url('" + url +"')";
+            const text = "Photo " + i;
             if (i == 1) {
-                ifrm.contentWindow.document.getElementById("image1").innerHTML = `${innerHtml}`;
+                ifrm.contentWindow.document.querySelector('#image1').setAttribute("style", bgImgUrl);
+                alert(text);
+                ifrm.contentWindow.document.getElementById("image1").innerHTML = `${text}`
             }
             if (i == 2) {
-                ifrm.contentWindow.document.getElementById("image2").innerHTML = `${innerHtml}`;
+                ifrm.contentWindow.document.querySelector('#image2').setAttribute("style", bgImgUrl);
+                ifrm.contentWindow.document.getElementById("image2").innerHTML = `${text}`
             }
             if (i == 3) {
-                ifrm.contentWindow.document.getElementById("image3").innerHTML = `${innerHtml}`;
+                ifrm.contentWindow.document.querySelector('#image3').setAttribute("style", bgImgUrl);
+                ifrm.contentWindow.document.getElementById("image3").innerHTML = `${text}`
             }
         }
     }
