@@ -255,17 +255,16 @@ function generateDetailsCard(json) {
             const bgImgUrl = "background-image: url('" + url +"')";
             const text = "Photo " + i;
             if (i == 1) {
-                ifrm.contentWindow.document.querySelector('#image1').setAttribute("style", bgImgUrl);
-                alert(text);
-                ifrm.contentWindow.document.getElementById("image1").innerHTML = `${text}`
+                ifrm.contentWindow.document.querySelector('#photoCol1').setAttribute("style", bgImgUrl);
+                ifrm.contentWindow.document.getElementById("photoCol1").innerHTML = `${text}`
             }
             if (i == 2) {
-                ifrm.contentWindow.document.querySelector('#image2').setAttribute("style", bgImgUrl);
-                ifrm.contentWindow.document.getElementById("image2").innerHTML = `${text}`
+                ifrm.contentWindow.document.querySelector('#photoCol2').setAttribute("style", bgImgUrl);
+                ifrm.contentWindow.document.getElementById("photoCol2").innerHTML = `${text}`
             }
             if (i == 3) {
-                ifrm.contentWindow.document.querySelector('#image3').setAttribute("style", bgImgUrl);
-                ifrm.contentWindow.document.getElementById("image3").innerHTML = `${text}`
+                ifrm.contentWindow.document.querySelector('#photoCol3').setAttribute("style", bgImgUrl);
+                ifrm.contentWindow.document.getElementById("photoCol3").innerHTML = `${text}`
             }
         }
     }

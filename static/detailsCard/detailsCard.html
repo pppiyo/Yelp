@@ -11,7 +11,7 @@
 
         #details-card {
             width: 800px;
-            height: 800px;
+            height: 850px;
             margin: auto;
             box-shadow: 0px 0px 5px 2px grey;
             font-family: Arial, sans-serif;
@@ -30,19 +30,19 @@
         }            
 
         .textArea {
-            height: 320px;
+            height: 330px;
             text-align: left;
-            padding: 30px 20px 0px 20px;
+            padding: 30px 0px 0px 0px;
         }
     
         .imageArea {
-            height: 380px;
+            height: 360px;
             position: fixed;
             
         }
 
         .subArea {
-            height: 80px;
+            height: 85px;
         }
 
         #columnLeft {
@@ -57,14 +57,6 @@
             float: right;
         }     
 
-        table {
-            table-layout: fixed;
-            height: inherit;
-            text-align: center;
-            /* border-spacing: 10px; */
-            box-sizing: border-box;
-        }        
-
         #bizname {
             text-align: center;
             font-size: 25px;
@@ -73,37 +65,68 @@
             position: static;
         }
 
-        .column {
-            flex: auto;
-        }          
-
-        td {
-            border: 1px solid silver;
-            position: fixed;
-            width: 250px;
-        }
-
-        .images td {
-            height: 340px;
-            background-repeat: no-repeat;
-            background-size:contain;
-            resize: both;
-            background-position-y: top;  
-        }
-        
-        .image-text td  {
-            font-family: Arial, sans-serif;
-            height: 20px;
-            padding: 0px 0px 7px 0px;
-        }
-
         .subheading {
             font-weight: bold;
             font-size: 20px;
             margin-block-start: 0px;
             margin-block-end: 0px;
+        }        
+
+        .column {
+            flex: auto;
+        }          
+
+        .photoArea {
+            width: inherit;
+            height: 360px;
+            /* position: fixed; */
+            margin: 0px;
+            font-family: Arial, sans-serif;
+            /* padding: 0px 0px 7px 0px; */
+            text-align: center;
+            position: relative;
+            bottom: 0px;
+            object-fit: scale-down;
+            max-height: 340;
+            background-repeat: no-repeat;
+            background-size:contain;
+            resize: both;
+            background-position-y: top; 
+        }
+
+                
+        /* .photoArea  {
+            object-fit: scale-down;
+            max-height: 340;
+            background-repeat: no-repeat;
+            background-size:contain;
+            resize: both;
+            background-position-y: top; 
+        } */
+
+
+
+        .photoArea .column {
+            width: 32%;
+            height: inherit;
+            border: 1px solid silver;
+            display:grid;
+            margin: auto;
+            position: fixed;
         }
         
+        #photoCol1 {
+            float: left;
+        }
+
+        #photoCol2 {
+            
+        }
+
+        #photoCol3 {
+            float: right;
+        }
+
         .infotext {
             margin-block-start: 7px;
             position: static;
@@ -111,16 +134,11 @@
         }
 
     </style>
-
-    <script type="text/javascript">
-        // alert(window.name); // alerts "dataToFrame"
-    </script>
 </head>
 <body>
     <div id="details-card">
         <section class="titleArea"> 
-            <p id="bizname" class="heading">Name</p>
-            <!-- <p id="bizname" class="heading"></p> -->
+            <p id="bizname" class="heading"></p>
         </section>
         <hr>
         
@@ -159,19 +177,12 @@
                 </div>
             </span>
         </section>
-    
-        <table id="imageTable" class="imageArea">
-            <tr>
-                <td class="images" id="image1"></td>
-                <td class="images" id="image2"></td>
-                <td class="images" id="image3"></td>
-            </tr>
-            <tr>
-                <td class="image-text" id="image-text1">Photo 1</td>
-                <td class="image-text" id="image-text2">Photo 2</td>
-                <td class="image-text" id="image-text3">Photo 3</td>
-            </tr>
-        </table>
+
+        <section class="photoArea">
+            <div id="photoCol1" class="column"></div>
+            <div id="photoCol2" class="column"></div>
+            <div id="photoCol3" class="column"></div>
+        </section>
     </div>
 
 </body>
