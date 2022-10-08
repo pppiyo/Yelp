@@ -99,29 +99,25 @@ function handleForm(query) {
 
             } else {
                 generateTable(jsonResponse);
-
             }
         }
     }
 }
 
-function handleDetail(yelpId) {
+function handleDetails(yelpId) {
     var req = new XMLHttpRequest();
-    // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + yelpId, true);
-    req.open('GET', 'http://127.0.0.1:5000/details?' + yelpId, true);
+    jsonFormData = {}
+    jsonFormData['yelpId'] = yelpId;
+    query = $.param(jsonFormData);
+    
+    req.open('GET', 'http://127.0.0.1:5000/details?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             const jsonResponse = JSON.parse(this.responseText);
             console.log(jsonResponse);    // FOR DEBUG PURPOSE
-            // if (jsonResponse['businesses'].length == 0) {
-            //     document.getElementById('searchResults').innerHTML = `<div id="no-record" style="color:black;">No record has been found</div>`
-
-            // } else {
-            //     // generateDetailsCard(jsonResponse);
-            //     console.log(jsonResponse);
-            // }
+            generateDetailsCard(jsonResponse);
         }
     }
 }
@@ -139,49 +135,45 @@ function generateTable(json) {
         let rating = json['businesses'][i - 1]['rating'];
         let distanceMeter = json['businesses'][i - 1]['distance'];
         let distanceMile = Number((distanceMeter / MILES_TO_METERS).toFixed(2));
-        let yelpid = json['businesses'][i - 1]['id'];
-        tableArea.innerHTML += addToRow(i, image, name, rating, distanceMile, yelpid);
+        let yelpId = json['businesses'][i - 1]['id'];
+        tableArea.innerHTML += addToRow(i, image, name, rating, distanceMile, yelpId);
     }
 
     var names = document.getElementsByClassName('clickable');
     for (let i = 0; i < names.length; i++) {
-        names[i].addEventListener("click", e => {           
-            generateDetailsCard(json, i);
+        names[i].addEventListener("click", e => {
+            yelpId = json['businesses'][i]['id'];
+            handleDetails(yelpId);
         });
     };
 }
 
-function generateDetailsCard(json, i) {
+function generateDetailsCard(json) {
     var ifrm = document.getElementById('detailsCard');
-    // console.log(json['businesses'][i]['transactions']); // debug
 
     // name
-    if (json['businesses'][i]['name']) {
-        let name = json['businesses'][i]['name'];
-        ifrm.contentWindow.document.getElementById("name").innerHTML = `${name}`;
-    } else {
-        ifrm.contentWindow.document.getElementById("name").innerHTML = `No Name`;
-    }
+    let bizname = json['name'];
+    ifrm.contentWindow.document.getElementById("bizname").innerHTML = `${bizname}`;
 
     // open or closed
-    if (json['businesses'][i]['is_closed'] != null) {
+    if (json['is_closed'] != null) {
         ifrm.contentWindow.document.getElementById("stat").style.display = "block";
-        let status = json['businesses'][i]['is_closed'];
+        let status = json['is_closed'];
         if (status == "false") {
             ifrm.contentWindow.document.getElementById("status").innerHTML = `Open Now`;
             ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: green; padding:8px 17px 8px 17px; border-radius: 15px; ");
         } else {
             ifrm.contentWindow.document.getElementById("status").innerHTML = `Closed`;
-            ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid red; background-color: red; padding:8px 17px 8px 17px; border-radius: 15px;");
+            ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: green; padding:8px 17px 8px 17px; border-radius: 15px; ");
         }
     } else {
         ifrm.contentWindow.document.getElementById("stat").style.display = "none";
     }
 
     // address
-    if (json['businesses'][i]['location']['display_address']) {
+    if (json['location']['display_address']) {
         ifrm.contentWindow.document.getElementById("addr").style.display = "block";
-        let addresses = json['businesses'][i]['location']['display_address'];
+        let addresses = json['location']['display_address'];
         var addr = '';
         for (let i = 0; i < addresses.length; i++) {
             addr = addr + addresses[i] + " ";
@@ -192,9 +184,9 @@ function generateDetailsCard(json, i) {
     }
 
     // transaction
-    if (json['businesses'][i]['transactions'].length != 0) {
+    if (json['transactions'].length != 0) {
         ifrm.contentWindow.document.getElementById("tran").style.display = "block";
-        let transactions = json['businesses'][i]['transactions'];
+        let transactions = json['transactions'];
         var trans = '';
         for (let i = 0; i < transactions.length; i++) {
             if (i == transactions.length - 1) {
@@ -209,10 +201,10 @@ function generateDetailsCard(json, i) {
     }
 
     // category
-    // if (jQuery(json['businesses'][i]).has('categories').length) {
-    if (json['businesses'][i]['categories']) {
+    // if (jQuery(json).has('categories').length) {
+    if (json['categories']) {
         ifrm.contentWindow.document.getElementById("cate").style.display = "block";
-        let categories = json['businesses'][i]['categories'];
+        let categories = json['categories'];
         var cate = '';
         for (let i = 0; i < categories.length; i++) {
             if (i == categories.length - 1) {
@@ -227,46 +219,46 @@ function generateDetailsCard(json, i) {
     }
 
     // phone number
-    if (json['businesses'][i]['display_phone']) {
+    if (json['display_phone']) {
         ifrm.contentWindow.document.getElementById("phon").style.display = "block";
-        let phone = json['businesses'][i]['display_phone'];
+        let phone = json['display_phone'];
         ifrm.contentWindow.document.getElementById("phoneNumber").innerHTML = `${phone}`;
     } else {
         ifrm.contentWindow.document.getElementById("phon").style.display = "none";
     }
 
     // yelp url
-    if (json['businesses'][i]['url']) {
+    if (json['url']) {
         ifrm.contentWindow.document.getElementById("more").style.display = "block";
-        let yelpUrl = json['businesses'][i]['url'];
+        let yelpUrl = json['url'];
         ifrm.contentWindow.document.querySelector('#moreInfo').querySelector('a').setAttribute("href", yelpUrl);
     } else {
         ifrm.contentWindow.document.getElementById("more").style.display = "none";
     }
 
     // price
-    if (json['businesses'][i]['price']) {
+    if (json['price']) {
         ifrm.contentWindow.document.getElementById("pric").style.display = "block";
-        let price = json['businesses'][i]['price'];
+        let price = json['price'];
         ifrm.contentWindow.document.getElementById("price").innerHTML = `${price}`;
     } else {
         ifrm.contentWindow.document.getElementById("pric").style.display = "none";
     }
 
-
-
-    // ifrm.contentWindow.document.getElementById("image1").innerHTML = `${}`;
-    // ifrm.contentWindow.document.getElementById("image2").innerHTML = `${}`;
-    // ifrm.contentWindow.document.getElementById("image3").innerHTML = `${}`;
     // photos
-    // if (json['businesses'][i]['']) {
-
-    // }
+    if (json['photos']) {
+        let photos = json['photos'];
+        // for (let i = 0; i < photos.length; i++) {
+        //     if (i == photos.length - 1) {
+        //     }
+        // }
+        // ifrm.contentWindow.document.getElementById("").innerHTML = `${}`;
+    }
 
     showDetailsCard();
 }
 
-
+/*
 function generateDetailsCard(json, i) {
     var ifrm = document.getElementById('detailsCard');
     // console.log(json['businesses'][i]['transactions']); // debug
@@ -375,7 +367,7 @@ function generateDetailsCard(json, i) {
     // }
 
     showDetailsCard();
-}
+}*/
 
 function capitalizeFirstLetter(string) { 
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase(); 

@@ -29,14 +29,12 @@ def cook_form_data():
 
 @app.get('/details')
 def get_biz_detail():
+    
     yelpId = request.args.get('yelpId')
-
+    
     url = 'https://api.yelp.com/v3/businesses/' + yelpId
 
     header = {'Authorization': 'Bearer eOCtSLcSjoo8DlufDEjkoF7Rjf9mHwrBRI_U6aPMluevSq_imUgoz13T-Au87od_4FmrsJ6iBChruHOxDXclMK5hbMixXZipfp1CuwPNdNDDC7NWypTros3P1Q4oY3Yx'}
-
-    # payload = {'term': term, 'latitude': latitude,
-            #    'longitude': longitude, 'categories': categories, 'radius': radius}
 
     r = requests.get(url, headers=header)
 
