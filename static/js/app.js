@@ -15,11 +15,11 @@ window.addEventListener('load', event => {
             $("#location")[0].reportValidity()
         else
             submitForm();
-            // location.href = "#";
-            // location.href = "#searchResults";
-            // document.getElementById("resultTable").click();
-            // $('#resultTable')[0].click();
-            // clickLink("location.href");
+        // location.href = "#";
+        // location.href = "#searchResults";
+        // document.getElementById("resultTable").click();
+        // $('#resultTable')[0].click();
+        // clickLink("location.href");
     });
 
     $("#clear").click(function () {
@@ -50,7 +50,7 @@ function submitForm() {
     const strDistance = tempJson['distance']
     const radius = Math.round(parseInt(strDistance) * MILES_TO_METERS);
     tempJson['radius'] = radius;
-    
+
     var checkBox = document.getElementById("detect-location");
 
     if (checkBox.checked == true) {
@@ -63,7 +63,7 @@ function submitForm() {
             alert('\nInvalid input:\n\nYou must either enter a location or click the auto-detect checkbox.');
         } else {
             str = str.split(',').join("+");
-            
+
             useGeoCoding(str, function acallback(json) {
                 var lat, lng;
                 if (json["status"] == "ZERO_RESULTS") {
@@ -71,7 +71,7 @@ function submitForm() {
                 } else {
                     lat = json["results"]["0"]["geometry"]["location"]["lat"];
                     lng = json["results"]["0"]["geometry"]["location"]["lng"];
-                    
+
                     tempJson['latitude'] = lat;
                     tempJson['longitude'] = lng;
                     var query = $.param(tempJson);
@@ -108,7 +108,7 @@ function handleForm(query) {
 
 function generateTable(json) {
     document.getElementById('searchResults').innerHTML = "<table id='resultTable'></table>"
-    
+
     var tableArea = document.getElementById('resultTable');
     tableArea.innerHTML = generateHeader();
 
@@ -125,46 +125,48 @@ function generateTable(json) {
 
     var names = document.getElementsByClassName('clickable');
     for (let i = 0; i < names.length; i++) {
-        names[i].addEventListener("click", e => {      
-            alert('hi');     
-    // let status = json['businesses'][i]['is_closed'];
-    // let addresses = json['businesses'][i]['location'];
-    // let transactions = json['businesses'][i]['transactions'];
-    // let categories = json['businesses'][i]['categories'];
-    // let phone = json['businesses'][i]['phone'];
-    // let yelpUrl = json['businesses'][i]['url'];
-    // let imageUrl = json['businesses'][i]['image_url'];
+        names[i].addEventListener("click", e => {
+            let status = json['businesses'][i]['is_closed'];
+            let addresses = json['businesses'][i]['location'];
+            let transactions = json['businesses'][i]['transactions'];
+            let categories = json['businesses'][i]['categories'];
+            let phone = json['businesses'][i]['phone'];
+            let yelpUrl = json['businesses'][i]['url'];
 
-    // console.log(status);
-    // console.log(addresses); // ~json
-    // console.log(transactions); // []
-    // console.log(categories); // []
-    // console.log(phone); // ?
-    // console.log(yelpUrl); //string            
-            // generateDetailsCard(json, i);
+            console.log(status);
+            console.log(addresses); // ~json
+            console.log(transactions); // []
+            console.log(categories); // []
+            console.log(phone); // ?
+            console.log(yelpUrl); //string            
+            generateDetailsCard(json, i);
         });
     };
 }
 
-    // document.getElementById('searchResults').addEventListener('click', event => {
-        // let td = event.target.closest('td[class="clickable"]');
-        // if(td) {
-            // console.log(event.target.innerText, 'was clicked');
-            // event.target.innerText, 'was clicked');
-            // console.log(td);
-            // generateDetailCard(td[]);
-            // document.getElementById('details').innerHTML = `${detailCard.html}`;
-            // event.target.setAttribute("href", "#details");
-            // event.target.setAttribute(this.href + "#details");
-            // event.target.setAttribute("onclick", "location.href='#details'");
-            // event.target.setAttribute("onclick", "location.hash='#details'");
-            // window.location.hash = "jump_to_this_location";
-            // event.target.setAttribute("style", "hover: text-decoration");
-            // event.target.href = "www.google.com";
-        // }
-    // });
+function generateDetailsCard(json, i) {
+    showDetailsCard();
+}
+
+// document.getElementById('searchResults').addEventListener('click', event => {
+// let td = event.target.closest('td[class="clickable"]');
+// if(td) {
+// console.log(event.target.innerText, 'was clicked');
+// event.target.innerText, 'was clicked');
+// console.log(td);
+// generateDetailCard(td[]);
+// document.getElementById('details').innerHTML = `${detailCard.html}`;
+// event.target.setAttribute("href", "#details");
+// event.target.setAttribute(this.href + "#details");
+// event.target.setAttribute("onclick", "location.href='#details'");
+// event.target.setAttribute("onclick", "location.hash='#details'");
+// window.location.hash = "jump_to_this_location";
+// event.target.setAttribute("style", "hover: text-decoration");
+// event.target.href = "www.google.com";
 // }
-    
+// });
+// }
+
 function showDetailsCard() {
     document.getElementById('detailsCard').style.display = "block";
 }
@@ -195,7 +197,7 @@ function addToRow(index, image, name, rating, distance, yelpid) {
 }
 
 // Reference: @ https://www.w3schools.com/howto/howto_js_sort_table.asp
-function sortTable(n) { 
+function sortTable(n) {
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("resultTable");
     // table = document.getElementById("searchResults");
