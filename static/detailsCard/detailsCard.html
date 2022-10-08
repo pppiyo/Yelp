@@ -44,6 +44,7 @@
         }
 
         #columnLeft {
+            font: 10pt;
             top: 10px;
             position: relative;
             width: 50%;
@@ -76,11 +77,13 @@
         }
 
         table {
-            margin: 0px 0px 20px 0px;
+            margin-top:30px;
             text-align: center;
             border-spacing: 10px;
             box-sizing: content-box;
-        }   
+            position:absolute;
+            bottom: 30px;
+        }
 
         .column {
             flex: auto;
@@ -96,6 +99,7 @@
         
         .infotext {
             margin-block-start: 7px;
+            position: absolute;
         }
                
         .images {
@@ -119,34 +123,34 @@
         <hr>
         <section class="textArea">
             <span id="columnLeft" class="column">
-                <div class="subArea" >
+                <div class="subArea"  id="stat">
                     <p id="statusHead" class="subheading">Status</p>
                     <p id="status" class="infotext"></p>
                 </div>
-                <div class="subArea" >
+                <div class="subArea"  id="addr">
                     <p id="addressHead" class="subheading">Address</p>
                     <p id="address" class="infotext"></p>
                 </div>
-                <div class="subArea" >
+                <div class="subArea"  id="tran">
                     <p id="transcationSupportedHead" class="subheading">Transcation Supported</p>
                     <p id="transcationSupported" class="infotext"></p>
                 </div>
-                <div class="subArea" >
+                <div class="subArea"  id="more">
                     <p id="moreInfoHead" class="subheading">More Info</p>
                     <p id="moreInfo" class="infotext"><a href="">Yelp</a></p>
                 </div>
             </span>
 
             <span id="columnRight" class="column">
-                <div class="subArea">
+                <div class="subArea" id="cate">
                     <p id="categoryHead" class="subheading">Category</p>
                     <p id="category" class="infotext"></p>
                 </div>
-                <div class="subArea">
+                <div class="subArea" id="phon">
                     <p id="phoneNumberHead" class="subheading">Phone Number</p>
                     <p id="phoneNumber" class="infotext"></p>
                 </div>
-                <div class="subArea">
+                <div class="subArea" id="pric">
                     <p id="priceHead" class="subheading">Price</p>
                     <p id="price" class="infotext"></p>
                 </div>

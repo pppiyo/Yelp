@@ -80,14 +80,13 @@ function submitForm() {
             });
         }
     }
-
-
 }
 
 
 function handleForm(query) {
     var req = new XMLHttpRequest();
-    req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
+    // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/cook?' + query, true);
+    // req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
@@ -105,6 +104,27 @@ function handleForm(query) {
     }
 }
 
+function handleDetail(yelpId) {
+    var req = new XMLHttpRequest();
+    // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + yelpId, true);
+    // req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
+    req.open('GET', 'http://127.0.0.1:5000/cook?' + yelpId, true);
+    req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    req.send();
+    req.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const jsonResponse = JSON.parse(this.responseText);
+            console.log(jsonResponse);    // FOR DEBUG PURPOSE
+            if (jsonResponse['businesses'].length == 0) {
+                document.getElementById('searchResults').innerHTML = `<div id="no-record" style="color:black;">No record has been found</div>`
+
+            } else {
+                // generateDetailsCard(jsonResponse);
+                console.log(jsonResponse);
+            }
+        }
+    }
+}
 
 function generateTable(json) {
     document.getElementById('searchResults').innerHTML = "<table id='resultTable'></table>"
@@ -125,28 +145,241 @@ function generateTable(json) {
 
     var names = document.getElementsByClassName('clickable');
     for (let i = 0; i < names.length; i++) {
-        names[i].addEventListener("click", e => {
-            let status = json['businesses'][i]['is_closed'];
-            let addresses = json['businesses'][i]['location'];
-            let transactions = json['businesses'][i]['transactions'];
-            let categories = json['businesses'][i]['categories'];
-            let phone = json['businesses'][i]['phone'];
-            let yelpUrl = json['businesses'][i]['url'];
-
-            console.log(status);
-            console.log(addresses); // ~json
-            console.log(transactions); // []
-            console.log(categories); // []
-            console.log(phone); // ?
-            console.log(yelpUrl); //string            
+        names[i].addEventListener("click", e => {           
             generateDetailsCard(json, i);
         });
     };
 }
 
 function generateDetailsCard(json, i) {
+    var ifrm = document.getElementById('detailsCard');
+    // console.log(json['businesses'][i]['transactions']); // debug
+
+    // name
+    if (json['businesses'][i]['name']) {
+        let name = json['businesses'][i]['name'];
+        ifrm.contentWindow.document.getElementById("name").innerHTML = `${name}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("name").innerHTML = `No Name`;
+    }
+
+    // open or closed
+    if (json['businesses'][i]['is_closed'] != null) {
+        ifrm.contentWindow.document.getElementById("stat").style.display = "block";
+        let status = json['businesses'][i]['is_closed'];
+        if (status == "false") {
+            ifrm.contentWindow.document.getElementById("status").innerHTML = `Open Now`;
+            ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: green; padding:8px 17px 8px 17px; border-radius: 15px; ");
+        } else {
+            ifrm.contentWindow.document.getElementById("status").innerHTML = `Closed`;
+            ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid red; background-color: red; padding:8px 17px 8px 17px; border-radius: 15px;");
+        }
+    } else {
+        ifrm.contentWindow.document.getElementById("stat").style.display = "none";
+    }
+
+    // address
+    if (json['businesses'][i]['location']['display_address']) {
+        ifrm.contentWindow.document.getElementById("addr").style.display = "block";
+        let addresses = json['businesses'][i]['location']['display_address'];
+        var addr = '';
+        for (let i = 0; i < addresses.length; i++) {
+            addr = addr + addresses[i] + " ";
+        }
+        ifrm.contentWindow.document.getElementById("address").innerHTML = `${addr}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("addr").style.display = "none";
+    }
+
+    // transaction
+    if (json['businesses'][i]['transactions'].length != 0) {
+        ifrm.contentWindow.document.getElementById("tran").style.display = "block";
+        let transactions = json['businesses'][i]['transactions'];
+        var trans = '';
+        for (let i = 0; i < transactions.length; i++) {
+            if (i == transactions.length - 1) {
+                trans = trans + capitalizeFirstLetter(transactions[i]);
+            } else {
+                trans = trans + capitalizeFirstLetter(transactions[i]) + ' | ';
+            }
+        }
+        ifrm.contentWindow.document.getElementById("transcationSupported").innerHTML = `${trans}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("tran").style.display = "none";
+    }
+
+    // category
+    // if (jQuery(json['businesses'][i]).has('categories').length) {
+    if (json['businesses'][i]['categories']) {
+        ifrm.contentWindow.document.getElementById("cate").style.display = "block";
+        let categories = json['businesses'][i]['categories'];
+        var cate = '';
+        for (let i = 0; i < categories.length; i++) {
+            if (i == categories.length - 1) {
+                cate = cate + categories[i]['title'];
+            } else {
+                cate = cate + categories[i]['title'] + ' | ';
+            }
+        }
+        ifrm.contentWindow.document.getElementById("category").innerHTML = `${cate}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("cate").style.display = "none";
+    }
+
+    // phone number
+    if (json['businesses'][i]['display_phone']) {
+        ifrm.contentWindow.document.getElementById("phon").style.display = "block";
+        let phone = json['businesses'][i]['display_phone'];
+        ifrm.contentWindow.document.getElementById("phoneNumber").innerHTML = `${phone}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("phon").style.display = "none";
+    }
+
+    // yelp url
+    if (json['businesses'][i]['url']) {
+        ifrm.contentWindow.document.getElementById("more").style.display = "block";
+        let yelpUrl = json['businesses'][i]['url'];
+        ifrm.contentWindow.document.querySelector('#moreInfo').querySelector('a').setAttribute("href", yelpUrl);
+    } else {
+        ifrm.contentWindow.document.getElementById("more").style.display = "none";
+    }
+
+    // price
+    if (json['businesses'][i]['price']) {
+        ifrm.contentWindow.document.getElementById("pric").style.display = "block";
+        let price = json['businesses'][i]['price'];
+        ifrm.contentWindow.document.getElementById("price").innerHTML = `${price}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("pric").style.display = "none";
+    }
+
+
+
+    // ifrm.contentWindow.document.getElementById("image1").innerHTML = `${}`;
+    // ifrm.contentWindow.document.getElementById("image2").innerHTML = `${}`;
+    // ifrm.contentWindow.document.getElementById("image3").innerHTML = `${}`;
+    // photos
+    // if (json['businesses'][i]['']) {
+
+    // }
+
     showDetailsCard();
 }
+
+
+function generateDetailsCard(json, i) {
+    var ifrm = document.getElementById('detailsCard');
+    // console.log(json['businesses'][i]['transactions']); // debug
+
+    // name
+    if (json['businesses'][i]['name']) {
+        let name = json['businesses'][i]['name'];
+        ifrm.contentWindow.document.getElementById("name").innerHTML = `${name}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("name").innerHTML = `No Name`;
+    }
+
+    // open or closed
+    if (json['businesses'][i]['is_closed'] != null) {
+        ifrm.contentWindow.document.getElementById("stat").style.display = "block";
+        let status = json['businesses'][i]['is_closed'];
+        if (status == "false") {
+            ifrm.contentWindow.document.getElementById("status").innerHTML = `Open Now`;
+            ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: green; padding:8px 17px 8px 17px; border-radius: 15px; ");
+        } else {
+            ifrm.contentWindow.document.getElementById("status").innerHTML = `Closed`;
+            ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid red; background-color: red; padding:8px 17px 8px 17px; border-radius: 15px;");
+        }
+    } else {
+        ifrm.contentWindow.document.getElementById("stat").style.display = "none";
+    }
+    
+    // address
+    if (json['businesses'][i]['location']['display_address']) {
+        ifrm.contentWindow.document.getElementById("addr").style.display = "block";
+        let addresses = json['businesses'][i]['location']['display_address'];
+        var addr = '';
+        for (let i = 0; i < addresses.length; i++) {
+            addr = addr + addresses[i] + " ";
+        }
+        ifrm.contentWindow.document.getElementById("address").innerHTML = `${addr}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("addr").style.display = "none";
+    }
+    
+    // transaction
+    if (json['businesses'][i]['transactions'].length != 0) {
+        ifrm.contentWindow.document.getElementById("tran").style.display = "block";
+        let transactions = json['businesses'][i]['transactions'];
+        var trans = '';
+        for (let i = 0; i < transactions.length; i++) {
+            if (i == transactions.length - 1) {
+                trans = trans + capitalizeFirstLetter(transactions[i]);
+            } else {
+                trans = trans + capitalizeFirstLetter(transactions[i]) + ' | ';
+            }
+        }
+        ifrm.contentWindow.document.getElementById("transcationSupported").innerHTML = `${trans}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("tran").style.display = "none";
+    }
+    
+    // category
+    // if (jQuery(json['businesses'][i]).has('categories').length) {
+        if (json['businesses'][i]['categories']) {
+            ifrm.contentWindow.document.getElementById("cate").style.display = "block";
+            let categories = json['businesses'][i]['categories'];
+            var cate = '';
+            for (let i = 0; i < categories.length; i++) {
+                if (i == categories.length - 1) {
+                    cate = cate + categories[i]['title'];
+                } else {
+                    cate = cate + categories[i]['title'] + ' | ';
+                }
+            }
+            ifrm.contentWindow.document.getElementById("category").innerHTML = `${cate}`;
+        } else {
+            ifrm.contentWindow.document.getElementById("cate").style.display = "none";
+        }
+        
+    // phone number
+    if (json['businesses'][i]['display_phone']) {
+        ifrm.contentWindow.document.getElementById("phon").style.display = "block";
+        let phone = json['businesses'][i]['display_phone'];
+        ifrm.contentWindow.document.getElementById("phoneNumber").innerHTML = `${phone}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("phon").style.display = "none";
+    }
+    
+    // yelp url
+    if (json['businesses'][i]['url']) {
+        ifrm.contentWindow.document.getElementById("more").style.display = "block";
+        let yelpUrl = json['businesses'][i]['url'];
+        ifrm.contentWindow.document.querySelector('#moreInfo').querySelector('a').setAttribute("href", yelpUrl); 
+    } else {
+        ifrm.contentWindow.document.getElementById("more").style.display = "none";
+    }
+    
+    // price
+    if (json['businesses'][i]['price']) {
+        ifrm.contentWindow.document.getElementById("pric").style.display = "block";
+        let price = json['businesses'][i]['price'];
+        ifrm.contentWindow.document.getElementById("price").innerHTML = `${price}`;
+    } else {
+        ifrm.contentWindow.document.getElementById("pric").style.display = "none";
+    }
+
+    // photos
+    // if (json['businesses'][i]['']) {
+
+    // }
+
+    showDetailsCard();
+}
+
+function capitalizeFirstLetter(string) { 
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase(); 
+}  
 
 // document.getElementById('searchResults').addEventListener('click', event => {
 // let td = event.target.closest('td[class="clickable"]');
@@ -170,7 +403,6 @@ function generateDetailsCard(json, i) {
 function showDetailsCard() {
     document.getElementById('detailsCard').style.display = "block";
 }
-
 
 //Generate Header
 function generateHeader() {

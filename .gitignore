@@ -2695,3 +2695,4 @@ env/lib/python3.7/site-packages/zipp-3.8.1.dist-info/top_level.txt
 env/lib/python3.7/site-packages/zipp-3.8.1.dist-info/WHEEL
 __pycache__/app.cpython-37.pyc
 __pycache__/main.cpython-37.pyc
+static/js/app.js
