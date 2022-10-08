@@ -172,7 +172,55 @@ function generateDetailsCard(json, i) {
 
 
 function drawCardFrame() {
-    document.getElementById("details").innerHTML = ``;
+    document.getElementById("details").innerHTML = `    <div>
+        <p id="name" class="heading">Name</p>
+        <hr class="details-card">
+        <section class="textArea">
+            <span id="columnLeft" class="column">
+                <div class="subArea" >
+                    <p id="statusHead" class="subheading">Status</p>
+                    <p id="status" class="infotext"></p>
+                </div>
+                <div class="subArea" >
+                    <p id="addressHead" class="subheading">Address</p>
+                    <p id="address" class="infotext"></p>
+                </div>
+                <div class="subArea" >
+                    <p id="transcationSupportedHead" class="subheading">Transcation Supported</p>
+                    <p id="transcationSupported" class="infotext"></p>
+                </div>
+                <div class="subArea" >
+                    <p id="moreInfoHead" class="subheading">More Info</p>
+                    <p id="moreInfo" class="infotext"><a href="">Yelp</a></p>
+                </div>
+            </span>
+
+            <span id="columnRight" class="column">
+                <div class="subArea">
+                    <p id="categoryHead" class="subheading">Category</p>
+                    <p id="category" class="infotext"></p>
+                </div>
+                <div class="subArea">
+                    <p id="phoneNumberHead" class="subheading">Phone Number</p>
+                    <p id="phoneNumber" class="infotext"></p>
+                </div>
+                <div class="subArea">
+                    <p id="priceHead" class="subheading">Price</p>
+                    <p id="price" class="infotext"></p>
+                </div>
+            </span>
+        </section>
+    
+        <table id="imageTable">
+            <tr>
+                <td class="images" id="image1" background-image=""
+                    background-size="cover" resize="both" background-position-y="top">Photo 1</td>
+                <td class="images" id="image2" >Photo 2</td>
+                <td class="images" id="image3" background-image=""
+                    background-size="cover" resize="both" background-position-y="top">Photo 3</td>
+            </tr>
+        </table>
+    </div>`;
 }
 
 
@@ -180,22 +228,22 @@ function drawCardFrame() {
 function generateHeader() {
     var html = "";
     html += "<thead><tr class='table-head'>";
-    html += "<th onclick='sortTable(0)' id='th-no' style='height:50px; width:50px; color:black;'>" + 'No.' + "</th>";
-    html += "<th onclick='sortTable(1)' id='th-image' style='height:50px; width:100px; color:black;'>" + 'Image' + "</th>";
-    html += "<th onclick='sortTable(2)' id='th-name' style='height:50px; width:600px; color:black;'>" + 'Business Name' + "</th>";
-    html += "<th onclick='sortTable(3)' id='th-rating' style='height:50px; width:200px; color:black;'>" + 'Rating' + "</th>";
-    html += "<th onclick='sortTable(4)' id='th-distance' style='height:50px; width:200px; color:black;'>" + 'Distance (miles)' + "</th>";
+    html += "<th class='welcome-card' onclick='sortTable(0)' id='th-no' style='height:50px; width:50px; color:black;'>" + 'No.' + "</th>";
+    html += "<th class='welcome-card' onclick='sortTable(1)' id='th-image' style='height:50px; width:100px; color:black;'>" + 'Image' + "</th>";
+    html += "<th class='welcome-card' onclick='sortTable(2)' id='th-name' style='height:50px; width:600px; color:black;'>" + 'Business Name' + "</th>";
+    html += "<th class='welcome-card' onclick='sortTable(3)' id='th-rating' style='height:50px; width:200px; color:black;'>" + 'Rating' + "</th>";
+    html += "<th class='welcome-card' onclick='sortTable(4)' id='th-distance' style='height:50px; width:200px; color:black;'>" + 'Distance (miles)' + "</th>";
     html += "</tr></thead>";
     return html;
 }
 
 function addToRow(index, image, name, rating, distance, yelpid) {
     var html = "<tr class='results'>";
-    html += "<td>" + index + "</td>";
-    html += "<td><img src='" + image + "' width='100px' height='100px' text-align='center'></img></td>";
-    html += "<td id='" + yelpid + "' class='clickable'><a href='#details' style='text-decoration: none;'>" + name + "</a></td>";
-    html += "<td>" + rating + "</td>";
-    html += "<td>" + distance + "</td>";
+    html += "<td class='welcome-card'>" + index + "</td>";
+    html += "<td class='welcome-card'><img src='" + image + "' width='100px' height='100px' text-align='center'></img></td>";
+    html += "<td class='welcome-card' id='" + yelpid + "' class='clickable'><a class='welcome-card' href='#details' style='text-decoration: none;'>" + name + "</a></td>";
+    html += "<td class='welcome-card'>" + rating + "</td>";
+    html += "<td class='welcome-card'>" + distance + "</td>";
     html += "</tr>";
     return html;
 }
