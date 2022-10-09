@@ -102,12 +102,14 @@ function handleForm(query) {
     }
 }
 
+
 function handleDetails(yelpId) {
     var req = new XMLHttpRequest();
     jsonFormData = {}
     jsonFormData['yelpId'] = yelpId;
     query = $.param(jsonFormData);
     
+
     req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + query, true);
     // req.open('GET', 'http://127.0.0.1:5000/details?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
@@ -120,6 +122,7 @@ function handleDetails(yelpId) {
         }
     }
 }
+
 
 function generateTable(json) {
     document.getElementById('searchResults').innerHTML = "<table id='resultTable'></table>"
@@ -164,6 +167,7 @@ function generateTable(json) {
         });
     };
 }
+
 
 function generateDetailsCard(json) {
     var ifrm = document.getElementById('detailsCard');
@@ -300,13 +304,16 @@ function generateDetailsCard(json) {
     showDetailsCard();
 }
 
+
 function capitalizeFirstLetter(string) { 
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase(); 
 }  
 
+
 function showDetailsCard() {
     document.getElementById('detailsCard').style.display = "block";
 }
+
 
 //Generate Header
 function generateHeader() {
@@ -321,6 +328,7 @@ function generateHeader() {
     return html;
 }
 
+
 function addToRow(index, image, name, rating, distance, yelpid) {
     var html = "<tr class='results'>";
     html += "<td>" + index + "</td>";
@@ -331,6 +339,7 @@ function addToRow(index, image, name, rating, distance, yelpid) {
     html += "</tr>";
     return html;
 }
+
 
 // Reference: @ https://www.w3schools.com/howto/howto_js_sort_table.asp
 function sortTable(n) {
