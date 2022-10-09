@@ -11,7 +11,7 @@
 
         #details-card {
             width: 800px;
-            height: 850px;
+            height: 820px;
             margin: auto;
             box-shadow: 0px 0px 5px 2px grey;
             font-family: Arial, sans-serif;
@@ -27,10 +27,14 @@
         hr {
             margin-block-start: 0px;
             margin-block-end: 5px;
-        }            
+        }        
+        
+        .subArea {
+            height: 85px;
+        }
 
         .textArea {
-            height: 330px;
+            height: 340px;
             text-align: left;
             padding: 30px 0px 0px 0px;
         }
@@ -39,10 +43,6 @@
             height: 360px;
             position: fixed;
             
-        }
-
-        .subArea {
-            height: 85px;
         }
 
         #columnLeft {
@@ -72,65 +72,68 @@
             margin-block-end: 0px;
         }        
 
-        .column {
+        .textArea .column {
             flex: auto;
         }          
 
         .photoArea {
             width: inherit;
             height: 360px;
-            /* position: fixed; */
             margin: 0px;
             font-family: Arial, sans-serif;
-            /* padding: 0px 0px 7px 0px; */
+            padding: 0px 0px 7px 0px;
             text-align: center;
             position: relative;
             bottom: 0px;
-            object-fit: scale-down;
-            max-height: 340;
-            background-repeat: no-repeat;
-            background-size:contain;
-            resize: both;
-            background-position-y: top; 
         }
 
-                
-        /* .photoArea  {
+        .photoArea .column {
+            position:absolute;
+            width: 255px;
+            height: 340px;
+            border: 1px solid silver;
+            border-bottom: none;
+            bottom: 0px;
+            top: 0px;
+            margin: 0px;
             object-fit: scale-down;
-            max-height: 340;
             background-repeat: no-repeat;
             background-size:contain;
             resize: both;
             background-position-y: top; 
-        } */
-
-
-
-        .photoArea .column {
-            width: 32%;
-            height: inherit;
-            border: 1px solid silver;
-            display:grid;
-            margin: auto;
-            position: fixed;
+            box-sizing: border-box;            
+            text-align: center;
         }
         
         #photoCol1 {
-            float: left;
+            left: 0px;
+            /* text-align: center; */
         }
-
+        
         #photoCol2 {
-            
+            left: 272px;
+            /* text-align: center; */
         }
-
+        
         #photoCol3 {
-            float: right;
+            right: 0px;
+            /* text-align: center; */
         }
 
         .infotext {
             margin-block-start: 7px;
             position: static;
             display: inline-flex;
+        }
+
+        .photoCol-text {
+            position: absolute;
+            bottom: -20px;
+            right: 0px;
+            left: 0px;
+            border: 1px solid silver;
+            border-top: none;
+            /* margin-block-end: 5px; */
         }
 
     </style>

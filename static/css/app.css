@@ -130,9 +130,7 @@ p {
 }
 
 table {
-    /* table-layout:auto; */
     text-align: center;
-    /* width: 80%; */
     width: 1000px;
     margin: auto;
     border-collapse: collapse;

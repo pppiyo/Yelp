@@ -154,8 +154,10 @@ function generateDetailsCard(json) {
     var ifrm = document.getElementById('detailsCard');
 
     // name
-    let bizname = json['name'];
-    ifrm.contentWindow.document.getElementById("bizname").innerHTML = `${bizname}`;
+    if (json['name']) {
+        let bizname = json['name'];
+        ifrm.contentWindow.document.getElementById("bizname").innerHTML = `${bizname}`;
+    }
 
     // open or closed
     if (json['is_closed'] != null) {
@@ -166,56 +168,67 @@ function generateDetailsCard(json) {
             ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: green; padding:8px 17px 8px 17px; border-radius: 15px; ");
         } else {
             ifrm.contentWindow.document.getElementById("status").innerHTML = `Closed`;
-            ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: green; padding:8px 17px 8px 17px; border-radius: 15px; ");
+            ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: red; padding:8px 17px 8px 17px; border-radius: 15px; ");
         }
     } else {
         ifrm.contentWindow.document.getElementById("stat").style.display = "none";
     }
 
     // address
-    if (json['location']['display_address']) {
+    if (json['location']) {
         ifrm.contentWindow.document.getElementById("addr").style.display = "block";
-        let addresses = json['location']['display_address'];
-        var addr = '';
-        for (let i = 0; i < addresses.length; i++) {
-            addr = addr + addresses[i] + " ";
+        if (json['location']['display_address']) {
+            let addresses = json['location']['display_address'];
+            var addr = '';
+            for (let i = 0; i < addresses.length; i++) {
+                addr = addr + addresses[i] + " ";
+            }
+            ifrm.contentWindow.document.getElementById("address").innerHTML = `${addr}`;
+        } else {
+            ifrm.contentWindow.document.getElementById("addr").style.display = "none";
         }
-        ifrm.contentWindow.document.getElementById("address").innerHTML = `${addr}`;
     } else {
         ifrm.contentWindow.document.getElementById("addr").style.display = "none";
     }
 
     // transaction
-    if (json['transactions'].length != 0) {
-        ifrm.contentWindow.document.getElementById("tran").style.display = "block";
-        let transactions = json['transactions'];
-        var trans = '';
-        for (let i = 0; i < transactions.length; i++) {
-            if (i == transactions.length - 1) {
-                trans = trans + capitalizeFirstLetter(transactions[i]);
-            } else {
-                trans = trans + capitalizeFirstLetter(transactions[i]) + ' | ';
+    if (json['transactions']) {
+        if (json['transactions'].length > 0) {
+            ifrm.contentWindow.document.getElementById("tran").style.display = "block";
+            let transactions = json['transactions'];
+            var trans = '';
+            for (let i = 0; i < transactions.length; i++) {
+                if (i == transactions.length - 1) {
+                    trans = trans + capitalizeFirstLetter(transactions[i]);
+                } else {
+                    trans = trans + capitalizeFirstLetter(transactions[i]) + ' | ';
+                }
             }
+            ifrm.contentWindow.document.getElementById("transcationSupported").innerHTML = `${trans}`;
+        } else {
+            ifrm.contentWindow.document.getElementById("tran").style.display = "none";
         }
-        ifrm.contentWindow.document.getElementById("transcationSupported").innerHTML = `${trans}`;
     } else {
         ifrm.contentWindow.document.getElementById("tran").style.display = "none";
     }
 
     // category
-    // if (jQuery(json).has('categories').length) {
     if (json['categories']) {
-        ifrm.contentWindow.document.getElementById("cate").style.display = "block";
-        let categories = json['categories'];
-        var cate = '';
-        for (let i = 0; i < categories.length; i++) {
-            if (i == categories.length - 1) {
-                cate = cate + categories[i]['title'];
-            } else {
-                cate = cate + categories[i]['title'] + ' | ';
+        if (json['categories'].length > 0) {
+            ifrm.contentWindow.document.getElementById("cate").style.display = "block";
+            let categories = json['categories'];
+            var cate = '';
+            for (let i = 0; i < categories.length; i++) {
+                if (i == categories.length - 1) {
+                    cate = cate + categories[i]['title'];
+                } else {
+                    cate = cate + categories[i]['title'] + ' | ';
+                }
             }
+            ifrm.contentWindow.document.getElementById("category").innerHTML = `${cate}`;
+        } else {
+            ifrm.contentWindow.document.getElementById("cate").style.display = "none";
         }
-        ifrm.contentWindow.document.getElementById("category").innerHTML = `${cate}`;
     } else {
         ifrm.contentWindow.document.getElementById("cate").style.display = "none";
     }
@@ -253,7 +266,7 @@ function generateDetailsCard(json) {
         for (let i = 1; i <= photos.length; i++) {
             const url = photos[i-1];
             const bgImgUrl = "background-image: url('" + url +"')";
-            const text = "Photo " + i;
+            const text = "<div class='photoCol-text'>Photo " + i + "</div>";
             if (i == 1) {
                 ifrm.contentWindow.document.querySelector('#photoCol1').setAttribute("style", bgImgUrl);
                 ifrm.contentWindow.document.getElementById("photoCol1").innerHTML = `${text}`
