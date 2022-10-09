@@ -144,6 +144,8 @@ function generateTable(json) {
     var names = document.getElementsByClassName('clickable');
     for (let i = 0; i < names.length; i++) {
         names[i].addEventListener("click", e => {
+            let ifrm = document.getElementById('detailsCard');
+            ifrm.style.display = "block";
             yelpId = json['businesses'][i]['id'];
             handleDetails(yelpId);
         });
