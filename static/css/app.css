@@ -1,6 +1,6 @@
 body {
     color: #4f6fad;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Open Sans', Arial, sans-serif;
     font-stretch: ultra-expanded;
 }
 
@@ -13,6 +13,7 @@ h1 {
     height: 480px;
     margin: 20px auto;
     box-shadow: 0px 0px 5px 2px grey;
+    font-weight: bold;
 }
 
 #keyword,
@@ -40,6 +41,7 @@ h1 {
     position: relative;
     top: 20px;
     left: 30px;
+    font-weight: bold;
 }
 
 .required {
@@ -87,12 +89,16 @@ hr {
 
 button {
     display: inline-block;
+    box-sizing: border-box;
+    width: 94px;
+    height: 40px;
     color: white;
     border: none;
-    padding: 13px 22px;
+    /* padding: 13px 23px; */
     text-transform: uppercase;
     font-weight: lighter;
     margin-top: 1rem;
+    font-family: 'Open Sans';
 }
 
 #submit {
@@ -143,7 +149,7 @@ th {
     font-weight: bold;
     background-color: #4f6fad;
     color: white;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family:Arial, Helvetica, sans-serif
 }
 
 th,

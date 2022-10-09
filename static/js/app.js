@@ -16,10 +16,10 @@ window.addEventListener('load', event => {
         else
             submitForm();
         
-        $('document').ready(function () {
-            window.location.href = "#";
-            window.location.href = "#searchResults";
-        });
+        // $('resultTable').ready(function () {
+        //     window.location.href = "#";
+        //     window.location.href = "#searchResults";
+        // });
     });
 
     $("#clear").click(function () {
@@ -131,7 +131,12 @@ function generateTable(json) {
 
     rows = json['businesses'].length;
     for (var i = 1; i <= rows; i++) {
-        let image = json['businesses'][i - 1]['image_url'];
+        var image;
+        if (json['businesses'][i - 1]['image_url']) {
+            image = json['businesses'][i - 1]['image_url'];
+        } else {
+            image = "https://static-prod.adweek.com/wp-content/uploads/2021/08/YelpLogoAugust2021.jpg";
+        }
         let name = json['businesses'][i - 1]['name'];
         let rating = json['businesses'][i - 1]['rating'];
         let distanceMeter = json['businesses'][i - 1]['distance'];
@@ -167,7 +172,7 @@ function generateDetailsCard(json) {
     if (json['is_closed'] != null) {
         ifrm.contentWindow.document.getElementById("stat").style.display = "block";
         let status = json['is_closed'];
-        if (status == "false") {
+        if (!status) {
             ifrm.contentWindow.document.getElementById("status").innerHTML = `Open Now`;
             ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: green; padding:8px 17px 8px 17px; border-radius: 15px; ");
         } else {
