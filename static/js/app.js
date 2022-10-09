@@ -15,11 +15,11 @@ window.addEventListener('load', event => {
             $("#location")[0].reportValidity()
         else
             submitForm();
-        location.href = "#";
-        location.href = "#searchResults";
-        // document.getElementById("resultTable").click();
-        // $('#resultTable')[0].click();
-        // clickLink("location.href");
+        
+        $('document').ready(function () {
+            window.location.href = "#";
+            window.location.href = "#searchResults";
+        });
     });
 
     $("#clear").click(function () {
@@ -39,7 +39,6 @@ function removeHash() {
 
 function submitForm() {
     event.preventDefault();    // FOR DEBUG PURPOSE
-
     var formData = new FormData(form); // returns a FormData prototype
 
     var object = {};
@@ -140,6 +139,9 @@ function generateTable(json) {
         let yelpId = json['businesses'][i - 1]['id'];
         tableArea.innerHTML += addToRow(i, image, name, rating, distanceMile, yelpId);
     }
+
+    location.href = "#";
+    location.href = "#searchResults";
 
     var names = document.getElementsByClassName('clickable');
     for (let i = 0; i < names.length; i++) {
