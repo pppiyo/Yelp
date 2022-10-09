@@ -143,16 +143,19 @@ th {
     font-weight: bold;
     background-color: #4f6fad;
     color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 th,
 td {
     border: 1px solid silver;
-}
-
-td {
     color: black;
 }
+
+th:hover {
+    cursor: pointer;
+}
+
 
 #no-record {
     text-align: center;
@@ -167,7 +170,7 @@ a {
     color: black;
 }
 
-a:hover{
+.results a:hover{
     text-decoration: none;    
     color: grey;
 }
