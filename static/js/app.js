@@ -85,8 +85,8 @@ function submitForm() {
 
 function handleForm(query) {
     var req = new XMLHttpRequest();
-    req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/cook?' + query, true);
-    // req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
+    // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/cook?' + query, true);
+    req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
@@ -111,8 +111,8 @@ function handleDetails(yelpId) {
     jsonFormData['yelpId'] = yelpId;
     query = $.param(jsonFormData);
     
-    req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + query, true);
-    // req.open('GET', 'http://127.0.0.1:5000/details?' + query, true);
+    // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + query, true);
+    req.open('GET', 'http://127.0.0.1:5000/details?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
@@ -153,7 +153,15 @@ function generateTable(json) {
     for (let i = 0; i < names.length; i++) {
         names[i].addEventListener("click", e => {
             let ifrm = document.getElementById('detailsCard');
-            ifrm.style.display = "block";
+
+            // if (ifrm.style) {
+            //     ifrm.style.display = "block";
+            // } else {
+            //     setTimeout(() => {
+            //         ifrm.style.display = "block";
+            //     }, 500);
+            // }
+
             yelpId = json['businesses'][i]['id'];
             handleDetails(yelpId);
         });
@@ -161,7 +169,16 @@ function generateTable(json) {
 }
 
 function generateDetailsCard(json) {
-    var ifrm = document.getElementById('detailsCard');
+    $("#detailsCard").style.display = "block";
+    // var ifrm = document.getElementById('detailsCard');
+
+    // if (ifrm) {
+    //     ifrm.style.display = "block";
+    // } else {
+    //     setTimeout(() => {
+    //         ifrm.style.display = "block";
+    //     }, 500);
+    // }
 
     // name
     if (json['name']) {
@@ -405,6 +422,8 @@ function sortTable(n) {
     for (let i = 1; i < rows.length; i++) {
         rows[i].getElementsByTagName("TD")[0].innerHTML = i;
     }
+    document.querySelector('#resultTable').setAttribute("style", "border:1px solid red;");
+    console.log(document.querySelector('#resultTable'));
 }
 
 
