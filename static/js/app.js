@@ -173,10 +173,10 @@ function generateDetailsCard(json) {
     }
 
     // open or closed
-    if (json['is_closed'] != null) {
+    if (json['is_open_now'] != null) {
         ifrm.contentWindow.document.getElementById("stat").style.display = "block";
-        let status = json['is_closed'];
-        if (!status) {
+        let status = json['is_open_now'];
+        if (status) {
             ifrm.contentWindow.document.getElementById("status").innerHTML = `Open Now`;
             ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: green; padding:8px 17px 8px 17px; border-radius: 15px; ");
         } else {
