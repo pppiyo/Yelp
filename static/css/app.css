@@ -178,8 +178,8 @@ iframe {
     /* iframes are inline by default */
     border: none;
     /* Reset default border */
-    height: 100vh;
+    height: 870px;
     /* Viewport-relative units */
     width: 100vw;
     display: none;
-}
+}   
