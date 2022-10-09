@@ -4,7 +4,8 @@ window.addEventListener('load', event => {
     $("#submit").click(function () {
         if (document.getElementById("searchResults").innerHTML != ``) {
             document.getElementById("searchResults").innerHTML = ``;
-            document.getElementById("details").innerHTML = ``;
+            document.getElementById("detailsCard").style.display = "none";
+            // document.getElementById("details").innerHTML = ``;
         }
 
         if (!$("#keyword")[0].checkValidity())
@@ -27,7 +28,8 @@ window.addEventListener('load', event => {
         document.getElementById("form").reset();
         document.getElementById("detect-location").checked = false;
         document.getElementById("searchResults").innerHTML = ``;
-        document.getElementById("details").innerHTML = ``;
+        // document.getElementById("details").innerHTML = ``;
+        document.getElementById("detailsCard").style.display = "none";
     })
 });
 
@@ -85,8 +87,8 @@ function submitForm() {
 
 function handleForm(query) {
     var req = new XMLHttpRequest();
-    // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/cook?' + query, true);
-    req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
+    req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/cook?' + query, true);
+    // req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
@@ -111,8 +113,8 @@ function handleDetails(yelpId) {
     jsonFormData['yelpId'] = yelpId;
     query = $.param(jsonFormData);
     
-    // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + query, true);
-    req.open('GET', 'http://127.0.0.1:5000/details?' + query, true);
+    req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + query, true);
+    // req.open('GET', 'http://127.0.0.1:5000/details?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
@@ -154,13 +156,13 @@ function generateTable(json) {
         names[i].addEventListener("click", e => {
             let ifrm = document.getElementById('detailsCard');
 
-            // if (ifrm.style) {
-            //     ifrm.style.display = "block";
-            // } else {
-            //     setTimeout(() => {
-            //         ifrm.style.display = "block";
-            //     }, 500);
-            // }
+            if (ifrm.style) {
+                ifrm.style.display = "block";
+            } else {
+                setTimeout(() => {
+                    ifrm.style.display = "block";
+                }, 500);
+            }
 
             yelpId = json['businesses'][i]['id'];
             handleDetails(yelpId);
@@ -169,16 +171,7 @@ function generateTable(json) {
 }
 
 function generateDetailsCard(json) {
-    $("#detailsCard").style.display = "block";
-    // var ifrm = document.getElementById('detailsCard');
-
-    // if (ifrm) {
-    //     ifrm.style.display = "block";
-    // } else {
-    //     setTimeout(() => {
-    //         ifrm.style.display = "block";
-    //     }, 500);
-    // }
+    var ifrm = document.getElementById('detailsCard');
 
     // name
     if (json['name']) {
@@ -356,7 +349,8 @@ function addToRow(index, image, name, rating, distance, yelpid) {
     var html = "<tr class='results'>";
     html += "<td>" + index + "</td>";
     html += "<td><img src='" + image + "' width='100px' height='100px' text-align='center'></img></td>";
-    html += "<td id='" + yelpid + "' class='clickable'><a href='#details' style='text-decoration: none;'>" + name + "</a></td>";
+    // html += "<td id='" + yelpid + "' class='clickable'><a href='#details' style='text-decoration: none;'>" + name + "</a></td>";
+    html += "<td id='" + yelpid + "' class='clickable'><a href='#detailsCard' style='text-decoration: none;'>" + name + "</a></td>";
     html += "<td>" + rating + "</td>";
     html += "<td>" + distance + "</td>";
     html += "</tr>";
