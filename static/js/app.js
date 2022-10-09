@@ -80,8 +80,8 @@ function submitForm() {
 
 function handleForm(query) {
     var req = new XMLHttpRequest();
-    req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/cook?' + query, true);
-    // req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
+    // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/cook?' + query, true);
+    req.open('GET', 'http://127.0.0.1:5000/cook?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
@@ -106,8 +106,8 @@ function handleDetails(yelpId) {
     jsonFormData['yelpId'] = yelpId;
     query = $.param(jsonFormData);
     
-    req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + query, true);
-    // req.open('GET', 'http://127.0.0.1:5000/details?' + query, true);
+    // req.open('GET', 'https://amylee-csci571-220906.wl.r.appspot.com/details?' + query, true);
+    req.open('GET', 'http://127.0.0.1:5000/details?' + query, true);
     req.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     req.send();
     req.onreadystatechange = function () {
@@ -173,9 +173,9 @@ function generateDetailsCard(json) {
     }
 
     // open or closed
-    if (json['is_open_now'] != null) {
+    if (json['hours']) {
         ifrm.contentWindow.document.getElementById("stat").style.display = "block";
-        let status = json['is_open_now'];
+        let status = json['hours'][0]['is_open_now'];
         if (status) {
             ifrm.contentWindow.document.getElementById("status").innerHTML = `Open Now`;
             ifrm.contentWindow.document.querySelector('#status').setAttribute("style", "border:1px solid green; background-color: green; padding:8px 17px 8px 17px; border-radius: 15px; ");
