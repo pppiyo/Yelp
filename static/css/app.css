@@ -141,6 +141,10 @@ table {
     margin: auto;
     border-collapse: collapse;
     padding: 8px;
+}
+
+
+#resultTable {
     border: 1px solid silver;
 }
 
@@ -183,11 +187,8 @@ a {
 
 iframe {
     display: block;
-    /* iframes are inline by default */
     border: none;
-    /* Reset default border */
     height: 870px;
-    /* Viewport-relative units */
     width: 100vw;
     display: none;
 }   

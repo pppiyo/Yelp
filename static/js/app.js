@@ -5,7 +5,6 @@ window.addEventListener('load', event => {
         if (document.getElementById("searchResults").innerHTML != ``) {
             document.getElementById("searchResults").innerHTML = ``;
             document.getElementById("detailsCard").style.display = "none";
-            // document.getElementById("details").innerHTML = ``;
         }
 
         if (!$("#keyword")[0].checkValidity())
@@ -16,11 +15,6 @@ window.addEventListener('load', event => {
             $("#location")[0].reportValidity()
         else
             submitForm();
-        
-        // $('resultTable').ready(function () {
-        //     window.location.href = "#";
-        //     window.location.href = "#searchResults";
-        // });
     });
 
     $("#clear").click(function () {
@@ -28,7 +22,6 @@ window.addEventListener('load', event => {
         document.getElementById("form").reset();
         document.getElementById("detect-location").checked = false;
         document.getElementById("searchResults").innerHTML = ``;
-        // document.getElementById("details").innerHTML = ``;
         document.getElementById("detailsCard").style.display = "none";
     })
 });
@@ -309,25 +302,6 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase(); 
 }  
 
-// document.getElementById('searchResults').addEventListener('click', event => {
-// let td = event.target.closest('td[class="clickable"]');
-// if(td) {
-// console.log(event.target.innerText, 'was clicked');
-// event.target.innerText, 'was clicked');
-// console.log(td);
-// generateDetailCard(td[]);
-// document.getElementById('details').innerHTML = `${detailCard.html}`;
-// event.target.setAttribute("href", "#details");
-// event.target.setAttribute(this.href + "#details");
-// event.target.setAttribute("onclick", "location.href='#details'");
-// event.target.setAttribute("onclick", "location.hash='#details'");
-// window.location.hash = "jump_to_this_location";
-// event.target.setAttribute("style", "hover: text-decoration");
-// event.target.href = "www.google.com";
-// }
-// });
-// }
-
 function showDetailsCard() {
     document.getElementById('detailsCard').style.display = "block";
 }
@@ -349,7 +323,6 @@ function addToRow(index, image, name, rating, distance, yelpid) {
     var html = "<tr class='results'>";
     html += "<td>" + index + "</td>";
     html += "<td><img src='" + image + "' width='100px' height='100px' text-align='center'></img></td>";
-    // html += "<td id='" + yelpid + "' class='clickable'><a href='#details' style='text-decoration: none;'>" + name + "</a></td>";
     html += "<td id='" + yelpid + "' class='clickable'><a href='#detailsCard' style='text-decoration: none;'>" + name + "</a></td>";
     html += "<td>" + rating + "</td>";
     html += "<td>" + distance + "</td>";
@@ -416,8 +389,7 @@ function sortTable(n) {
     for (let i = 1; i < rows.length; i++) {
         rows[i].getElementsByTagName("TD")[0].innerHTML = i;
     }
-    document.querySelector('#resultTable').setAttribute("style", "border:1px solid red;");
-    console.log(document.querySelector('#resultTable'));
+    document.querySelector('#resultTable').setAttribute("style", "border:1px solid silver;");
 }
 
 
