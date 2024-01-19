@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" type="text/css" href="/static/css/app.css" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js"></script>
+
+</head>
+
+<body>
+    <section id="welcome-card">
+        <div class="banner">
+            <div id="banner-text">
+                <h2>Buisiness Search</h2>
+                <p>Fill out the form to get businesses near you!</p>
+                <!-- <p>Fill out the form to get business info</p> -->
+            </div>
+        </div>
+
+        <form action="#searchResults" method="GET" id="form">
+            <div class="row" id="row1">
+                <label for="keyword">Keyword<span class="required">*</span></label>
+                <input type="text" id="keyword" name="keyword" required>
+            </div>
+
+            <div class="row" id="row2">
+                <div id="column1">                
+                    <label for="distance">Distance(miles)</label>
+                    <input type="text" id="distance" name="distance" value="10" required>
+                </div>
+    
+                <div id="column2">
+                    <label for="category">Category <span class="required">*</span></label>
+                    <select name="category" id="category" required>
+                        <option value="default" selected>Default</option>
+                        <option value="arts-entertainment">Arts & Entertainment</option>
+                        <option value="health-medical">Health & Medical</option>
+                        <option value="hotels-travel">Hotels & Travel</option>
+                        <option value="food">Food</option>
+                        <option value="professional-services">Professional Services</option>
+                    </select>
+                </div>
+            </div>
+    
+            <div class="row" id="row3">
+                <label for="location">Location <span class="required">*</span></label>
+                <input type="text" id="location" name="location" required>
+            </div>
+
+            <p></p>
+            <hr>
+        
+            <div class="row" id="row4">
+                <label for="detect-location">Want us to auto-detect your location? Check here</label>
+                <input type="checkbox" id="detect-location" onclick="disableLocationBox(this)">
+            </div>
+
+            <button type="button" id="submit">submit</button>
+            <button type="button" id="clear" onclick="enableLocationBox()">clear</button>
+        </form>
+    </section>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <section id="searchResults"></section>
+
+    <br>
+    <br>
+
+    <iframe name="detailsCardName" id="detailsCard" src="/static/detailsCard.html" style="display:none;" title="details-card"></iframe>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

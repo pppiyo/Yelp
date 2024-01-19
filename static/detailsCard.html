@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <title>Business Details</title>
+
+    <style type="text/css">
+
+        #details-card {
+            width: 800px;
+            height: 830px;
+            margin: auto;
+            box-shadow: 0px 0px 5px 2px grey;
+            font-family: Arial, sans-serif;
+            padding: 0 20px 20px 20px;
+            
+        }
+
+        .titleArea {
+            height: 65px;
+            padding-top: 10px;
+        }
+
+        hr {
+            margin-block-start: 0px;
+            margin-block-end: 5px;
+        }        
+        
+        .subArea {
+            height: 85px;
+        }
+
+        .textArea {
+            height: 340px;
+            text-align: left;
+            padding: 30px 0px 0px 0px;
+        }
+    
+        .imageArea {
+            height: 360px;
+            position: fixed;
+            
+        }
+
+        #columnLeft {
+            position: relative;
+            width: 50%;
+            float: left;
+        }
+        
+        #columnRight {
+            position: relative;
+            width: 50%;
+            float: right;
+        }     
+
+        #bizname {
+            text-align: center;
+            font-size: 25px;
+            margin-block-start: 20px;
+            margin-block-end: 8px;
+            position: static;
+            font-weight: bold;
+        }
+
+        .subheading {
+            font-weight: bold;
+            font-size: 20px;
+            margin-block-start: 0px;
+            margin-block-end: 0px;
+        }        
+
+        .textArea .column {
+            flex: auto;
+        }          
+
+        .photoArea {
+            width: inherit;
+            height: 380px;
+            margin: 0px;
+            font-family: Arial, sans-serif;
+            padding: 0px 0px 7px 0px;
+            text-align: center;
+            position: relative;
+            bottom: 0px;
+        }
+
+        .photoArea .column {
+            position:absolute;
+            width: 255px;
+            height: 360px;
+            border: 1px solid silver;
+            border-bottom: none;
+            bottom: 0px;
+            top: 0px;
+            margin: 0px;
+            object-fit: scale-down;
+            background-repeat: no-repeat;
+            background-size:contain;
+            resize: both;
+            background-position-y: top; 
+            box-sizing: border-box;            
+            text-align: center;
+        }
+        
+        #photoCol1 {
+            left: 0px;
+            /* text-align: center; */
+        }
+        
+        #photoCol2 {
+            left: 272px;
+            /* text-align: center; */
+        }
+        
+        #photoCol3 {
+            right: 0px;
+            /* text-align: center; */
+        }
+
+        .infotext {
+            margin-block-start: 7px;
+            position: static;
+            display: inline-flex;
+        }
+
+        .photoCol-text {
+            position: absolute;
+            bottom: -20px;
+            right: 0px;
+            left: 0px;
+            border: 1px solid silver;
+            border-top: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="details-card">
+        <section class="titleArea"> 
+            <p id="bizname" class="heading"></p>
+        </section>
+        <hr>
+        
+        <section class="textArea">
+            <span id="columnLeft" class="column">
+                <div class="subArea"  id="stat">
+                    <p id="statusHead" class="subheading">Status</p>
+                    <p id="status" class="infotext"></p>
+                </div>
+                <div class="subArea"  id="addr">
+                    <p id="addressHead" class="subheading">Address</p>
+                    <p id="address" class="infotext"></p>
+                </div>
+                <div class="subArea"  id="tran">
+                    <p id="transcationSupportedHead" class="subheading">Transcation Supported</p>
+                    <p id="transcationSupported" class="infotext"></p>
+                </div>
+                <div class="subArea"  id="more">
+                    <p id="moreInfoHead" class="subheading">More Info</p>
+                    <p id="moreInfo" class="infotext"><a href="" target="_blank">Yelp</a></p>
+                </div>
+            </span>
+
+            <span id="columnRight" class="column">
+                <div class="subArea" id="cate">
+                    <p id="categoryHead" class="subheading">Category</p>
+                    <p id="category" class="infotext"></p>
+                </div>
+                <div class="subArea" id="phon">
+                    <p id="phoneNumberHead" class="subheading">Phone Number</p>
+                    <p id="phoneNumber" class="infotext"></p>
+                </div>
+                <div class="subArea" id="pric">
+                    <p id="priceHead" class="subheading">Price</p>
+                    <p id="price" class="infotext"></p>
+                </div>
+            </span>
+        </section>
+
+        <section class="photoArea">
+            <div id="photoCol1" class="column"></div>
+            <div id="photoCol2" class="column"></div>
+            <div id="photoCol3" class="column"></div>
+        </section>
+    </div>
+
+</body>
+
+</html>
